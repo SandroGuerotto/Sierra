@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
@@ -46,7 +47,7 @@
       </VBox>
       <VBox fx:id="pane_login" alignment="TOP_CENTER" prefHeight="223.0" prefWidth="693.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <children>
-            <Label fx:id="lbl_error" text="Username oder Passwort falsch!" styleClass="error">
+            <Label fx:id="lbl_error" styleClass="error" text="Username oder Passwort falsch!">
                <font>
                   <Font size="24.0" />
                </font>
@@ -54,7 +55,7 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </Label>
-            <FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="137.0" prefWidth="693.0">
+            <FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="137.0" prefWidth="693.0" vgap="20.0">
                <children>
                   <JFXTextField fx:id="tf_username" focusColor="#b4d87e" maxWidth="300.0" minWidth="283.0" prefHeight="31.0" prefWidth="300.0" promptText="Benutzername">
                     <font>
@@ -76,9 +77,9 @@
 <Insets top="20.0" />
 </padding>
         </VBox>
-<BorderPane  GridPane.columnIndex="1" GridPane.rowIndex="4">
+<BorderPane GridPane.columnIndex="1" GridPane.rowIndex="4">
          <right>
-            <JFXButton fx:id="btn_login" onAction="#login" prefHeight="40.0" prefWidth="120.0" ripplerFill="#b4d87e" text="Anmelden" BorderPane.alignment="CENTER" styleClass="btn">
+            <JFXButton fx:id="btn_login" onAction="#login" prefHeight="40.0" prefWidth="120.0" ripplerFill="#b4d87e" styleClass="btn" text="Anmelden" BorderPane.alignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
