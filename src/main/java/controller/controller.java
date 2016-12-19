@@ -1,13 +1,13 @@
 package controller;
 
-import handler.LoginHandler;
-import javafx.stage.Stage;
-
+import data.Tasks;
 import exception.LoginException;
+import handler.ApplicationHandler;
+import handler.LoginHandler;
+import javafx.collections.ObservableList;
+import javafx.stage.Stage;
+import view.ItemEvent;
 
-/**
- * Created by Sandro on 13.12.2016.
- */
 public class Controller {
     private Stage stage;
 
@@ -18,23 +18,30 @@ public class Controller {
     public void start(Stage stage){
         this.stage = stage;
         goToLogin();
+//        gotToApplication();
     }
 
     public void goToLogin(){
-        new StarterLogin().start(stage, new LoginHandler((this)));
+        new StarterGui().start(stage, new LoginHandler(this), "Login");
 
     }
 
     public void gotToApplication(){
-
+        new StarterGui().start(stage, new ApplicationHandler(this), "Application");
     }
 
     public void login(String username, String password) throws LoginException{
         if (username.equals("test") && password.equals("1234")){
-//            gotToApplication();
+            gotToApplication();
             System.out.println("eingeloggt");
         }else{
             throw new LoginException();
         }
     }
+
+
+    public ObservableList<ItemEvent> getTasks(){
+        return  new Tasks().getTasks();
+    }
+
 }

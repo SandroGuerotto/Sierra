@@ -4,9 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import view.ItemEvent;
 
-/**
- * Created by Sandro on 17.12.2016.
- */
+
 public class Tasks {
 
     private ObservableList<ItemEvent> events = FXCollections.observableArrayList();
