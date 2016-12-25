@@ -1,24 +1,29 @@
 package controller;
 
-import data.Tasks;
+import data.Database;
+import data.Request;
 import exception.LoginException;
 import handler.ApplicationHandler;
 import handler.LoginHandler;
+import helper.DateFormatter;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import view.ItemEvent;
 
+import java.time.LocalDate;
+
 public class Controller {
     private Stage stage;
+    private Database database;
 
     public Controller(){
-
+        database = new Database();
     }
 
     public void start(Stage stage){
         this.stage = stage;
-        goToLogin();
-//        gotToApplication();
+//        goToLogin();
+        gotToApplication();
     }
 
     public void goToLogin(){
@@ -41,7 +46,20 @@ public class Controller {
 
 
     public ObservableList<ItemEvent> getTasks(){
-        return  new Tasks().getTasks();
+        return  database.getTasks();
     }
+
+    public ObservableList<Request> getRequest(){
+        return  database.getRequest();
+    }
+    public void addJoker(LocalDate date, String reason){
+        Request request = new Request();
+        request.setDate(DateFormatter.LocalDateToString(date));
+        request.setReason(reason);
+        request.setStatus("RQ");
+        database.addRequest(request);
+    }
+
+
 
 }

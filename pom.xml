@@ -41,6 +41,15 @@
             <version>8.9</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.jfxtras/jfxtras-labs -->
+        <dependency>
+            <groupId>org.jfxtras</groupId>
+            <artifactId>jfxtras-labs</artifactId>
+            <version>8.0-r5</version>
+        </dependency>
+
+
+
     </dependencies>
 
 
