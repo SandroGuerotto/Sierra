@@ -5,13 +5,14 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Request {
+public class Gesuch {
     private IntegerProperty id;
     private StringProperty date;
     private StringProperty reason;
+    private StringProperty content;
     private StringProperty status;
 
-    public Request() {
+    public Gesuch() {
 
     }
 
@@ -45,6 +46,22 @@ public class Request {
             this.date = new SimpleStringProperty(this, "date");
         }
         return this.date;
+    }
+
+    //content
+    public void setContent(String value) {
+        this.contentProperty().set(value);
+    }
+
+    public String getContent() {
+        return this.contentProperty().get();
+    }
+
+    public StringProperty contentProperty() {
+        if (this.content == null) {
+            this.content = new SimpleStringProperty(this, "content");
+        }
+        return this.content;
     }
 
     //reason

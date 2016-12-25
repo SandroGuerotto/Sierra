@@ -8,11 +8,11 @@ package controller;
  * @version 1.0
  */
 
-import handler.LoginHandler;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -45,7 +45,7 @@ public class StarterGui {
                 System.exit(0);
             });
 
-//			stage.getIcons().add(new Image("@/../icons/logo/logo.png"));
+			stage.getIcons().add(new Image("/icon/logo.png"));
             stage.setTitle("Sierra"); // Titel
             stage.setScene(scene);
             switch (fxml){

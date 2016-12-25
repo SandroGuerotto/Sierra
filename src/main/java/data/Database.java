@@ -7,12 +7,13 @@ import view.ItemEvent;
 
 public class Database {
 
-    ObservableList<Request> requests = FXCollections.observableArrayList();
-    ObservableList<ItemEvent> events = FXCollections.observableArrayList();
+    private ObservableList<Request> requests = FXCollections.observableArrayList();
+    private ObservableList<Gesuch> gesuche = FXCollections.observableArrayList();
+    private ObservableList<ItemEvent> events = FXCollections.observableArrayList();
 
     public Database(){
         initRequest();
-
+        initGesuch();
         initEvent();
 
     }
@@ -26,6 +27,16 @@ public class Database {
         requests.addAll(request);
     }
 
+    private void initGesuch() {
+        Gesuch gesuch = new Gesuch();
+        gesuch.setID(1);
+        gesuch.setDate("10.02.2016");
+        gesuch.setReason("Sommerferien Verlängerung");
+        gesuch.setContent("Ich will frei haben, weil Baum :)");
+        gesuch.setStatus("XX");
+        gesuche.addAll(gesuch);
+    }
+
     private void initEvent() {
         ItemEvent item;
         item = new ItemEvent(1, "Mathematik Test: Bruchrechnen", "12.12.2016", "15:00", "Lernziele 1-4 \n" +
@@ -37,8 +48,11 @@ public class Database {
         events.add(item);
     }
 
-    public ObservableList<Request> getRequest(){
+    public ObservableList<Request> getRequests(){
         return  requests;
+    }
+    public ObservableList<Gesuch> getGesuche(){
+        return  gesuche;
     }
     public ObservableList<ItemEvent> getTasks(){
         return events;
@@ -47,4 +61,8 @@ public class Database {
     public void addRequest(Request request){
         requests.add(request);
     }
+    public void addGesuch(Gesuch gesuch){
+        gesuche.add(gesuch);
+    }
+
 }

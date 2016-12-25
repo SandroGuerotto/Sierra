@@ -2,6 +2,9 @@ package view;
 
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXPopup;
+import data.Notification;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.collections.FXCollections;
@@ -9,11 +12,12 @@ import javafx.collections.ObservableList;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
+
 
 public class Menubanner extends HBox {
 
@@ -27,6 +31,9 @@ public class Menubanner extends HBox {
 
     private VBox wrapper;
     private FlowPane menu;
+    private GridPane parent;
+
+    private JFXPopup popup_notifcation;
 
     private static Paint GREEN = Paint.valueOf("#b4d878");
     private static Paint GRAY = Paint.valueOf("#4d4d4d");
@@ -34,15 +41,16 @@ public class Menubanner extends HBox {
     private ObservableList<Node> items = FXCollections.observableArrayList();;
 
 
-    public Menubanner(GridPane parent) {
+    public Menubanner(GridPane parent, StackPane main , ObservableList<Notification> notifications) {
         this.setFillHeight(true);
-
+        this.parent = parent;
         wrapper = new VBox();
         menu = new FlowPane();
         menu.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
+        menu.setAlignment(Pos.TOP_LEFT);
 
         wrapper.prefWidthProperty().bind(parent.prefWidthProperty());
-        wrapper.setAlignment(Pos.CENTER_LEFT);
+        wrapper.setAlignment(Pos.TOP_LEFT);
 
         createStudentMenu();
         setIcon();
@@ -51,6 +59,8 @@ public class Menubanner extends HBox {
         menu.getChildren().addAll(items );
         wrapper.getChildren().add(menu);
         this.getChildren().addAll(wrapper, btn_settings);
+
+        initPopup(notifications, main);
 
     }
 
@@ -71,7 +81,7 @@ public class Menubanner extends HBox {
         btn_home = new JFXButton("Home");
         btn_home.setButtonType(JFXButton.ButtonType.FLAT);
         btn_home.setRipplerFill(GREEN);
-        btn_home.setPrefWidth(150);
+        btn_home.setPrefWidth(100);
         btn_home.getStyleClass().add("btn");
 
         btn_notification = new JFXButton("");
@@ -119,5 +129,20 @@ public class Menubanner extends HBox {
 
         items.addAll(btn_home, btn_notification, btn_mymarks, btn_myclass, btn_teacher, btn_allclass, btn_school);
 
+    }
+
+    private void initPopup(ObservableList<Notification> notifications, StackPane main){
+        popup_notifcation = new JFXPopup();
+        JFXListView<Label> list = new JFXListView<Label>();
+        for(int i = 1 ; i < 5 ; i++) list.getItems().add(new Label("Item " + i));
+        popup_notifcation.setContent(list);
+        popup_notifcation.setPopupContainer(main);
+        popup_notifcation.setSource(btn_notification);
+        btn_notification.setOnMouseClicked((e)->{
+            if (e.getButton().equals(MouseButton.PRIMARY)){
+                popup_notifcation.show(JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 0, 50);
+            }
+
+        } );
     }
 }

@@ -1,6 +1,7 @@
 package controller;
 
 import data.Database;
+import data.Gesuch;
 import data.Request;
 import exception.LoginException;
 import handler.ApplicationHandler;
@@ -49,9 +50,13 @@ public class Controller {
         return  database.getTasks();
     }
 
-    public ObservableList<Request> getRequest(){
-        return  database.getRequest();
+    public ObservableList<Request> getRequests(){
+        return  database.getRequests();
     }
+    public ObservableList<Gesuch> getGesuche(){
+        return  database.getGesuche();
+    }
+
     public void addJoker(LocalDate date, String reason){
         Request request = new Request();
         request.setDate(DateFormatter.LocalDateToString(date));
@@ -60,6 +65,14 @@ public class Controller {
         database.addRequest(request);
     }
 
+    public void addGesuch(LocalDate date, String reason, String content){
+        Gesuch gesuch = new Gesuch();
+        gesuch.setDate(DateFormatter.LocalDateToString(date));
+        gesuch.setReason(reason);
+        gesuch.setContent(content);
+        gesuch.setStatus("RQ");
+        database.addGesuch(gesuch);
+    }
 
 
 }
