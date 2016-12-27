@@ -4,8 +4,8 @@ import data.Database;
 import data.Gesuch;
 import data.Request;
 import exception.LoginException;
-import handler.ApplicationHandler;
-import handler.LoginHandler;
+import javafx.scene.layout.Pane;
+import model.ViewModel;
 import helper.DateFormatter;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
@@ -16,24 +16,29 @@ import java.time.LocalDate;
 public class Controller {
     private Stage stage;
     private Database database;
+    private ViewModel viewModel;
 
     public Controller(){
         database = new Database();
+        viewModel = new ViewModel(this);
+
+        viewModel.loadHandler();
+        viewModel.loadFxml();
     }
 
     public void start(Stage stage){
         this.stage = stage;
-//        goToLogin();
         gotToApplication();
+//        goToLogin();
     }
 
     public void goToLogin(){
-        new StarterGui().start(stage, new LoginHandler(this), "Login");
+        new StarterGui().start(stage, viewModel.getFxml("login"), false) ;
 
     }
 
     public void gotToApplication(){
-        new StarterGui().start(stage, new ApplicationHandler(this), "Application");
+        new StarterGui().start(stage, viewModel.getFxml("application"), true) ;
     }
 
     public void login(String username, String password) throws LoginException{
@@ -74,5 +79,8 @@ public class Controller {
         database.addGesuch(gesuch);
     }
 
+    public Pane getNextPane(String name){
+        return viewModel.getFxml(name);
+    }
 
 }

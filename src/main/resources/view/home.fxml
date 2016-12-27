@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane fx:id="pane_home" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="831.0" minWidth="10.0" prefWidth="526.3333740234375" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1355.3333435058594" minWidth="10.0" prefWidth="1278.6666259765625" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="461.0" minHeight="10.0" prefHeight="358.3333435058594" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="582.0" minHeight="10.0" prefHeight="556.6666564941406" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowSpan="2">
+         <tabs>
+            <Tab text="Stundenplan">
+               <content>
+                  <BorderPane fx:id="pane_schedule" prefHeight="200.0" prefWidth="200.0">
+                     <top>
+                        <JFXToggleButton fx:id="btn_schedule" contentDisplay="RIGHT" styleClass="btn" text="Stundenplan" textFill="#4d4d4d" toggleColor="#759a38" toggleLineColor="#b4d87e" BorderPane.alignment="CENTER_LEFT">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </JFXToggleButton>
+                     </top>
+                  </BorderPane>
+               </content>
+            </Tab>
+            <Tab text="Absenzen">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <top>
+                        <Label prefHeight="61.0" styleClass="subtitle" text="Absenzen" textFill="#4d4d4d" BorderPane.alignment="CENTER_LEFT">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </Label>
+                     </top>
+                  </BorderPane>
+               </content>
+            </Tab>
+            <Tab text="Jokertage &amp; Gesuche">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <top>
+                        <Label prefHeight="64.0" styleClass="subtitle" text="Jokertage" textFill="#4d4d4d" BorderPane.alignment="CENTER_LEFT">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </Label>
+                     </top>
+                     <center>
+                        <GridPane BorderPane.alignment="TOP_LEFT">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="295.0" minHeight="10.0" prefHeight="193.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="108.0" minHeight="55.0" prefHeight="105.0" vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="514.0" minHeight="10.0" prefHeight="190.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="512.0" minHeight="10.0" prefHeight="301.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <TableView fx:id="table_joker" prefHeight="150.0" prefWidth="1259.0">
+                                 <columns>
+                                    <TableColumn fx:id="col_jokerDate" editable="false" prefWidth="95.0" sortable="false" text="Datum" />
+                                    <TableColumn fx:id="col_jokerReason" editable="false" prefWidth="1072.0" sortable="false" text="Grund" />
+                                    <TableColumn fx:id="col_jokerStatus" editable="false" prefWidth="87.6666259765625" text="Status" />
+                                 </columns>
+                              </TableView>
+                              <HBox alignment="BASELINE_LEFT" GridPane.rowIndex="1">
+                                 <children>
+                                    <JFXDatePicker fx:id="date_Joker" defaultColor="#b4d878" prefHeight="31.0" prefWidth="160.0" promptText="Datum" showWeekNumbers="true" styleClass="btn2">
+                                       <HBox.margin>
+                                          <Insets right="20.0" />
+                                       </HBox.margin>
+                                    </JFXDatePicker>
+                                    <JFXTextField fx:id="tf_reasonJoker" focusColor="#b4d878" prefWidth="944.0" promptText="Grund" styleClass="text">
+                                       <HBox.margin>
+                                          <Insets right="20.0" />
+                                       </HBox.margin>
+                                    </JFXTextField>
+                                    <JFXButton fx:id="btnSaveJoker"  ripplerFill="#b4d878" styleClass="btn2" text="Beantragen" textFill="#4d4d4d">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </JFXButton>
+                                 </children>
+                                 <padding>
+                                    <Insets top="10.0" />
+                                 </padding>
+                              </HBox>
+                              <Label alignment="CENTER" prefHeight="64.0" styleClass="subtitle" text="Gesuche" textFill="#4d4d4d" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </Label>
+                              <TableView fx:id="table_gesuche" prefHeight="208.0" prefWidth="1259.0" GridPane.rowIndex="3">
+                                 <columns>
+                                    <TableColumn fx:id="col_gesuchDate" editable="false" prefWidth="95.0" sortable="false" text="Datum" />
+                                    <TableColumn fx:id="col_gesuchReason" editable="false" prefWidth="1072.0" sortable="false" text="Grund" />
+                                    <TableColumn fx:id="col_gesuchStatus" editable="false" prefWidth="87.6666259765625" text="Status" />
+                                 </columns>
+                              </TableView>
+                              <VBox prefWidth="1259.0" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="64.0" styleClass="subsubtitle" text="Neues Gesuche" textFill="#4d4d4d">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="20.0" />
+                                       </padding>
+                                    </Label>
+                                    <HBox>
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <JFXDatePicker fx:id="date_gesuch" defaultColor="#b4d878" prefHeight="31.0" prefWidth="160.0" promptText="Datum" showWeekNumbers="true" styleClass="btn2" />
+                                          <JFXTextField fx:id="tf_reasonGesuch" focusColor="#b4d878" maxWidth="490.0" minWidth="490.0" prefHeight="45.0" prefWidth="490.0" promptText="Betreff" styleClass="text">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </JFXTextField>
+                                       </children>
+                                    </HBox>
+                                    <JFXTextArea fx:id="tf_textGesuch" focusColor="#b4d878" maxWidth="1259.0" minWidth="1259.0" prefHeight="98.0" prefWidth="1259.0" promptText="Text" styleClass="text">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </JFXTextArea>
+                                    <BorderPane>
+                                       <right>
+                                          <JFXButton fx:id="btnSaveGesuch" alignment="CENTER"  ripplerFill="#b4d878" styleClass="btn2" text="Beantragen" textFill="#4d4d4d" BorderPane.alignment="CENTER">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                             <BorderPane.margin>
+                                                <Insets top="20.0" />
+                                             </BorderPane.margin>
+                                          </JFXButton>
+                                       </right>
+                                    </BorderPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </GridPane>
+                     </center>
+                  </BorderPane>
+               </content>
+            </Tab>
+         </tabs>
+         <GridPane.margin>
+            <Insets left="20.0" />
+         </GridPane.margin>
+      </TabPane>
+      <VBox spacing="10.0" GridPane.rowIndex="1">
+         <children>
+            <BorderPane>
+               <right>
+                  <JFXButton fx:id="btn_addTask" prefHeight="35.0" prefWidth="35.0" ripplerFill="#b4d87e" text=" " BorderPane.alignment="CENTER" />
+               </right>
+               <left>
+                  <Label styleClass="subtitle" text="Alle Aufgaben" textFill="#4d4d4d" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </left>
+            </BorderPane>
+            <JFXListView fx:id="lv_tasks" prefHeight="467.0" prefWidth="526.0" />
+         </children>
+         <GridPane.margin>
+            <Insets top="20.0" />
+         </GridPane.margin>
+      </VBox>
+      <VBox spacing="10.0">
+         <children>
+            <BorderPane>
+               <right>
+                  <JFXButton fx:id="btn_addNews" prefHeight="35.0" prefWidth="35.0" ripplerFill="#b4d87e" text=" " BorderPane.alignment="CENTER" />
+               </right>
+               <left>
+                  <Label styleClass="subtitle" text="Ereignisse" textFill="#4d4d4d" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </left>
+            </BorderPane>
+            <JFXListView fx:id="lv_news" prefHeight="467.0" prefWidth="526.0" />
+         </children>
+      </VBox>
+   </children>
+</GridPane>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXSpinner?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane fx:id="pane_main" alignment="TOP_CENTER" prefHeight="1080.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<children>
+    <GridPane fx:id="pane_container" prefWidth="1920.0" style="-fx-background-color: white;">
+        <columnConstraints>
+            <ColumnConstraints hgrow="NEVER" percentWidth="3.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="941.0" minWidth="10.0" prefWidth="518.6666870117188" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1485.0" minWidth="10.0" prefWidth="1267.3333129882812" />
+            <ColumnConstraints hgrow="SOMETIMES" percentWidth="3.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints percentHeight="5.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints percentHeight="5.0" vgrow="ALWAYS" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints percentHeight="5.0" vgrow="NEVER" />
+        </rowConstraints>
+         <children>
+            <BorderPane fx:id="spinner" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="2">
+               <center>
+                  <JFXSpinner  radius="100.0" startingAngle="-256.27528690480403" BorderPane.alignment="CENTER" />
+               </center>
+            </BorderPane>
+         </children>
+    </GridPane>
+</children>
+</StackPane>

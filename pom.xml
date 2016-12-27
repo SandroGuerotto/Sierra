@@ -18,6 +18,14 @@
                 </configuration>
             </plugin>
         </plugins>
+        <!--<resources>-->
+            <!--<resource>-->
+                <!--<directory>src/main/java</directory>-->
+                <!--<includes>-->
+                    <!--<include>**/*.fxml</include>-->
+                <!--</includes>-->
+            <!--</resource>-->
+        <!--</resources>-->
     </build>
 
     <dependencies>
@@ -34,6 +42,7 @@
             <artifactId>jfoenix</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <!--https://bintray.com/jerady/maven/FontAwesomeFX-->
         <!-- https://mvnrepository.com/artifact/de.jensd/fontawesomefx -->
         <dependency>
             <groupId>de.jensd</groupId>

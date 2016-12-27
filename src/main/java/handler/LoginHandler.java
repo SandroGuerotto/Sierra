@@ -47,7 +47,7 @@ public class LoginHandler implements Initializable{
     }
 
     /**
-     * calls login method for Controller checks previously if all inputs are
+     * calls view.login method for Controller checks previously if all inputs are
      * filled out
      */
     @FXML
@@ -68,7 +68,7 @@ public class LoginHandler implements Initializable{
 
     }
     /**
-     * automatically calls register or login depends on which option is selected
+     * automatically calls register or view.login depends on which option is selected
      *
      * @param ke Keyevent too listen on Enter
      */

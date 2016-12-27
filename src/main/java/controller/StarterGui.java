@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 public class StarterGui {
 
 
-    public void start(Stage stage, Object handler, String fxml) {
+    public void start(Stage stage, Parent root, boolean fullscreen) {
         // get screen props
         final double ypos = Screen.getPrimary().getVisualBounds().getMinY();
         final double xpos = Screen.getPrimary().getVisualBounds().getMinX();
@@ -28,10 +28,6 @@ public class StarterGui {
         final double height = Screen.getPrimary().getVisualBounds().getHeight();
 
         try {
-
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/" + fxml + ".fxml"));
-            loader.setController(handler);
-            Parent root = loader.load();
 
             Scene scene = new Scene(root);
             scene.getStylesheets().add(this.getClass().getResource("/css/application.css").toExternalForm());
@@ -48,11 +44,9 @@ public class StarterGui {
 			stage.getIcons().add(new Image("/icon/logo.png"));
             stage.setTitle("Sierra"); // Titel
             stage.setScene(scene);
-            switch (fxml){
-                case "Login":
-                    stage.setResizable(false);
-                    break;
-                case "Application":
+            if (!fullscreen) {
+                stage.setResizable(false);
+            }else{
                     stage.setResizable(false);
                     stage.setX(xpos);
                     stage.setY(ypos);
@@ -60,7 +54,6 @@ public class StarterGui {
                     stage.setHeight(height);
                     stage.setMaximized(true);
                     stage.setResizable(true);
-                    break;
             }
 
             stage.show();
