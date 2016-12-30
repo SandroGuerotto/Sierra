@@ -17,7 +17,7 @@ public class ApplicationHandler implements Initializable {
     @FXML
     private StackPane pane_main;
     @FXML
-    private GridPane pane_container, pane_test;
+    private GridPane pane_container;
     @FXML
     private BorderPane spinner;
 
@@ -26,7 +26,6 @@ public class ApplicationHandler implements Initializable {
 
     public ApplicationHandler(Controller controller) {
         this.controller = controller;
-        pane_test = (GridPane) controller.getNextPane("home");
     }
 
     @Override
@@ -37,16 +36,7 @@ public class ApplicationHandler implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         pane_container.add(menubanner, 0, 0, 4, 1);
-        Platform.runLater(() -> {
-            pane_container.add(controller.getNextPane("home"), 1, 2, 2, 2);
-            spinner.setManaged(false);
-            spinner.setDisable(true);
-            spinner.setVisible(false);
-        });
-
-
     }
 
     private void initMenuListener(Menubanner menubanner) throws Exception {
@@ -56,13 +46,14 @@ public class ApplicationHandler implements Initializable {
 
         for (Node child : menu.getChildren()) {
             Button btn = (Button) child;
-            if (btn.getId().equals("home") || btn.getId().equals("school")) {
+            if (!btn.getId().equals("notification") && !btn.getId().equals("settings")) {
                 btn.setOnAction(event -> {
                     deletePane(); // delete current Pane and add to parent Pane
                     pane_container.add(controller.getNextPane(btn.getId()), 1, 2, 2, 2);
 
                 });
             }
+
         }
     }
 
@@ -80,4 +71,12 @@ public class ApplicationHandler implements Initializable {
         }
     }
 
+    public void setFirstDisplay() {
+        Platform.runLater(() -> {
+            spinner.setManaged(false);
+            spinner.setDisable(true);
+            spinner.setVisible(false);
+            pane_container.add(controller.getNextPane("home"), 1, 2, 2, 2);
+        });
+    }
 }

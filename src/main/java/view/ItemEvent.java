@@ -62,6 +62,7 @@ public class ItemEvent extends VBox {
 		
 		ta_descr = new TextArea(this.descr);
 		ta_descr.setEditable(false);
+		ta_descr.setDisable(true);
 		
 		getChildren().addAll(pane_title, pane_content, ta_descr);
 		

@@ -30,7 +30,7 @@ public class StarterGui {
         try {
 
             Scene scene = new Scene(root);
-            scene.getStylesheets().add(this.getClass().getResource("/css/application.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/css/application.css").toExternalForm());
 
             //set font style
             Font.loadFont(getClass().getResourceAsStream("/font/Abel-Regular.ttf"), 14);
@@ -57,8 +57,8 @@ public class StarterGui {
             }
 
             stage.show();
-        } catch (Exception var5) {
-            var5.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }

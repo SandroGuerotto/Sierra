@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Text?>
+
+<StackPane stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="453.0" fitWidth="688.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+         <image>
+            <Image url="@../image/back.jpg" />
+         </image>
+         <viewport>
+            <Rectangle2D minX="5.0" minY="5.0" width="1.0" />
+         </viewport>
+      </ImageView>
+      <Text fx:id="lbl_welcome" fill="#fff0f0" stroke="#d70000" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="WILLKOMMEN" textAlignment="CENTER" wrappingWidth="272.13671875" StackPane.alignment="CENTER" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_LEFT">
+         <image>
+            <Image url="@../icon/Sierra_Logo.png" />
+         </image>
+         <StackPane.margin>
+            <Insets bottom="20.0" left="20.0" />
+         </StackPane.margin>
+      </ImageView>
+   </children>
+</StackPane>

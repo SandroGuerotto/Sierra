@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="650.0" style="-fx-background-color: white;" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+  <columnConstraints>
+      <ColumnConstraints hgrow="NEVER" />
+    <ColumnConstraints hgrow="NEVER" maxWidth="267.0" prefWidth="230.0" />
+      <ColumnConstraints hgrow="NEVER" maxWidth="150.0" minWidth="97.0" prefWidth="97.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="207.0" minWidth="132.0" prefWidth="207.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints vgrow="NEVER" />
+    <RowConstraints vgrow="NEVER" />
+    <RowConstraints vgrow="NEVER" />
+      <RowConstraints vgrow="NEVER" />
+      <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints vgrow="NEVER" />
+  </rowConstraints>
+   <children>
+      <BorderPane GridPane.columnSpan="4">
+         <right>
+            <HBox alignment="CENTER" fillHeight="false" prefHeight="5.0" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXButton fx:id="btn_edit" contentDisplay="RIGHT" ripplerFill="#b4d878" styleClass="btn2" text="Bearbeiten" />
+                  <JFXButton fx:id="btn_delete" contentDisplay="RIGHT" ripplerFill="#b4d878" styleClass="btn2" text="Löschen" />
+               </children>
+            </HBox>
+         </right>
+         <left>
+            <Label styleClass="subtitle" text="Hausaufgaben" BorderPane.alignment="CENTER">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+         </left>
+      </BorderPane>
+      <JFXTextField fx:id="tf_title" focusColor="#b4d878" promptText="Titel" styleClass="input" GridPane.columnSpan="4" GridPane.rowIndex="1" />
+      <JFXComboBox fx:id="cb_subject" prefHeight="39.0" prefWidth="163.0" promptText="auswählen" styleClass="input" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin></JFXComboBox>
+      <JFXComboBox fx:id="cb_teacher" prefHeight="39.0" prefWidth="190.0" promptText="auswählen" styleClass="input" GridPane.columnIndex="3" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin></JFXComboBox>
+      <JFXDatePicker fx:id="dp_date" defaultColor="#b4d878" prefHeight="45.0" promptText="Datum auswählen" showWeekNumbers="true" styleClass="input" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <JFXDatePicker fx:id="dp_time" defaultColor="#b4d878" prefHeight="45.0" promptText="Zeit auswählen" showTime="true" showWeekNumbers="true" styleClass="input" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+      <JFXTextArea fx:id="tf_descr" focusColor="#b4d878" promptText="Beschreibung" styleClass="input" GridPane.columnSpan="4" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </JFXTextArea>
+      <JFXButton onAction="#save" ripplerFill="#b4d878" styleClass="btn2" text="Hausaufgaben speichern" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets bottom="10.0" right="10.0" top="10.0" />
+         </GridPane.margin>
+      </JFXButton>
+      <Label fx:id="lbl_error" disable="true" prefHeight="54.0" prefWidth="238.0" styleClass="error-small" text="Ein Fehler ist aufgetreten. Bitte später erneut probieren" visible="false" wrapText="true" GridPane.columnSpan="2" GridPane.rowIndex="5">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Label>
+      <Label styleClass="text-content" text="Fach:" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin></Label>
+      <Label styleClass="text-content" text="Erledigen bis:" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin></Label>
+      <Label styleClass="text-content" text="Lehrperson:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+   </children>
+</GridPane>

@@ -5,48 +5,29 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane focusTraversable="true" prefHeight="400.0" prefWidth="646.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
-   <columnConstraints>
-      <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="10.0" percentWidth="6.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="712.0" minWidth="10.0" prefWidth="709.0" />
-      <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="12.0" percentWidth="6.0" prefWidth="15.0" />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints fillHeight="false" minHeight="10.0" percentHeight="8.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="213.0" minHeight="10.0" percentHeight="20.0" prefHeight="60.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="377.0" minHeight="10.0" percentHeight="55.0" prefHeight="377.0" vgrow="SOMETIMES" />
-      <RowConstraints fillHeight="false" maxHeight="377.0" minHeight="0.0" percentHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-      <RowConstraints fillHeight="false" maxHeight="377.0" minHeight="10.0" percentHeight="9.0" prefHeight="46.0" vgrow="SOMETIMES" />
-      <RowConstraints fillHeight="false" percentHeight="8.0" vgrow="SOMETIMES" />
-   </rowConstraints>
+<AnchorPane fx:id="pane_root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="365.0" prefWidth="657.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <VBox fx:id="pane_login" alignment="CENTER" layoutY="86.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Label prefWidth="475.0" styleClass="title" text="Willkommen," textFill="#4d4d4d">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Label>
-            <Label prefHeight="17.0" prefWidth="564.0" styleClass="subtitle" text="bitte geben Sie Ihre Logindaten ein." textFill="#4d4d4d">
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
-      <VBox fx:id="pane_login" alignment="TOP_CENTER" prefHeight="223.0" prefWidth="693.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <children>
+            <FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="160.0" prefWidth="688.0" vgap="30.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <JFXTextField fx:id="tf_username" focusColor="#b4d87e" labelFloat="true" maxWidth="300.0" minWidth="283.0" prefHeight="31.0" prefWidth="300.0" promptText="Benutzername">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXPasswordField fx:id="tf_password" focusColor="#b4d87e" labelFloat="true" maxWidth="300.0" onKeyPressed="#onEnter" prefHeight="31.0" prefWidth="300.0" promptText="Password">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </JFXPasswordField>
+               </children>
+            </FlowPane>
             <Label fx:id="lbl_error" styleClass="error" text="Username oder Passwort falsch!">
                <font>
                   <Font size="24.0" />
@@ -55,36 +36,12 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </Label>
-            <FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="137.0" prefWidth="693.0" vgap="20.0">
-               <children>
-                  <JFXTextField fx:id="tf_username" focusColor="#b4d87e" maxWidth="300.0" minWidth="283.0" prefHeight="31.0" prefWidth="300.0" promptText="Benutzername">
-                    <font>
-                        <Font size="24.0" />
-                    </font>
-                    </JFXTextField>
-                    <JFXPasswordField fx:id="tf_password" focusColor="#b4d87e" maxWidth="300.0" onKeyPressed="#onEnter" prefHeight="31.0" prefWidth="300.0" promptText="Password">
-                        <font>
-                            <Font size="24.0" />
-                        </font>
-                    </JFXPasswordField>
-                </children>
-            </FlowPane>
-        </children>
-<GridPane.margin>
-<Insets />
-</GridPane.margin>
-<padding>
-<Insets top="20.0" />
-</padding>
-        </VBox>
-<BorderPane GridPane.columnIndex="1" GridPane.rowIndex="4">
-         <right>
-            <JFXButton fx:id="btn_login" onAction="#login" prefHeight="40.0" prefWidth="120.0" ripplerFill="#b4d87e" styleClass="btn" text="Anmelden" BorderPane.alignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </JFXButton>
-         </right>
-      </BorderPane>
+         </children>
+      </VBox>
+      <JFXButton fx:id="btn_login" layoutX="488.0" layoutY="300.0" onAction="#login" prefHeight="51.0" prefWidth="155.0" ripplerFill="#b4d87e" styleClass="btn" text="Anmelden">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </JFXButton>
    </children>
-</GridPane>
+</AnchorPane>

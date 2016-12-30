@@ -8,8 +8,6 @@
 
 .text{
     -fx-font-family: "Abel";
-    /*-fx-text-fill: #4D4D4D;*/
-    /*-fx-font-size: 24px;*/
 }
 
 .title{
@@ -19,11 +17,15 @@
 .subtitle{
     -fx-font-size: 24px;
 }
-.subsubtitle{
+.subtitle2{
     -fx-font-size: 20px;
 }
-.text{
+.text-content{
     -fx-font-size: 18px;
+}
+.input{
+    -fx-font-size: 18px;
+
 }
 /* ===================================================================
 /* 							Login
@@ -107,9 +109,16 @@
  */
 
 .text-area {
-    -fx-background-color: rgba(53,89,119,0.4);
+    -fx-background-color: transparent;
+    -fx-opacity: 1.0;
 }
-
+/*text area show as normal*/
+.text-area:disabled{
+    -fx-opacity: 1.0;
+}
+.text-input > .scroll-pane:disabled {
+    -fx-opacity: 1;
+}
 .text-area .scroll-pane {
     -fx-background-color: transparent;
 }
@@ -130,6 +139,12 @@
 /* 							Nachrichten
  * ===================================================================
  */
+
+.error-small{
+    -fx-text-fill: #D8000C;
+    -fx-font-size: 18px;
+}
+
 .msg_info, .msg_success, .msg_warning, .msg_error {
     -fx-padding: 12px 12px 12px 12px;
     -fx-font-size: 24px;

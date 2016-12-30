@@ -6,6 +6,7 @@ import data.Gesuch;
 import data.Request;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -14,10 +15,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import jfxtras.scene.control.agenda.Agenda;
 import view.ItemEvent;
+import view.PopupNewTask;
 import view.ScheduleView;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 
@@ -66,28 +72,41 @@ public class HomeHandler implements Initializable {
     @FXML
     private StackPane pane_main;
 
+    @FXML
+    private JFXPopup popup_addTask;
+
     private Controller controller;
+    private ScheduleView scheduleView;
 
 
     public HomeHandler(Controller controller) {
         this.controller = controller;
+//        scheduleView = controller.getScheduleView();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initButton();
         initCol();
-
-
+        initPopup();
         lv_tasks.setItems(controller.getTasks());
 
-        pane_schedule.setCenter(new ScheduleView().getPanel());
+        scheduleView = controller.getScheduleView();
+        pane_schedule.setCenter(controller.getScheduleView().getPanel());
+        pane_schedule.setBottom(controller.getScheduleView().getControlPanel());
 
         table_joker.setItems(controller.getRequests());
         table_gesuche.setItems(controller.getGesuche());
 
     }
 
+    private void initPopup() {
+        Platform.runLater(() -> {
+            popup_addTask = new PopupNewTask(controller);
+            popup_addTask.setPopupContainer(controller.getPane_main());
+            popup_addTask.setSource(btn_addTask);
+        });
+    }
 
     /**
      * cellfactory of tableview.
@@ -125,6 +144,7 @@ public class HomeHandler implements Initializable {
 
     @FXML
     private void saveJoker(){
+        System.out.println("Joker");
         if (!tf_reasonJoker.getText().isEmpty() && date_Joker.getValue() != null){
             controller.addJoker(date_Joker.getValue(), tf_reasonJoker.getText());
             date_Joker.setValue(null);
@@ -134,6 +154,7 @@ public class HomeHandler implements Initializable {
 
     @FXML
     private void saveGesuch(){
+        System.out.println("Gesuch");
         if (!tf_reasonGesuch.getText().isEmpty() && !tf_textGesuch.getText().isEmpty() && date_gesuch.getValue() != null){
             controller.addGesuch(date_gesuch.getValue(), tf_reasonGesuch.getText(), tf_textGesuch.getText());
             date_gesuch.setValue(null);
@@ -142,4 +163,13 @@ public class HomeHandler implements Initializable {
         }
     }
 
+
+    @FXML
+    private void addTask(){
+        popup_addTask.show(JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 0, 50);
+    }
+
+    @FXML
+    private void addNews(){
+    }
 }

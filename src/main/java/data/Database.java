@@ -1,8 +1,14 @@
 package data;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import jfxtras.scene.control.agenda.Agenda;
 import view.ItemEvent;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 
 public class Database {
@@ -10,13 +16,15 @@ public class Database {
     private ObservableList<Request> requests = FXCollections.observableArrayList();
     private ObservableList<Gesuch> gesuche = FXCollections.observableArrayList();
     private ObservableList<ItemEvent> events = FXCollections.observableArrayList();
+    private ObservableList<Agenda.Appointment> appointments = FXCollections.observableArrayList();
 
-    public Database(){
+    public Database() {
         initRequest();
         initGesuch();
         initEvent();
-
+        initAppointments();
     }
+
 
     private void initRequest() {
         Request request = new Request();
@@ -48,21 +56,65 @@ public class Database {
         events.add(item);
     }
 
-    public ObservableList<Request> getRequests(){
-        return  requests;
+    public ObservableList<Request> getRequests() {
+        return requests;
     }
-    public ObservableList<Gesuch> getGesuche(){
-        return  gesuche;
+
+    public ObservableList<Gesuch> getGesuche() {
+        return gesuche;
     }
-    public ObservableList<ItemEvent> getTasks(){
+
+    public ObservableList<ItemEvent> getTasks() {
         return events;
     }
 
-    public void addRequest(Request request){
+    public ObservableList<Agenda.Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void addRequest(Request request) {
         requests.add(request);
     }
-    public void addGesuch(Gesuch gesuch){
+
+    public void addAppointment(Agenda.Appointment appointment) {
+        appointments.add(appointment);
+    }
+
+    public void addGesuch(Gesuch gesuch) {
         gesuche.add(gesuch);
+    }
+
+    private void initAppointments() {
+        Agenda.Appointment appointment = new Agenda.AppointmentImplLocal()
+                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 00)))
+                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(11, 30)))
+                .withSummary("A")
+                .withDescription("A much longer test description");
+        appointments.add(appointment);
+        appointment = new Agenda.AppointmentImplLocal()
+                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 30)))
+                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 00)))
+                .withSummary("B")
+                .withDescription("A description ");
+        appointments.add(appointment);
+        appointment = new Agenda.AppointmentImplLocal()
+                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 30)))
+                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(9, 30)))
+                .withSummary("C")
+                .withDescription("A description ");
+        appointments.add(appointment);
+        appointment = new Agenda.AppointmentImplLocal()
+                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(9, 00)))
+                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(13, 30)))
+                .withSummary("D")
+                .withDescription("A description ");
+        appointments.add(appointment);
+        appointment = new Agenda.AppointmentImplLocal()
+                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(10, 30)))
+                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now().plusDays(4), LocalTime.of(11, 00)))
+                .withSummary("E")
+                .withDescription("A description ");
+        appointments.add(appointment);
     }
 
 }
