@@ -5,21 +5,19 @@ import data.Gesuch;
 import data.Mark;
 import data.Request;
 import exception.LoginException;
-import javafx.concurrent.Task;
-import javafx.scene.Node;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import jfxtras.scene.control.agenda.Agenda;
-import model.ViewModel;
 import helper.DateFormatter;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import jfxtras.scene.control.agenda.Agenda;
+import model.ViewModel;
 import view.ClassMember;
 import view.ItemEvent;
 import view.ScheduleView;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class Controller {
     private Stage stage;
@@ -66,7 +64,6 @@ public class Controller {
         new Thread(() -> {
             viewModel.setFirstDisplay();
         }).start();
-
     }
 
     public void login(String username, String password) throws LoginException {
@@ -125,6 +122,10 @@ public class Controller {
         database.addAppointment(appointment);
         scheduleView.addAppointement(appointment);
     }
+    public void deleteAppointment(Agenda.Appointment old) {
+        database.deleteAppointment(old);
+        scheduleView.getAgenda().appointments().remove(old);
+    }
 
     public int getStudentcount() {
         return database.getSchoolclass().getStudentcount();
@@ -139,4 +140,5 @@ public class Controller {
     }
 
     public ObservableList<ClassMember> getTeachers(){ return  database.getTeachers(); }
+
 }

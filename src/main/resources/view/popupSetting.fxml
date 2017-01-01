@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<BorderPane style="-fx-background-color: white;" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="350.0" spacing="10.0">
+         <children>
+            <ImageView fitHeight="122.0" fitWidth="149.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/person.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lbl_name_forename" styleClass="subtitle2" text="Maximori Dunois" textFill="#4d4d4d" />
+            <Label fx:id="lbl_email" styleClass="text-content" text="maximori.dunois@gmail.com" textFill="#4d4d4d" />
+            <Hyperlink onAction="#goToSetting" style="-fx-focus-color: transparent;" styleClass="text-content" text="Einstellungen" textFill="#4d4d4d" underline="true" />
+         </children>
+         <padding>
+            <Insets top="25.0" />
+         </padding>
+      </VBox>
+   </center>
+   <bottom>
+      <JFXButton alignment="CENTER" onAction="#exit" prefWidth="210.0" ripplerFill="#b4d878" styleClass="btn2" text="Abmelden" BorderPane.alignment="CENTER" />
+   </bottom>
+   <padding>
+      <Insets bottom="20.0" />
+   </padding>
+</BorderPane>

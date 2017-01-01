@@ -72,8 +72,7 @@ public class HomeHandler implements Initializable {
     @FXML
     private StackPane pane_main;
 
-    @FXML
-    private JFXPopup popup_addTask;
+    private PopupNewTask popup_addTask;
 
     private Controller controller;
     private ScheduleView scheduleView;
@@ -81,7 +80,6 @@ public class HomeHandler implements Initializable {
 
     public HomeHandler(Controller controller) {
         this.controller = controller;
-//        scheduleView = controller.getScheduleView();
     }
 
     @Override
@@ -93,15 +91,18 @@ public class HomeHandler implements Initializable {
 
         scheduleView = controller.getScheduleView();
         pane_schedule.setCenter(controller.getScheduleView().getPanel());
-        pane_schedule.setBottom(controller.getScheduleView().getControlPanel());
+//        pane_schedule.setBottom(controller.getScheduleView().getControlPanel());
 
         table_joker.setItems(controller.getRequests());
         table_gesuche.setItems(controller.getGesuche());
+
+        editAppointment();
 
     }
 
     private void initPopup() {
         Platform.runLater(() -> {
+
             popup_addTask = new PopupNewTask(controller);
             popup_addTask.setPopupContainer(controller.getPane_main());
             popup_addTask.setSource(btn_addTask);
@@ -166,10 +167,22 @@ public class HomeHandler implements Initializable {
 
     @FXML
     private void addTask(){
+        popup_addTask.setInfo("", "", LocalDate.now(), LocalTime.now(), null);
         popup_addTask.show(JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 0, 50);
     }
 
     @FXML
     private void addNews(){
+    }
+
+
+    private void editAppointment(){
+        controller.getScheduleView().getAgenda().setEditAppointmentCallback(param -> {
+            LocalDate date = param.getStartLocalDateTime().toLocalDate();
+            LocalTime time = param.getStartLocalDateTime().toLocalTime();
+            popup_addTask.setInfo(param.getSummary(), param.getDescription(), date, time, param);
+            popup_addTask.show(JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 0, 50);
+            return null;
+        });
     }
 }

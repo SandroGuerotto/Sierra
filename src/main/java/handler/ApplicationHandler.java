@@ -1,7 +1,9 @@
 package handler;
 
+import com.jfoenix.controls.JFXSnackbar;
 import controller.Controller;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
@@ -37,6 +39,7 @@ public class ApplicationHandler implements Initializable {
             e.printStackTrace();
         }
         pane_container.add(menubanner, 0, 0, 4, 1);
+
     }
 
     private void initMenuListener(Menubanner menubanner) throws Exception {

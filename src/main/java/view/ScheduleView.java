@@ -202,6 +202,7 @@ public class ScheduleView {
 //        };
 //        agenda.appointments().addAll(lTestAppointments);
         agenda.appointments().addAll(controller.getAppointments());
+
     }
 
     final Agenda agenda;
@@ -314,5 +315,9 @@ public class ScheduleView {
     public void addAppointement( Appointment appointment){
         agenda.appointments().add(appointment);
     }
+
+
+    public Agenda getAgenda(){ return agenda; }
+
 
 }

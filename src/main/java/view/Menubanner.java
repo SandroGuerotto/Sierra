@@ -11,16 +11,13 @@ import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
-
-import java.io.IOException;
 
 
 public class Menubanner extends HBox {
@@ -38,9 +35,10 @@ public class Menubanner extends HBox {
     private GridPane parent;
 
     private JFXPopup popup_notifcation;
+    private PopupSetting popupSetting;
 
-    private ObservableList<Node> items = FXCollections.observableArrayList();;
-
+    private ObservableList<Node> items = FXCollections.observableArrayList();
+    private ObservableList<Notification> notifications;
 
     public Menubanner(GridPane parent, StackPane main , ObservableList<Notification> notifications) {
         this.setFillHeight(true);
@@ -62,13 +60,20 @@ public class Menubanner extends HBox {
         menu.getChildren().addAll(items );
         wrapper.getChildren().add(menu);
         this.getChildren().addAll(wrapper, btn_settings);
+        this.notifications = notifications;
+        initNotificationPopup(main);
 
-        initPopup(notifications, main);
+        initSettingPopup(main);
 
     }
 
     private void setIcon() {
-        MaterialDesignIconView icon = new MaterialDesignIconView(MaterialDesignIcon.BELL);
+        MaterialDesignIconView icon;
+        if (notifications == null || notifications.isEmpty() ){
+            icon = new MaterialDesignIconView(MaterialDesignIcon.BELL_OUTLINE);
+        }else{
+            icon = new MaterialDesignIconView(MaterialDesignIcon.BELL);
+        }
         icon.setSize("2.5em");
         btn_notification.setGraphic(icon);
         icon.setFill(Color.GRAY);
@@ -143,19 +148,35 @@ public class Menubanner extends HBox {
 
     }
 
-    private void initPopup(ObservableList<Notification> notifications, StackPane main){
+    private void initNotificationPopup(StackPane main){
         popup_notifcation = new JFXPopup();
-        JFXListView<Label> list = new JFXListView<Label>();
-        for(int i = 1 ; i < 5 ; i++) list.getItems().add(new Label("Item " + i));
-        popup_notifcation.setContent(list);
+        if (notifications == null || notifications.isEmpty()){
+            Label label = new Label("Keine Benachrichtigungen!");
+            label.setStyle("-fx-background-color: white");
+            label.getStyleClass().add("text-content");
+            label.setPadding(new Insets(5,5,5,5));
+            popup_notifcation.setContent(label);
+        }else{
+//            popup_notifcation.setContent(notifications.get(0));
+        }
         popup_notifcation.setPopupContainer(main);
         popup_notifcation.setSource(btn_notification);
         btn_notification.setOnMouseClicked((e)->{
             if (e.getButton().equals(MouseButton.PRIMARY)){
                 popup_notifcation.show(JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 0, 50);
             }
+        });
+    }
 
-        } );
+    private void initSettingPopup(StackPane main){
+        popupSetting = new PopupSetting();
+        popupSetting.setPopupContainer(main);
+        popupSetting.setSource(btn_settings);
+        btn_settings.setOnMouseClicked((e)->{
+            if (e.getButton().equals(MouseButton.PRIMARY)){
+                popupSetting.show(JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.RIGHT, -5, 50);
+            }
+        });
     }
 
 }

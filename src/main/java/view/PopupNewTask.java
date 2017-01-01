@@ -21,9 +21,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
-/**
- * Created by Sandro on 29.12.2016.
- */
+
 public class PopupNewTask extends JFXPopup implements Initializable {
 
     @FXML
@@ -48,6 +46,7 @@ public class PopupNewTask extends JFXPopup implements Initializable {
 
     private GridPane content;
     private Controller controller;
+    private Agenda.Appointment old = null;
 
     public PopupNewTask(Controller controller) {
 
@@ -90,7 +89,6 @@ public class PopupNewTask extends JFXPopup implements Initializable {
         ObservableList<String> subjects = FXCollections.observableArrayList();
         subjects.addAll("Französisch", "Mathematik", "Englisch", "Deutsch");
         cb_subject.setItems(subjects);
-
     }
 
     @FXML
@@ -105,8 +103,13 @@ public class PopupNewTask extends JFXPopup implements Initializable {
                 appointment.setStartLocalDateTime(LocalDateTime.of(dp_date.getValue(), dp_time.getTime()));
                 appointment.setEndLocalDateTime(LocalDateTime.of(dp_date.getValue(), dp_time.getTime().plusHours(1)));
                 appointment.setSummary(tf_title.getText());
+                if (old != null) {
+                    controller.deleteAppointment(old);
+                    old = null;
+                }
                 controller.addAppointment(appointment);
                 hideError();
+
                 // popup erfolgreich
             } catch (Exception e) {
                 showError("Es ist ein Fehler aufgetreten. Bitte später erneut probieren!");
@@ -140,5 +143,13 @@ public class PopupNewTask extends JFXPopup implements Initializable {
     private void hideError() {
         lbl_error.setVisible(false);
         lbl_error.setDisable(true);
+    }
+
+    public void setInfo(String title, String descr, LocalDate start, LocalTime time, Agenda.Appointment old) {
+        tf_title.setText(title);
+        tf_descr.setText(descr);
+        dp_date.setValue(start);
+        dp_time.setTime(time);
+        this.old = old;
     }
 }

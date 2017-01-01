@@ -162,4 +162,8 @@ public class Database {
         appointments.add(appointment);
     }
 
+    public void deleteAppointment(Agenda.Appointment old){
+        appointments.remove(old);
+    }
+
 }

@@ -29,6 +29,7 @@
     </build>
 
     <dependencies>
+
         <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
             <groupId>junit</groupId>
@@ -42,8 +43,8 @@
             <artifactId>jfoenix</artifactId>
             <version>1.0.0</version>
         </dependency>
+
         <!--https://bintray.com/jerady/maven/FontAwesomeFX-->
-        <!-- https://mvnrepository.com/artifact/de.jensd/fontawesomefx -->
         <dependency>
             <groupId>de.jensd</groupId>
             <artifactId>fontawesomefx</artifactId>
@@ -55,6 +56,13 @@
             <groupId>org.jfxtras</groupId>
             <artifactId>jfxtras-labs</artifactId>
             <version>8.0-r5</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.10</version>
         </dependency>
 
 
