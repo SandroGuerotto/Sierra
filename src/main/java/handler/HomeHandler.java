@@ -148,7 +148,7 @@ public class HomeHandler implements Initializable {
         if (!tf_reasonJoker.getText().isEmpty() && date_Joker.getValue() != null){
             controller.addJoker(date_Joker.getValue(), tf_reasonJoker.getText());
             date_Joker.setValue(null);
-            tf_reasonJoker.setText(null);
+            tf_reasonJoker.setText("");
         }
     }
 
@@ -158,8 +158,8 @@ public class HomeHandler implements Initializable {
         if (!tf_reasonGesuch.getText().isEmpty() && !tf_textGesuch.getText().isEmpty() && date_gesuch.getValue() != null){
             controller.addGesuch(date_gesuch.getValue(), tf_reasonGesuch.getText(), tf_textGesuch.getText());
             date_gesuch.setValue(null);
-            tf_reasonGesuch.setText(null);
-            tf_textGesuch.setText(null);
+            tf_reasonGesuch.setText("");
+            tf_textGesuch.setText("");
         }
     }
 

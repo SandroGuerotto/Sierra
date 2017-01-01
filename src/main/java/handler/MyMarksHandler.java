@@ -4,10 +4,14 @@ package handler;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import controller.Controller;
+import data.Gesuch;
+import data.Mark;
+import data.Request;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
@@ -22,25 +26,25 @@ public class MyMarksHandler implements Initializable {
     private JFXButton btn_printPDF;
 
     @FXML
-    private TableView<?> table_marks;
+    private TableView<Mark> table_marks;
 
     @FXML
-    private TableColumn<?, ?> col_date;
+    private TableColumn<Mark, String> col_date;
 
     @FXML
-    private TableColumn<?, ?> col_theme;
+    private TableColumn<Mark, String> col_theme;
 
     @FXML
-    private TableColumn<?, ?> col_subject;
+    private TableColumn<Mark, String> col_subject;
 
     @FXML
-    private TableColumn<?, ?> col_semester;
+    private TableColumn<Mark, String> col_semester;
 
     @FXML
-    private TableColumn<?, ?> col_mark;
+    private TableColumn<Mark, String> col_mark;
 
     @FXML
-    private TableColumn<?, ?> col_avgClass;
+    private TableColumn<Mark, String> col_avgClass;
 
     @FXML
     private JFXListView<?> lv_nextTests;
@@ -54,6 +58,23 @@ public class MyMarksHandler implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        initCol();
+        table_marks.setItems(controller.getMarks());
+    }
+
+    /**
+     * cellfactory of tableview.
+     * create a custom cell for download column
+     */
+    private void initCol() {
+
+        col_date.setCellValueFactory(new PropertyValueFactory<Mark, String>("date"));
+        col_theme.setCellValueFactory(new PropertyValueFactory<Mark, String>("theme"));
+        col_subject.setCellValueFactory(new PropertyValueFactory<Mark, String>("subject"));
+        col_semester.setCellValueFactory(new PropertyValueFactory<Mark, String>("semester"));
+        col_mark.setCellValueFactory(new PropertyValueFactory<Mark, String>("mark"));
+        col_avgClass.setCellValueFactory(new PropertyValueFactory<Mark, String>("avgClass"));
+
 
     }
 

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="pane_root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="265.0" prefWidth="600.0" style="-fx-background-color: transparent;" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <Label fx:id="lbl_roll" style="-fx-background-color: white;" styleClass="text-content" text="Klassen Lehrer" BorderPane.alignment="BOTTOM_LEFT">
+         <padding>
+            <Insets left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Label>
+   </top>
+   <center>
+      <BorderPane fx:id="pane_content" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+         <left>
+            <ImageView fx:id="iv_pic" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../image/person.png" />
+               </image>
+            </ImageView>
+         </left>
+         <center>
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox spacing="10.0">
+                     <children>
+                        <Label fx:id="lbl_forename" styleClass="text-content" text="Vorname" />
+                        <Label fx:id="lbl_name" styleClass="text-content" text="Nachname">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label fx:id="lbl_birthdate" styleClass="text-content" text="01.05.2016" />
+                  <Label fx:id="lbl_telnr" styleClass="text-content" text="079 842 20 20" />
+                  <Label fx:id="lbl_email" styleClass="text-content" text="emailprovider.domain" />
+                  <Label fx:id="lbl_addtext" styleClass="text-content" text="Text" />
+               </children>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </VBox>
+         </center>
+      </BorderPane>
+   </center>
+</BorderPane>

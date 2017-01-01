@@ -15,7 +15,7 @@ public class Request {
 
     }
 
-    //name
+    //id
     public void setID(int value) {
         this.idProperty().set(value);
     }

@@ -11,6 +11,7 @@
 }
 
 .title{
+    -fx-font-family: "Abel";
     -fx-font-size: 36px;
     -fx-font-weight: bold;
 }
@@ -102,6 +103,13 @@
 #col_jokerReason .label,
 #col_gesuchReason .label{
     -fx-alignment: CENTER_LEFT;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+.scroll-pane {
+    -fx-background-color: transparent;
 }
 /* ===================================================================
 /* 							ListItem

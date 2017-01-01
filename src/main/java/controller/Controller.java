@@ -2,9 +2,11 @@ package controller;
 
 import data.Database;
 import data.Gesuch;
+import data.Mark;
 import data.Request;
 import exception.LoginException;
 import javafx.concurrent.Task;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import jfxtras.scene.control.agenda.Agenda;
@@ -12,10 +14,12 @@ import model.ViewModel;
 import helper.DateFormatter;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
+import view.ClassMember;
 import view.ItemEvent;
 import view.ScheduleView;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Controller {
     private Stage stage;
@@ -40,8 +44,8 @@ public class Controller {
             }
         };
         loadThread.setOnSucceeded(event -> {
-//                    gotToApplication();
-            goToLogin();
+                    gotToApplication();
+//            goToLogin();
         });
 
     }
@@ -87,6 +91,8 @@ public class Controller {
         return database.getGesuche();
     }
 
+    public ObservableList<Mark> getMarks(){ return database.getMarks(); }
+
     public void addJoker(LocalDate date, String reason) {
         Request request = new Request();
         request.setDate(DateFormatter.LocalDateToString(date));
@@ -119,4 +125,18 @@ public class Controller {
         database.addAppointment(appointment);
         scheduleView.addAppointement(appointment);
     }
+
+    public int getStudentcount() {
+        return database.getSchoolclass().getStudentcount();
+    }
+
+    public ObservableList<ClassMember> getMemebers() {
+        return database.getSchoolclass().getMemebers();
+    }
+
+    public String getClassname() {
+        return database.getSchoolclass().getClassname();
+    }
+
+    public ObservableList<ClassMember> getTeachers(){ return  database.getTeachers(); }
 }

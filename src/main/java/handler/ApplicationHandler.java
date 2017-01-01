@@ -50,7 +50,6 @@ public class ApplicationHandler implements Initializable {
                 btn.setOnAction(event -> {
                     deletePane(); // delete current Pane and add to parent Pane
                     pane_container.add(controller.getNextPane(btn.getId()), 1, 2, 2, 2);
-
                 });
             }
 

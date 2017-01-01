@@ -3,17 +3,11 @@ package model;
 import controller.Controller;
 import handler.*;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 
 import java.io.IOException;
-import java.nio.file.StandardWatchEventKinds;
 
-/**
- * Created by Sandro on 27.12.2016.
- */
+
 public class ViewModel {
 
     private HomeHandler homeHandler;
@@ -21,6 +15,8 @@ public class ViewModel {
     private ApplicationHandler applicationHandler;
     private LoginHandler loginHandler;
     private MyMarksHandler myMarksHandler;
+    private MyClassHandler myClassHandler;
+    private TeacherHandler teacherHandler;
 
     private GridPane pane_home;
     private GridPane pane_school;
@@ -28,6 +24,8 @@ public class ViewModel {
     private StackPane pane_main;
     private StackPane pane_loader;
     private GridPane pane_mymarks;
+    private GridPane pane_myclass;
+    private GridPane pane_teacher;
 
 
     private Controller controller;
@@ -43,6 +41,8 @@ public class ViewModel {
         applicationHandler = new ApplicationHandler(controller);
         loginHandler = new LoginHandler(controller);
         myMarksHandler = new MyMarksHandler(controller);
+        myClassHandler = new MyClassHandler(controller);
+        teacherHandler = new TeacherHandler(controller);
 
     }
 
@@ -58,7 +58,6 @@ public class ViewModel {
             loader = new FXMLLoader(this.getClass().getResource("/view/login.fxml"));
             loader.setController(loginHandler);
             pane_login = loader.load();
-
 
 
             // Application
@@ -81,6 +80,16 @@ public class ViewModel {
             loader.setController(myMarksHandler);
             pane_mymarks = loader.load();
 
+            //myClass
+            loader = new FXMLLoader(this.getClass().getResource("/view/myClass.fxml"));
+            loader.setController(myClassHandler);
+            pane_myclass = loader.load();
+
+            //teacher
+            loader = new FXMLLoader(this.getClass().getResource("/view/teachers.fxml"));
+            loader.setController(teacherHandler);
+            pane_teacher = loader.load();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,6 +110,10 @@ public class ViewModel {
                 return pane_mymarks;
             case "loading":
                 return pane_loader;
+            case "myClass":
+                return pane_myclass;
+            case "teacher":
+                return pane_teacher;
             default:
                 return new Pane();
         }
