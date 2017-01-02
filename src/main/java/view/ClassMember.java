@@ -80,7 +80,7 @@ public class ClassMember extends Pane implements Initializable{
             lbl_addtext.setDisable(true);
         }
 
-        new JFXDepthManager().setDepth(this, 1);
+        JFXDepthManager.setDepth(this, 1);
 
     }
 
@@ -98,4 +98,19 @@ public class ClassMember extends Pane implements Initializable{
 
     }
 
+    public boolean isTeacher() {
+        return isTeacher;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getForename() {
+        return forename;
+    }
+
+    public String getTelnr() {
+        return telnr;
+    }
 }

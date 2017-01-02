@@ -64,8 +64,6 @@ public class PopupNewTask extends JFXPopup implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        dp_date.setValue(LocalDate.now());
-        dp_time.setTime(LocalTime.now());
         initButton();
         initLists();
     }
@@ -123,8 +121,11 @@ public class PopupNewTask extends JFXPopup implements Initializable {
             } finally {
                 tf_descr.clear();
                 tf_title.clear();
-                dp_date.setValue(LocalDate.now());
-                dp_time.setTime(LocalTime.now());
+                dp_date.setValue(null);
+                try {
+                    dp_time.setTime(null);
+                } catch (Exception e){ }
+
                 cb_subject.getSelectionModel().clearSelection();
                 cb_teacher.getSelectionModel().clearSelection();
             }

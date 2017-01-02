@@ -34,12 +34,12 @@
             <Insets left="20.0" />
          </padding>
       </VBox>
-      <ImageView fitHeight="338.0" fitWidth="531.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+      <ImageView fx:id="iv_2" fitHeight="338.0" fitWidth="531.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
          <image>
             <Image url="@../image/test_schoolpic2.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="338.0" fitWidth="531.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+      <ImageView fx:id="iv_1" fitHeight="338.0" fitWidth="531.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
          <image>
             <Image url="@../image/test_schoolpic.jpg" />
          </image>

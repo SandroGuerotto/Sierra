@@ -12,11 +12,15 @@ public class Gesuch {
     private StringProperty content;
     private StringProperty status;
 
-    public Gesuch() {
-
+    public Gesuch(int id, String date, String reason, String content, String status) {
+        this.setID(id);
+        this.setDate(date);
+        this.setReason(reason);
+        this.setContent(content);
+        this.setStatus(status);
     }
 
-    //name
+    //id
     public void setID(int value) {
         this.idProperty().set(value);
     }

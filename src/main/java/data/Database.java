@@ -24,6 +24,7 @@ public class Database {
     private ObservableList<Mark> marks = FXCollections.observableArrayList();
     private Schoolclass schoolclass;
     private ObservableList<ClassMember> teachers = FXCollections.observableArrayList();
+    private ObservableList<Absent> absents = FXCollections.observableArrayList();
 
     public Database() {
         initRequest();
@@ -33,6 +34,14 @@ public class Database {
         initMarks();
         initClass();
         initTeacher();
+        initAbsent();
+    }
+
+    private void initAbsent() {
+        Absent absent = new Absent(1, "01.01.2017 08:00", "02.01.2017 12:00", "Krank", false);
+        absents.add(absent);
+        absent = new Absent(2, "28.03.2017 10:00", "28.03.2017 19:00", "Arzt", true);
+        absents.add(absent);
     }
 
     private void initTeacher() {
@@ -66,22 +75,13 @@ public class Database {
 
 
     private void initRequest() {
-        Request request = new Request();
-        request.setID(1);
-        request.setDate("25.12.2016");
-        request.setReason("Aufgrund von Gründen");
-        request.setStatus("OK");
-        requests.addAll(request);
+        Request request = new Request(1, "25.12.2016", "Aufgrund von Gründen", "OK");
+        requests.add(request);
     }
 
     private void initGesuch() {
-        Gesuch gesuch = new Gesuch();
-        gesuch.setID(1);
-        gesuch.setDate("10.02.2016");
-        gesuch.setReason("Sommerferien Verlängerung");
-        gesuch.setContent("Ich will frei haben, weil Baum :)");
-        gesuch.setStatus("XX");
-        gesuche.addAll(gesuch);
+        Gesuch gesuch = new Gesuch(1, "10.02.2016", "Sommerferienverlängerung", "Ich will frei haben!", "XX");
+        gesuche.add(gesuch);
     }
 
     private void initEvent() {
@@ -117,6 +117,8 @@ public class Database {
 
     public ObservableList<ClassMember> getTeachers(){ return teachers; }
 
+    public ObservableList<Absent> getAbsents(){ return absents; }
+
     public void addRequest(Request request) {
         requests.add(request);
     }
@@ -128,6 +130,8 @@ public class Database {
     public void addGesuch(Gesuch gesuch) {
         gesuche.add(gesuch);
     }
+
+    public void addAbsent(Absent absent){ absents.add(absent); }
 
     private void initAppointments() {
         Agenda.Appointment appointment = new Agenda.AppointmentImplLocal()

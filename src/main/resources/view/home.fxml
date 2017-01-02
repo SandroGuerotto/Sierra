@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXPopup?>
@@ -15,6 +16,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -59,6 +61,112 @@
                            </padding>
                         </Label>
                      </top>
+                     <right>
+                        <VBox fx:id="box_absent" focusTraversable="true" prefHeight="816.0" prefWidth="352.0" spacing="10.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+                           <children>
+                              <Label styleClass="subtitle2" text="Absenz melden">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Label>
+                              <JFXComboBox fx:id="cb_reason" prefHeight="39.0" prefWidth="320.0" promptText="Grund" styleClass="btn2" VBox.vgrow="ALWAYS" />
+                              <GridPane>
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints vgrow="SOMETIMES" />
+                                  <RowConstraints vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label focusTraversable="false" styleClass="text-content" text="Von:" />
+                                    <JFXDatePicker fx:id="dp_startdate" defaultColor="#b4d878" prefWidth="160.0" showWeekNumbers="true" styleClass="btn2" GridPane.columnIndex="1" />
+                                    <JFXDatePicker fx:id="dp_starttime" defaultColor="#b4d878" prefWidth="110.0" showTime="true" styleClass="btn2" GridPane.columnIndex="2" />
+                                    <Label focusTraversable="false" styleClass="text-content" text="Bis:" GridPane.rowIndex="1" />
+                                    <JFXDatePicker fx:id="dp_enddate" defaultColor="#b4d878" prefWidth="160.0" showWeekNumbers="true" styleClass="btn2" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <JFXDatePicker fx:id="dp_endtime" defaultColor="#b4d878" prefWidth="110.0" showTime="true" styleClass="btn2" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </GridPane>
+                              <Label focusTraversable="false" styleClass="subtitle2" text="Bestätigungscode">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin></Label>
+                              <Label focusTraversable="false" styleClass="text-content" text="Bestätigungscode wird an Erziehungsverantwortlichen gesendet " wrapText="true" />
+                              <HBox alignment="CENTER" focusTraversable="true">
+                                 <children>
+                                    <JFXButton onAction="#save_absent" ripplerFill="#b4d878" styleClass="btn2" text="Bestätigungscode senden" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                              <Label focusTraversable="false" styleClass="subtitle2" text="Bestätigungscode eingeben">
+                                 <VBox.margin>
+                                    <Insets top="50.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <HBox>
+                                 <children>
+                                    <JFXTextField fx:id="tf_code" focusColor="#b4d878" maxWidth="267.0" minWidth="267.0" prefHeight="45.0" prefWidth="267.0" promptText="Code" styleClass="btn2" />
+                                    <JFXButton fx:id="btn_verifyCode" onAction="#verifyCode" ripplerFill="#b4d878" styleClass="btn2" text="OK" />
+                                 </children>
+                              </HBox>
+                              <Label focusTraversable="false" styleClass="text-content" text="Wenn die Bestätigungscode-Variante nicht möglich ist, muss angerufen werden" wrapText="true" />
+                              <Label focusTraversable="false" styleClass="subtitle2" text="Klassenlehrer anrufen">
+                                 <VBox.margin>
+                                    <Insets top="50.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <FlowPane hgap="30.0" prefWrapLength="300.0">
+                                 <children>
+                                    <Label fx:id="lbl_teacher" focusTraversable="false" styleClass="text-content" text="Vorname Nachname" textFill="#4d4d4d" wrapText="true" />
+                                    <Label fx:id="lbl_telnrTeacher" focusTraversable="false" styleClass="text-content" text="079 842 25 24" textFill="#4d4d4d" wrapText="true" />
+                                 </children>
+                              </FlowPane>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </right>
+                     <padding>
+                        <Insets bottom="10.0" right="10.0" />
+                     </padding>
+                     <center>
+                        <VBox BorderPane.alignment="CENTER">
+                           <children>
+                              <TableView fx:id="table_absent">
+                                <columns>
+                                  <TableColumn fx:id="col_AbsentFrom" prefWidth="180.0" text="Von" />
+                                  <TableColumn fx:id="col_AbsentTo" prefWidth="180.0" text="Bis" />
+                                    <TableColumn fx:id="col_absentReason" prefWidth="100.0" text="Grund" />
+                                    <TableColumn fx:id="col_absentExcuse" prefWidth="150.0" text="Entschuldigt" />
+                                </columns>
+                              </TableView>
+                              <HBox alignment="CENTER_LEFT">
+                                 <VBox.margin>
+                                    <Insets left="20.0" top="20.0" />
+                                 </VBox.margin>
+                                 <children>
+                                    <Label focusTraversable="false" styleClass="subtitle2" text="Total:">
+                                       <HBox.margin>
+                                          <Insets right="15.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="lbl_AbsentTotal" focusTraversable="false" styleClass="text-content" text="4 Tage" />
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" right="20.0" />
+                           </padding>
+                        </VBox>
+                     </center>
                   </BorderPane>
                </content>
             </Tab>
@@ -91,7 +199,7 @@
                               <TableView fx:id="table_joker" prefHeight="150.0" prefWidth="1259.0">
                                  <columns>
                                     <TableColumn fx:id="col_jokerDate" editable="false" prefWidth="95.0" sortable="false" text="Datum" />
-                                    <TableColumn fx:id="col_jokerReason" editable="false" prefWidth="1072.0" sortable="false" text="Grund" />
+                                    <TableColumn fx:id="col_jokerReason" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="1038.0" sortable="false" text="Grund" />
                                     <TableColumn fx:id="col_jokerStatus" editable="false" prefWidth="87.6666259765625" text="Status" />
                                  </columns>
                               </TableView>
@@ -105,7 +213,7 @@
                                           <JFXTextField fx:id="tf_reasonJoker" focusColor="#b4d878" maxWidth="1200.0" prefHeight="45.0" promptText="Grund" styleClass="text-content" />
                                        </center>
                                        <left>
-                                          <JFXDatePicker fx:id="date_Joker" defaultColor="#b4d878" prefHeight="31.0" prefWidth="160.0" promptText="Datum" showWeekNumbers="true" styleClass="btn2" BorderPane.alignment="CENTER" />
+                                          <JFXDatePicker fx:id="date_Joker" defaultColor="#b4d878" prefWidth="160.0" promptText="Datum" showWeekNumbers="true" styleClass="btn2" BorderPane.alignment="CENTER" />
                                        </left>
                                        <right>
                                           <JFXButton fx:id="btnSaveJoker" onAction="#saveJoker" ripplerFill="#b4d878" styleClass="btn2" text="Beantragen" textFill="#4d4d4d" BorderPane.alignment="CENTER">
@@ -131,7 +239,7 @@
                               <TableView fx:id="table_gesuche" prefHeight="208.0" prefWidth="1259.0" GridPane.rowIndex="3">
                                  <columns>
                                     <TableColumn fx:id="col_gesuchDate" editable="false" prefWidth="95.0" sortable="false" text="Datum" />
-                                    <TableColumn fx:id="col_gesuchReason" editable="false" prefWidth="1072.0" sortable="false" text="Grund" />
+                                    <TableColumn fx:id="col_gesuchReason" editable="false" prefWidth="1038.0" sortable="false" text="Grund" />
                                     <TableColumn fx:id="col_gesuchStatus" editable="false" prefWidth="87.6666259765625" text="Status" />
                                  </columns>
                               </TableView>
@@ -150,8 +258,8 @@
                                           <Insets bottom="20.0" />
                                        </VBox.margin>
                                        <children>
-                                          <JFXDatePicker fx:id="date_gesuch" defaultColor="#b4d878" prefHeight="45.0" prefWidth="160.0" promptText="Datum" showWeekNumbers="true" styleClass="btn2" />
-                                          <JFXTextField fx:id="tf_reasonGesuch" focusColor="#b4d878" maxWidth="490.0" minWidth="490.0" prefHeight="45.0" prefWidth="490.0" promptText="Betreff" styleClass="text-content">
+                                          <JFXDatePicker fx:id="date_gesuch" defaultColor="#b4d878" prefWidth="160.0" promptText="Datum" showWeekNumbers="true" styleClass="btn2" />
+                                          <JFXTextField fx:id="tf_reasonGesuch" focusColor="#b4d878" maxWidth="490.0" minWidth="490.0" prefWidth="490.0" promptText="Betreff" styleClass="text-content">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>

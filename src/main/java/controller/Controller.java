@@ -1,9 +1,6 @@
 package controller;
 
-import data.Database;
-import data.Gesuch;
-import data.Mark;
-import data.Request;
+import data.*;
 import exception.LoginException;
 import helper.DateFormatter;
 import javafx.collections.ObservableList;
@@ -18,6 +15,8 @@ import view.ItemEvent;
 import view.ScheduleView;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Controller {
     private Stage stage;
@@ -75,7 +74,7 @@ public class Controller {
         }
     }
 
-
+    // DB Logik
     public ObservableList<ItemEvent> getTasks() {
         return database.getTasks();
     }
@@ -90,21 +89,21 @@ public class Controller {
 
     public ObservableList<Mark> getMarks(){ return database.getMarks(); }
 
+    public ObservableList<Absent> getAbsents(){ return database.getAbsents(); }
+
     public void addJoker(LocalDate date, String reason) {
-        Request request = new Request();
-        request.setDate(DateFormatter.LocalDateToString(date));
-        request.setReason(reason);
-        request.setStatus("RQ");
+        Request request = new Request(getRequests().size() + 1, DateFormatter.LocalDateToString(date), reason, "RQ");
         database.addRequest(request);
     }
 
     public void addGesuch(LocalDate date, String reason, String content) {
-        Gesuch gesuch = new Gesuch();
-        gesuch.setDate(DateFormatter.LocalDateToString(date));
-        gesuch.setReason(reason);
-        gesuch.setContent(content);
-        gesuch.setStatus("RQ");
+        Gesuch gesuch = new Gesuch(getGesuche().size() + 1, DateFormatter.LocalDateToString(date), reason, content, "RQ");
         database.addGesuch(gesuch);
+    }
+
+    public void addAbsent(String reason, LocalDateTime from, LocalDateTime to){
+        Absent absent = new Absent(getAbsents().size() + 1, DateFormatter.LocalDateTimeToString(from), DateFormatter.LocalDateTimeToString(to), reason, false);
+        database.addAbsent(absent);
     }
 
     public Pane getNextPane(String name) {
@@ -140,5 +139,24 @@ public class Controller {
     }
 
     public ObservableList<ClassMember> getTeachers(){ return  database.getTeachers(); }
+
+    public String getTotalAbsentTime(){
+        int difdays = 0, difHours = 0;
+        String text = "";
+        for (Absent absent : database.getAbsents()) {
+            LocalDateTime to = DateFormatter.StringToLocalDateTime(absent.getDateto());
+            LocalDateTime from = DateFormatter.StringToLocalDateTime(absent.getDatefrom());
+            difdays += DateFormatter.differenceInDays(from, to);
+            difHours += DateFormatter.differenceInHours(from, to);
+        }
+        if (difdays == 0 && difHours == 0){
+            text = "Keine Absenz";
+        }else{
+            text = Integer.toString(difdays) + " Tage " + Integer.toString(difHours) + " Stunden";
+        }
+
+        return text;
+    }
+
 
 }

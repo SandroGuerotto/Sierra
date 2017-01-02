@@ -11,8 +11,11 @@ public class Request {
     private StringProperty reason;
     private StringProperty status;
 
-    public Request() {
-
+    public Request(int id, String date, String reason, String status) {
+        this.setID(id);
+        this.setDate(date);
+        this.setReason(reason);
+        this.setStatus(status);
     }
 
     //id
