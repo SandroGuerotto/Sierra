@@ -11,15 +11,7 @@
  */
 package Interfaces;
 
-import data.Absent;
-import data.Gesuch;
-import data.Mark;
 import data.Person;
-import data.Request;
-import data.Schoolclass;
-import javafx.collections.ObservableList;
-import view.ClassMember;
-import view.ItemEvent;
 
 public interface DataSaver {
 	
