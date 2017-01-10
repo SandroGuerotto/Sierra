@@ -93,10 +93,10 @@ public class MySQLConnection implements DataSaver{
 	}
 
 	/* (non-Javadoc)
-	 * @see Interfaces.DataSaver#get_Request(data.Request)
+	 * @see Interfaces.DataSaver#get_Request(int)
 	 */
 	@Override
-	public Object get_Request(Request request) {
+	public Object get_Request(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -138,10 +138,10 @@ public class MySQLConnection implements DataSaver{
 	}
 
 	/* (non-Javadoc)
-	 * @see Interfaces.DataSaver#get_Gesuch(data.Gesuch)
+	 * @see Interfaces.DataSaver#get_Gesuch(int)
 	 */
 	@Override
-	public Object get_Gesuch(Gesuch gesuch) {
+	public Object get_Gesuch(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -183,10 +183,10 @@ public class MySQLConnection implements DataSaver{
 	}
 
 	/* (non-Javadoc)
-	 * @see Interfaces.DataSaver#get_ItemEvent(view.ItemEvent)
+	 * @see Interfaces.DataSaver#get_ItemEvent(int)
 	 */
 	@Override
-	public Object get_ItemEvent(ItemEvent event) {
+	public Object get_ItemEvent(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -228,10 +228,10 @@ public class MySQLConnection implements DataSaver{
 	}
 
 	/* (non-Javadoc)
-	 * @see Interfaces.DataSaver#get_Mark(data.Mark)
+	 * @see Interfaces.DataSaver#get_Mark(int)
 	 */
 	@Override
-	public Object get_Mark(Mark mark) {
+	public Object get_Mark(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -273,10 +273,10 @@ public class MySQLConnection implements DataSaver{
 	}
 
 	/* (non-Javadoc)
-	 * @see Interfaces.DataSaver#get_Schoolclass(data.Schoolclass)
+	 * @see Interfaces.DataSaver#get_Schoolclass(int)
 	 */
 	@Override
-	public Object get_Schoolclass(Schoolclass schoolClass) {
+	public Object get_Schoolclass(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -318,10 +318,10 @@ public class MySQLConnection implements DataSaver{
 	}
 
 	/* (non-Javadoc)
-	 * @see Interfaces.DataSaver#get_ClassMember(view.ClassMember)
+	 * @see Interfaces.DataSaver#get_ClassMember(int)
 	 */
 	@Override
-	public Object get_ClassMember(ClassMember classMember) {
+	public Object get_ClassMember(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -372,10 +372,10 @@ public class MySQLConnection implements DataSaver{
 	}
 
 	/* (non-Javadoc)
-	 * @see Interfaces.DataSaver#get_Absent(data.Absent)
+	 * @see Interfaces.DataSaver#get_Absent(int)
 	 */
 	@Override
-	public Object get_Absent(Absent absent) {
+	public Object get_Absent(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -397,5 +397,7 @@ public class MySQLConnection implements DataSaver{
 		// TODO Auto-generated method stub
 		
 	}
+
+
 		
 }//-class
