@@ -134,36 +134,36 @@ public class Database {
     public void addAbsent(Absent absent){ absents.add(absent); }
 
     private void initAppointments() {
-        Agenda.Appointment appointment = new Agenda.AppointmentImplLocal()
-                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 00)))
-                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(11, 30)))
-                .withSummary("A")
-                .withDescription("A much longer test description");
-        appointments.add(appointment);
-        appointment = new Agenda.AppointmentImplLocal()
-                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 30)))
-                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 00)))
-                .withSummary("B")
-                .withDescription("A description ");
-        appointments.add(appointment);
-        appointment = new Agenda.AppointmentImplLocal()
-                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 30)))
-                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(9, 30)))
-                .withSummary("C")
-                .withDescription("A description ");
-        appointments.add(appointment);
-        appointment = new Agenda.AppointmentImplLocal()
-                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(9, 00)))
-                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(13, 30)))
-                .withSummary("D")
-                .withDescription("A description ");
-        appointments.add(appointment);
-        appointment = new Agenda.AppointmentImplLocal()
-                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(10, 30)))
-                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now().plusDays(4), LocalTime.of(11, 00)))
-                .withSummary("E")
-                .withDescription("A description ");
-        appointments.add(appointment);
+//        Tst appointment = new Tst(1)
+//                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 00)))
+//                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(11, 30)))
+//                .withSummary("A")
+//                .withDescription("A much longer test description");
+//        appointments.add(appointment);
+//        appointment = Tst(2)
+//                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 30)))
+//                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 00)))
+//                .withSummary("B")
+//                .withDescription("A description ");
+//        appointments.add(appointment);
+//        appointment = new Agenda.AppointmentImplLocal()
+//                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 30)))
+//                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(9, 30)))
+//                .withSummary("C")
+//                .withDescription("A description ");
+//        appointments.add(appointment);
+//        appointment = new Agenda.AppointmentImplLocal()
+//                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(9, 00)))
+//                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(13, 30)))
+//                .withSummary("D")
+//                .withDescription("A description ");
+//        appointments.add(appointment);
+//        appointment = new Agenda.AppointmentImplLocal()
+//                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(10, 30)))
+//                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now().plusDays(4), LocalTime.of(11, 00)))
+//                .withSummary("E")
+//                .withDescription("A description ");
+//        appointments.add(appointment);
     }
 
     public void deleteAppointment(Agenda.Appointment old){

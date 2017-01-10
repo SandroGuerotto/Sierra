@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ClassMember extends Pane implements Initializable{
+public class ClassMember extends Pane implements Initializable {
 
     @FXML
     private BorderPane pane_root;
@@ -42,6 +42,24 @@ public class ClassMember extends Pane implements Initializable{
 
     private int id;
 
+//    public ClassMember(Person person ){
+//        this.id = person.getId();
+//        this.isTeacher = person.getisTeacher();
+//        this.isRepresentative = person.getisRepresentative();
+//        this.name = person.getName();
+//        this.forename = person.getForename();
+//        this.birthdate = person.getBirthdate();
+//        this.telnr = person.getTelnr();
+//        this.email = person.getEmail();
+//        this.addText = person.getAddText();
+//
+//        if (this.isTeacher){
+//        this.roll = "Klassenlehrer";
+//    }else if( this.isRepresentative){
+//        this.roll = "Klassensprecher";
+//    }
+//    loadFXML();
+//}
 
 
     public ClassMember(int id, boolean isTeacher, boolean isRepresentative, String name, String forename, String birthdate, String telnr, String email, String addText) {
