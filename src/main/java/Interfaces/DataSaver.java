@@ -20,6 +20,6 @@ public interface DataSaver {
 	 * @param person Das Objekt welches gespeichert wird
 	 * @return boolean Wert, welcher angibt ob erfolgreich
 	 */
-	//public boolean insertPerson(Person person);
+	public boolean insertPerson(Person person);
 	
 }//-class

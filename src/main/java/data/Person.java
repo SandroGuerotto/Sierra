@@ -19,12 +19,13 @@ public class Person {
 	private String telnr;
 	private String email;
 	private String addText;
-	private Roll rolle;
 	private String password;
 	private String username;
-			
+	private boolean isTeacher = false;  // teacher
+	private boolean isRepresentative = false;  //Klassensprecher
+	
 	public Person(int id, String name, String forename, String birthdate, String telnr, String email, String addText,
-			Roll rolle, String password, String username) {
+			boolean isTeacher,boolean isRepresentative, String password, String username) {
 		this.id = id;
 		this.name = name;
 		this.forename = forename;
@@ -32,11 +33,28 @@ public class Person {
 		this.telnr = telnr;
 		this.email = email;
 		this.addText = addText;
-		this.rolle = rolle;
+		this.isRepresentative = isRepresentative;
+		this.isTeacher	= isTeacher;
 		this.password = password;
 		this.username = username;
 	}
 	
+	public boolean isTeacher() {
+		return isTeacher;
+	}
+
+	public void setTeacher(boolean isTeacher) {
+		this.isTeacher = isTeacher;
+	}
+
+	public boolean isRepresentative() {
+		return isRepresentative;
+	}
+
+	public void setRepresentative(boolean isRepresentative) {
+		this.isRepresentative = isRepresentative;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -78,12 +96,6 @@ public class Person {
 	}
 	public void setAddText(String addText) {
 		this.addText = addText;
-	}
-	public Roll getRolle() {
-		return rolle;
-	}
-	public void setRolle(Roll rolle) {
-		this.rolle = rolle;
 	}
 	public String getPassword() {
 		return password;

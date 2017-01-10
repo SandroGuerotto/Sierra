@@ -78,11 +78,17 @@ public class MySQLConnection implements DataSaver{
 	/* (non-Javadoc)
 	 * @see Interfaces.DataSaver#insertPerson(data.Person)
 	 */
-	/*@Override
+	@Override
 	public boolean insertPerson(Person person) {
-		// TODO Auto-generated method stub
-		return false;
-	}*/
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		boolean result = false;
+		
+		
+		
+		return result;
+	}
 
+	
 		
 }//-class
