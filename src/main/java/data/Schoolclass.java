@@ -10,6 +10,7 @@ public class Schoolclass {
     private int studentcount;
 
     private ObservableList<ClassMember> memebers = FXCollections.observableArrayList();
+    private ObservableList<Person> people = FXCollections.observableArrayList();
 
     private String classname;
 
