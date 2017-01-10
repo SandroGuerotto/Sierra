@@ -11,12 +11,12 @@
  */
 package data;
 
-public class Fach {
+public class Subject {
 	private int id;
 	private String name;
 	private String colour_hex;
 	
-	public Fach(int id, String name, String colour_hex){
+	public Subject(int id, String name, String colour_hex){
 		this.id = id;
 		this.name = name;
 		this.colour_hex = colour_hex;
