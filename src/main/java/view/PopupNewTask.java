@@ -2,6 +2,9 @@ package view;
 
 import com.jfoenix.controls.*;
 import controller.Controller;
+import data.Appointment;
+import data.Person;
+import data.Subject;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.application.Platform;
@@ -11,7 +14,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
+import javafx.util.Callback;
 import jfxtras.scene.control.agenda.Agenda;
 
 import java.io.IOException;
@@ -27,10 +33,10 @@ public class PopupNewTask extends JFXPopup implements Initializable {
     @FXML
     private JFXButton btn_edit, btn_delete;
     @FXML
-    private JFXComboBox<String> cb_teacher;
+    private JFXComboBox<Person> cb_teacher;
 
     @FXML
-    private JFXComboBox<String> cb_subject;
+    private JFXComboBox<Subject> cb_subject;
 
     @FXML
     private JFXTextField tf_title;
@@ -46,7 +52,7 @@ public class PopupNewTask extends JFXPopup implements Initializable {
 
     private GridPane content;
     private Controller controller;
-    private Agenda.Appointment old = null;
+    private Appointment old = null;
 
     public PopupNewTask(Controller controller) {
 
@@ -80,13 +86,24 @@ public class PopupNewTask extends JFXPopup implements Initializable {
     }
 
     private void initLists() {
-        ObservableList<String> teachers = FXCollections.observableArrayList();
-        teachers.addAll("Jürg Imagio", "Ruedi Streng", "Peter Meter", "Hans Guck");
-        cb_teacher.setItems(teachers);
-
-        ObservableList<String> subjects = FXCollections.observableArrayList();
-        subjects.addAll("Französisch", "Mathematik", "Englisch", "Deutsch");
-        cb_subject.setItems(subjects);
+        cb_teacher.setCellFactory(new Callback<ListView<Person>, ListCell<Person>>() {
+            @Override
+            public ListCell<Person> call(ListView<Person> p) {
+                return new ListCell<Person>() {
+                    @Override
+                    protected void updateItem(Person t, boolean bln) {
+                        super.updateItem(t, bln);
+                        if (t != null) {
+                            setText(t.getForename() + " " + t.getName());
+                        } else {
+                            setText(null);
+                        }
+                    }
+                };
+            }
+        });
+        cb_teacher.setItems(controller.getTeachers());
+        cb_subject.setItems(controller.getSubjects());
     }
 
     @FXML
@@ -96,11 +113,12 @@ public class PopupNewTask extends JFXPopup implements Initializable {
                 && cb_teacher.getSelectionModel().getSelectedItem() != null
                 && cb_subject.getSelectionModel().getSelectedItem() != null) {
             try {
-                Agenda.Appointment appointment = new Agenda.AppointmentImpl();
-                appointment.setDescription(tf_descr.getText());
-                appointment.setStartLocalDateTime(LocalDateTime.of(dp_date.getValue(), dp_time.getTime()));
-                appointment.setEndLocalDateTime(LocalDateTime.of(dp_date.getValue(), dp_time.getTime().plusHours(1)));
-                appointment.setSummary(tf_title.getText());
+                Appointment appointment = new Appointment(LocalDateTime.of(dp_date.getValue(), dp_time.getTime()), LocalDateTime.of(dp_date.getValue(), dp_time.getTime().plusHours(1)),
+                        tf_title.getText(), tf_descr.getText(), cb_subject.getSelectionModel().getSelectedItem(), cb_teacher.getSelectionModel().getSelectedItem());
+//                appointment.setDescription(tf_descr.getText());
+//                appointment.setStartLocalDateTime(LocalDateTime.of(dp_date.getValue(), dp_time.getTime()));
+//                appointment.setEndLocalDateTime(LocalDateTime.of(dp_date.getValue(), dp_time.getTime().plusHours(1)));
+//                appointment.setSummary(tf_title.getText());
                 if (old != null) {
                     controller.deleteAppointment(old);
                     old = null;
@@ -124,7 +142,8 @@ public class PopupNewTask extends JFXPopup implements Initializable {
                 dp_date.setValue(null);
                 try {
                     dp_time.setTime(null);
-                } catch (Exception e){ }
+                } catch (Exception e) {
+                }
 
                 cb_subject.getSelectionModel().clearSelection();
                 cb_teacher.getSelectionModel().clearSelection();
@@ -146,11 +165,13 @@ public class PopupNewTask extends JFXPopup implements Initializable {
         lbl_error.setDisable(true);
     }
 
-    public void setInfo(String title, String descr, LocalDate start, LocalTime time, Agenda.Appointment old) {
+    public void setInfo(String title, String descr, LocalDate start, LocalTime time, Subject subject, Person teacher, Appointment old) {
         tf_title.setText(title);
         tf_descr.setText(descr);
         dp_date.setValue(start);
         dp_time.setTime(time);
+        cb_subject.getSelectionModel().select(subject);
+        cb_teacher.getSelectionModel().select(teacher);
         this.old = old;
     }
 }

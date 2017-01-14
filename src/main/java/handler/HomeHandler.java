@@ -2,9 +2,9 @@ package handler;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.effects.JFXDepthManager;
-import com.sun.prism.impl.Disposer;
 import controller.Controller;
 import data.Absent;
+import data.Appointment;
 import data.Gesuch;
 import data.Request;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
@@ -24,18 +24,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
-import jfxtras.scene.control.agenda.Agenda;
 import view.*;
 
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Calendar;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -104,7 +98,7 @@ public class HomeHandler implements Initializable {
     private TableView<Absent> table_absent;
 
     @FXML
-    private TableColumn<Absent, String> col_AbsentFrom,  col_AbsentTo,  col_absentReason;
+    private TableColumn<Absent, String> col_AbsentFrom, col_AbsentTo, col_absentReason;
 
     @FXML
     private TableColumn<Absent, Boolean> col_absentExcuse;
@@ -133,7 +127,7 @@ public class HomeHandler implements Initializable {
         lv_tasks.setItems(controller.getTasks());
 
         pane_schedule.setCenter(controller.getScheduleView().getPanel());
-//        pane_schedule.setBottom(controller.getScheduleView().getControlPanel());
+//        pane_schedule.setBottom(controller.getAgendaView().getControlPanel());
 
         table_joker.setItems(controller.getRequests());
         table_gesuche.setItems(controller.getGesuche());
@@ -153,7 +147,7 @@ public class HomeHandler implements Initializable {
         cb_reason.setItems(reasons);
 
         JFXDepthManager.setDepth(box_absent, 1);
-        ClassMember teacher = controller.getMemebers().stream().filter(classMember -> classMember.isTeacher()).collect(Collectors.toList()).get(0);
+        ClassMember teacher = controller.getMemebers().stream().filter(ClassMember::isTeacher).collect(Collectors.toList()).get(0);
         lbl_teacher.setText(teacher.getForename() + " " + teacher.getName());
         lbl_telnrTeacher.setText(teacher.getTelnr());
 
@@ -188,16 +182,16 @@ public class HomeHandler implements Initializable {
         col_absentReason.setCellValueFactory(new PropertyValueFactory<Absent, String>("reason"));
         col_absentExcuse.setCellValueFactory(new PropertyValueFactory<Absent, Boolean>("isExcused"));
 
-        col_absentExcuse.setCellFactory(param -> new TableCell<Absent, Boolean>(){
+        col_absentExcuse.setCellFactory(param -> new TableCell<Absent, Boolean>() {
             @Override
             protected void updateItem(Boolean item, boolean empty) {
                 super.updateItem(item, empty);
                 MaterialDesignIconView icon = null;
-                if (!empty && item){
+                if (!empty && item) {
                     icon = new MaterialDesignIconView(MaterialDesignIcon.CHECK);
                     icon.setSize("2.5em");
                     icon.setFill(Color.GRAY);
-                }else if(!empty){
+                } else if (!empty) {
                     icon = new MaterialDesignIconView(MaterialDesignIcon.CLOSE);
                     icon.setSize("2.5em");
                     icon.setFill(Color.GRAY);
@@ -233,11 +227,10 @@ public class HomeHandler implements Initializable {
     }
 
 
-
     @FXML
-    private void saveJoker(){
+    private void saveJoker() {
         System.out.println("Joker");
-        if (!tf_reasonJoker.getText().isEmpty() && date_Joker.getValue() != null){
+        if (!tf_reasonJoker.getText().isEmpty() && date_Joker.getValue() != null) {
             controller.addJoker(date_Joker.getValue(), tf_reasonJoker.getText());
             date_Joker.setValue(null);
             tf_reasonJoker.setText("");
@@ -245,9 +238,9 @@ public class HomeHandler implements Initializable {
     }
 
     @FXML
-    private void saveGesuch(){
+    private void saveGesuch() {
         System.out.println("Gesuch");
-        if (!tf_reasonGesuch.getText().isEmpty() && !tf_textGesuch.getText().isEmpty() && date_gesuch.getValue() != null){
+        if (!tf_reasonGesuch.getText().isEmpty() && !tf_textGesuch.getText().isEmpty() && date_gesuch.getValue() != null) {
             controller.addGesuch(date_gesuch.getValue(), tf_reasonGesuch.getText(), tf_textGesuch.getText());
             date_gesuch.setValue(null);
             tf_reasonGesuch.setText("");
@@ -257,28 +250,28 @@ public class HomeHandler implements Initializable {
 
 
     @FXML
-    private void addTask(){
-        popup_addTask.setInfo("", "", LocalDate.now(), LocalTime.now(), null);
+    private void addTask() {
+        popup_addTask.setInfo("", "", LocalDate.now(), LocalTime.now(), null, null, null);
         popup_addTask.show(JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 0, 50);
     }
 
     @FXML
-    private void addNews(){
+    private void addNews() {
     }
 
 
     @FXML
-    private void verifyCode(){
-        if (!tf_code.getText().isEmpty()){
+    private void verifyCode() {
+        if (!tf_code.getText().isEmpty()) {
             //do something
         }
     }
 
     @FXML
-    private void save_absent(){
+    private void save_absent() {
         if (cb_reason.getSelectionModel().getSelectedItem() != null && dp_startdate.getValue() != null
                 && dp_starttime.getTime() != null && dp_enddate.getValue() != null && dp_endtime.getTime() != null
-                && dp_startdate.getValue().isBefore(dp_enddate.getValue())){
+                && dp_startdate.getValue().isBefore(dp_enddate.getValue())) {
             LocalDateTime from = LocalDateTime.of(dp_startdate.getValue(), dp_starttime.getTime());
             LocalDateTime to = LocalDateTime.of(dp_enddate.getValue(), dp_endtime.getTime());
             controller.addAbsent(cb_reason.getSelectionModel().getSelectedItem(), from, to);
@@ -290,19 +283,33 @@ public class HomeHandler implements Initializable {
             try {
                 dp_endtime.setTime(null);
                 dp_starttime.setTime(null);
-            }catch (Exception e){  }
+            } catch (Exception e) {
+            }
             lbl_AbsentTotal.setText(controller.getTotalAbsentTime());
 
         }
     }
 
-    private void editAppointment(){
-        controller.getScheduleView().getAgenda().setEditAppointmentCallback(param -> {
-            LocalDate date = param.getStartLocalDateTime().toLocalDate();
-            LocalTime time = param.getStartLocalDateTime().toLocalTime();
-            popup_addTask.setInfo(param.getSummary(), param.getDescription(), date, time, param);
+    private void editAppointment() {
+        controller.getAgendaView().getAgenda().setEditAppointmentCallback(param -> {
+            Appointment test = (Appointment) param;
+
+            LocalDate date = test.getStartLocalDateTime().toLocalDate();
+            LocalTime time = test.getStartLocalDateTime().toLocalTime();
+            popup_addTask.setInfo(test.getSummary(), test.getDescription(), date, time, test.getSubject(), test.getTeacher(), test);
             popup_addTask.show(JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 0, 50);
             return null;
         });
+    }
+
+    @FXML
+    private void switchView() {
+        if (btn_schedule.isSelected()) {
+            btn_schedule.setText("Agenda");
+            pane_schedule.setCenter(controller.getAgendaView().getPanel());
+        } else {
+            btn_schedule.setText("Stundenplan");
+            pane_schedule.setCenter(controller.getScheduleView().getPanel());
+        }
     }
 }

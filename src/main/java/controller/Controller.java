@@ -12,6 +12,7 @@ import jfxtras.scene.control.agenda.Agenda;
 import model.ViewModel;
 import view.ClassMember;
 import view.ItemEvent;
+import view.AgendaView;
 import view.ScheduleView;
 
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ public class Controller {
     private Stage stage;
     private Database database;
     private ViewModel viewModel;
+    private AgendaView agendaView;
     private ScheduleView scheduleView;
 
     private Task loadThread;
@@ -33,6 +35,7 @@ public class Controller {
 
             @Override
             protected Void call() throws Exception {
+                agendaView = new AgendaView(controller);
                 scheduleView = new ScheduleView(controller);
                 viewModel.loadHandler();
                 viewModel.loadFxml();
@@ -40,32 +43,30 @@ public class Controller {
             }
         };
         loadThread.setOnSucceeded(event -> {
-                    gotToApplication();
-//            goToLogin();
+//                    gotToApplication();
+            goToLogin();
         });
 
     }
 
-    public void start(Stage stage) {
+    void start(Stage stage) {
         this.stage = stage;
         new Thread(loadThread).start();
 
     }
 
-    public void goToLogin() {
+    private void goToLogin() {
         new StarterGui().start(stage, viewModel.getFxml("login"), false);
 
     }
 
-    public void gotToApplication() {
+    private void gotToApplication() {
         new StarterGui().start(stage, viewModel.getFxml("application"), true);
-        new Thread(() -> {
-            viewModel.setFirstDisplay();
-        }).start();
+        new Thread(() -> viewModel.setFirstDisplay()).start();
     }
 
     public void login(String username, String password) throws LoginException {
-        if (username.equals("test") && password.equals("1234")) {
+        if (database.getPeople().filtered(t -> username.equals(t.getUsername()) && password.equals(t.getPassword())).size() > 0){
             gotToApplication();
             System.out.println("eingeloggt");
         } else {
@@ -114,15 +115,16 @@ public class Controller {
     public ObservableList<Agenda.Appointment> getAppointments() {
         return database.getAppointments();
     }
+    public AgendaView getAgendaView(){ return agendaView; }
     public ScheduleView getScheduleView(){ return scheduleView; }
 
-    public void addAppointment(Agenda.Appointment appointment) {
+    public void addAppointment(Appointment appointment) {
         database.addAppointment(appointment);
-        scheduleView.addAppointement(appointment);
+        agendaView.addAppointement(appointment);
     }
     public void deleteAppointment(Agenda.Appointment old) {
         database.deleteAppointment(old);
-        scheduleView.getAgenda().appointments().remove(old);
+        agendaView.getAgenda().appointments().remove(old);
     }
 
     public int getStudentcount() {
@@ -137,11 +139,15 @@ public class Controller {
         return database.getSchoolclass().getClassname();
     }
 
-    public ObservableList<ClassMember> getTeachers(){ return  database.getTeachers(); }
+    public ObservableList<ClassMember> getMyTeachers(){ return  database.getMyTeachers(); }
+
+    public ObservableList<Person> getTeachers(){ return  database.getPeople().filtered(Person::isTeacher); }
+
+    public ObservableList<Subject> getSubjects(){ return database.getSubjects(); }
 
     public String getTotalAbsentTime(){
         int difdays = 0, difHours = 0;
-        String text = "";
+        String text;
         for (Absent absent : database.getAbsents()) {
             LocalDateTime to = DateFormatter.StringToLocalDateTime(absent.getDateto());
             LocalDateTime from = DateFormatter.StringToLocalDateTime(absent.getDatefrom());

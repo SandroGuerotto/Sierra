@@ -39,7 +39,7 @@
                <content>
                   <BorderPane fx:id="pane_schedule" prefHeight="200.0" prefWidth="200.0">
                      <top>
-                        <JFXToggleButton fx:id="btn_schedule" contentDisplay="RIGHT" styleClass="btn" text="Stundenplan" textFill="#4d4d4d" toggleColor="#759a38" toggleLineColor="#b4d87e" BorderPane.alignment="CENTER_LEFT">
+                        <JFXToggleButton fx:id="btn_schedule" alignment="CENTER_LEFT" contentDisplay="RIGHT" onAction="#switchView" styleClass="btn" text="Stundenplan" textAlignment="JUSTIFY" textFill="#4d4d4d" toggleColor="#759a38" toggleLineColor="#b4d87e" BorderPane.alignment="CENTER_LEFT">
                            <font>
                               <Font size="24.0" />
                            </font>

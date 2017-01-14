@@ -2,6 +2,7 @@ package view;
 
 
 import com.jfoenix.effects.JFXDepthManager;
+import data.Person;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -37,50 +38,32 @@ public class ClassMember extends Pane implements Initializable {
 
     private boolean isTeacher = false;  // teacher
     private boolean isRepresentative = false;  //Klassensprecher
+    private boolean isClassTeacher = false;  //Klassensprecher
 
     private String name, forename, birthdate, telnr, email, roll = "Schüler", addText;
-
+    // roll = text for user information
     private int id;
 
-//    public ClassMember(Person person ){
-//        this.id = person.getId();
-//        this.isTeacher = person.getisTeacher();
-//        this.isRepresentative = person.getisRepresentative();
-//        this.name = person.getName();
-//        this.forename = person.getForename();
-//        this.birthdate = person.getBirthdate();
-//        this.telnr = person.getTelnr();
-//        this.email = person.getEmail();
-//        this.addText = person.getAddText();
-//
-//        if (this.isTeacher){
-//        this.roll = "Klassenlehrer";
-//    }else if( this.isRepresentative){
-//        this.roll = "Klassensprecher";
-//    }
-//    loadFXML();
-//}
+    public ClassMember(Person person ){
+        this.id = person.getId();
+        this.isTeacher = person.isTeacher();
+        this.isRepresentative = person.isRepresentative();
+        this.name = person.getName();
+        this.forename = person.getForename();
+        this.birthdate = person.getBirthdate();
+        this.telnr = person.getTelnr();
+        this.email = person.getEmail();
+        this.addText = person.getAddText();
 
-
-    public ClassMember(int id, boolean isTeacher, boolean isRepresentative, String name, String forename, String birthdate, String telnr, String email, String addText) {
-        this.id = id;
-        this.isTeacher = isTeacher;
-        this.isRepresentative = isRepresentative;
-        this.name = name;
-        this.forename = forename;
-        this.birthdate = birthdate;
-        this.telnr = telnr;
-        this.email = email;
-        this.addText = addText;
-
-        if (this.isTeacher){
+        if (this.isTeacher && this.isClassTeacher){
             this.roll = "Klassenlehrer";
+        }else if(this.isTeacher && !this.isClassTeacher){
+            this.roll = "Lehrer";
         }else if( this.isRepresentative){
             this.roll = "Klassensprecher";
         }
-        loadFXML();
-    }
-
+    loadFXML();
+}
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -131,4 +114,10 @@ public class ClassMember extends Pane implements Initializable {
     public String getTelnr() {
         return telnr;
     }
+
+    public void setIsClassTeacher(boolean isClassTeacher) {
+        this.isClassTeacher = isClassTeacher;
+        this.roll = "Klassenlehrer";
+    }
+
 }

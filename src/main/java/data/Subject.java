@@ -11,22 +11,27 @@
  */
 package data;
 
-public class Subject {
-	private int id;
+
+import javafx.scene.control.Label;
+
+public class Subject extends Label {
+
+	private int id1;
 	private String name;
 	private String colour_hex;
 	
 	public Subject(int id, String name, String colour_hex){
-		this.id = id;
+		this.id1 = id;
 		this.name = name;
 		this.colour_hex = colour_hex;
+		this.setText(name);
 	}//-Fach
 	
-	public int getId() {
-		return id;
+	public int getId1() {
+		return id1;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setId1(int id) {
+		this.id1 = id;
 	}
 	public String getName() {
 		return name;

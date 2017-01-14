@@ -1,9 +1,7 @@
 package data;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import jfxtras.scene.control.agenda.Agenda;
 import view.ClassMember;
 import view.ItemEvent;
@@ -11,8 +9,6 @@ import view.ItemEvent;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class Database {
@@ -25,16 +21,43 @@ public class Database {
     private Schoolclass schoolclass;
     private ObservableList<ClassMember> teachers = FXCollections.observableArrayList();
     private ObservableList<Absent> absents = FXCollections.observableArrayList();
+    private ObservableList<Person> people = FXCollections.observableArrayList();
+    private ObservableList<Subject> subjects = FXCollections.observableArrayList();
 
     public Database() {
+        initPeople();
         initRequest();
         initGesuch();
         initEvent();
-        initAppointments();
         initMarks();
         initClass();
         initTeacher();
         initAbsent();
+        initSubject();
+        initAppointments();
+    }
+
+    private void initSubject() {
+        Subject subject = new Subject(1, "Mathematik", "#00ff00");
+        subjects.add(subject);
+        subject = new Subject(2, "Französisch", "#ff00ff");
+        subjects.add(subject);
+    }
+
+    private void initPeople() {
+        Person person = new Person(1, "Dunois", "Maximori", "02.11.2016", "078 245 02 21", "maximori.dunois@gmail.com", "Spetklasse AP14a", false, false, "1234", "maximori.dunois");
+        people.add(person);
+        person = new Person( 3, "Henrich", "Max", "05.06.1999", "078 205 25 23", "m.henrich@gmail.com", "Ersatzklassen: BI14a" , false, true, "1234", "max.henrich");
+        people.add(person);
+        person = new Person( 4, "Kalt", "Jean", "15.08.1999", "078 298 45 78", "jean.dunois@gmail.com", "Ersatzklassen: BI14a", false, false, "1234", "jean.kalt");
+        people.add(person);
+        person = new Person( 5, "Bauer", "Dieter", "23.09.2001", "078 852 23 01", "b.d2001@hotmail.com", "Ersatzklassen: AP14b", false, false, "1234", "dieter.bauer");
+        people.add(person);
+        // teacher
+        person = new Person(2, "Streng", "Manfred", "12.02.1975", "079 352 64 87", "manfred.streng@schule.ch", "Deutsch, Englisch, Mathematik", true, false, "1234", "manfred.streng");
+        people.add(person);
+        person = new Person(6, "Klainfus", "Benjamin", "19.10.1968", "079 253 78 02", "benjamin.klainfus@schule.ch", "Geschichte, Biologie, Naturwissenschaft", true, false, "1234", "benjamin.klainfus");
+        people.add(person);
     }
 
     private void initAbsent() {
@@ -45,23 +68,25 @@ public class Database {
     }
 
     private void initTeacher() {
-        ClassMember teacher = new ClassMember(5, true, false, "Streng", "Manfred", "12.02.1975", "079 352 64 87", "manfred.streng@schule.ch", "Deutsch, Englisch, Mathematik") ;
-        teachers.add(teacher);
-        teacher = new ClassMember(8, true, false, "Klainfus", "Benjamin", "19.10.1968", "079 253 78 02", "benjamin.klainfus@schule.ch", "Geschichte, Biologie, Naturwissenschaft") ;
-        teachers.add(teacher);
+        for (Person person: people.filtered(Person::isTeacher)) {
+            teachers.add(new ClassMember(person));
+        }
     }
 
-    private void initClass(){
+    private void initClass() {
         ObservableList<ClassMember> memberList = FXCollections.observableArrayList();
-        ClassMember member = new ClassMember(5, true, false, "Streng", "Manfred", "12.02.1975", "079 352 64 87", "manfred.streng@schule.ch", "") ;
+        ClassMember member = new ClassMember(people.filtered(t -> t.getId()== 2).get(0));
+        member.setIsClassTeacher(true);
         memberList.add(member);
-        member = new ClassMember(1, false, true, "Henrich", "Max", "05.06.1999", "078 205 25 23", "m.henrich@gmail.com", "Ersatzklassen: BI14a") ;
+        member = new ClassMember(people.get(0));
         memberList.add(member);
-        member = new ClassMember(2, false, false, "Dunois", "Jean", "15.08.1999", "078 298 45 78", "jean.dunois@gmail.com", "Ersatzklassen: BI14a") ;
+        member = new ClassMember(people.get(1));
         memberList.add(member);
-        member = new ClassMember(3, false, false, "Bauer", "Dieter", "23.09.2001", "078 852 23 01", "b.d2001@hotmail.com", "Ersatzklassen: AP14b") ;
+        member = new ClassMember(people.get(2));
         memberList.add(member);
-        schoolclass = new Schoolclass(1, memberList.size(), "AP14a");
+        member = new ClassMember(people.get(3));
+        memberList.add(member);
+        schoolclass = new Schoolclass(1, memberList.filtered(t -> !t.isTeacher()).size(), "AP14a");
 
         schoolclass.setMemebers(memberList);
     }
@@ -111,19 +136,31 @@ public class Database {
         return appointments;
     }
 
-    public ObservableList<Mark> getMarks(){ return marks; }
+    public ObservableList<Mark> getMarks() {
+        return marks;
+    }
 
-    public Schoolclass getSchoolclass(){ return  schoolclass; }
+    public Schoolclass getSchoolclass() {
+        return schoolclass;
+    }
 
-    public ObservableList<ClassMember> getTeachers(){ return teachers; }
+    public ObservableList<ClassMember> getMyTeachers() {
+        return teachers;
+    }
 
-    public ObservableList<Absent> getAbsents(){ return absents; }
+    public ObservableList<Absent> getAbsents() {
+        return absents;
+    }
+
+    public ObservableList<Person> getPeople(){ return people; }
+
+    public ObservableList<Subject> getSubjects() { return subjects; }
 
     public void addRequest(Request request) {
         requests.add(request);
     }
 
-    public void addAppointment(Agenda.Appointment appointment) {
+    public void addAppointment(Appointment appointment) {
         appointments.add(appointment);
     }
 
@@ -131,42 +168,20 @@ public class Database {
         gesuche.add(gesuch);
     }
 
-    public void addAbsent(Absent absent){ absents.add(absent); }
-
-    private void initAppointments() {
-//        Tst appointment = new Tst(1)
-//                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 00)))
-//                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(11, 30)))
-//                .withSummary("A")
-//                .withDescription("A much longer test description");
-//        appointments.add(appointment);
-//        appointment = Tst(2)
-//                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 30)))
-//                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 00)))
-//                .withSummary("B")
-//                .withDescription("A description ");
-//        appointments.add(appointment);
-//        appointment = new Agenda.AppointmentImplLocal()
-//                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 30)))
-//                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(9, 30)))
-//                .withSummary("C")
-//                .withDescription("A description ");
-//        appointments.add(appointment);
-//        appointment = new Agenda.AppointmentImplLocal()
-//                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(9, 00)))
-//                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(13, 30)))
-//                .withSummary("D")
-//                .withDescription("A description ");
-//        appointments.add(appointment);
-//        appointment = new Agenda.AppointmentImplLocal()
-//                .withStartLocalDateTime(LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(10, 30)))
-//                .withEndLocalDateTime(LocalDateTime.of(LocalDate.now().plusDays(4), LocalTime.of(11, 00)))
-//                .withSummary("E")
-//                .withDescription("A description ");
-//        appointments.add(appointment);
+    public void addAbsent(Absent absent) {
+        absents.add(absent);
     }
 
-    public void deleteAppointment(Agenda.Appointment old){
+    private void initAppointments() {
+        Appointment appointment = new Appointment(2, LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 30)), LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 00)), "B", "A Description", subjects.get(0), people.get(1));
+        appointments.add(appointment);
+        appointment = new Appointment(3, LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 30)), LocalDateTime.of(LocalDate.now(), LocalTime.of(9, 30)), "C", "Blablabla" , subjects.get(0), people.get(1));
+        appointments.add(appointment);
+        appointment = new Appointment(3, LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(9, 00)), LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(13, 30)), "D", "Blablabla" , subjects.get(0), people.get(1));
+        appointments.add(appointment);
+    }
+
+    public void deleteAppointment(Agenda.Appointment old) {
         appointments.remove(old);
     }
 
