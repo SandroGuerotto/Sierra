@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="320.0" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <BorderPane BorderPane.alignment="CENTER">
+         <left>
+            <Label fx:id="lbl_datetime" styleClass="text-content" text="16.01.2017 10:00" BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <Label fx:id="lbl_subject" styleClass="text-content" text="Mathematik" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+   </top>
+   <center>
+      <TextArea fx:id="ta_descr" disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="text-content" wrapText="true" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
