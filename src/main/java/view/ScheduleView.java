@@ -18,6 +18,7 @@ public class ScheduleView {
         }
 
         setSettings();
+        agenda.appointments().addAll(controller.getStandardTable());
     }
 
     final Agenda agenda;
@@ -30,6 +31,7 @@ public class ScheduleView {
     private void setSettings() {
         agenda.setAllowDragging(false);
         agenda.setAllowResize(false);
+        agenda.setEditAppointmentCallback(param -> null);
     }
 
 }

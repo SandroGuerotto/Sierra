@@ -47,7 +47,7 @@ public class PopupNewTask extends JFXPopup implements Initializable {
     @FXML
     private JFXTextArea tf_descr;
     @FXML
-    private Label lbl_error;
+    private Label lbl_error, lbl_titel;
 
 
     private GridPane content;
@@ -114,11 +114,7 @@ public class PopupNewTask extends JFXPopup implements Initializable {
                 && cb_subject.getSelectionModel().getSelectedItem() != null) {
             try {
                 Appointment appointment = new Appointment(LocalDateTime.of(dp_date.getValue(), dp_time.getTime()), LocalDateTime.of(dp_date.getValue(), dp_time.getTime().plusHours(1)),
-                        tf_title.getText(), tf_descr.getText(), cb_subject.getSelectionModel().getSelectedItem(), cb_teacher.getSelectionModel().getSelectedItem());
-//                appointment.setDescription(tf_descr.getText());
-//                appointment.setStartLocalDateTime(LocalDateTime.of(dp_date.getValue(), dp_time.getTime()));
-//                appointment.setEndLocalDateTime(LocalDateTime.of(dp_date.getValue(), dp_time.getTime().plusHours(1)));
-//                appointment.setSummary(tf_title.getText());
+                        tf_title.getText(), tf_descr.getText(), cb_subject.getSelectionModel().getSelectedItem(), cb_teacher.getSelectionModel().getSelectedItem(), lbl_titel.getText());
                 if (old != null) {
                     controller.deleteAppointment(old);
                     old = null;
@@ -166,6 +162,11 @@ public class PopupNewTask extends JFXPopup implements Initializable {
     }
 
     public void setInfo(String title, String descr, LocalDate start, LocalTime time, Subject subject, Person teacher, Appointment old) {
+        if (old != null) {
+            lbl_titel.setText(old.getType());
+        } else {
+            lbl_titel.setText("Aufgabe");
+        }
         tf_title.setText(title);
         tf_descr.setText(descr);
         dp_date.setValue(start);

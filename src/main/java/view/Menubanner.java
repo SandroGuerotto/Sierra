@@ -2,50 +2,35 @@ package view;
 
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXPopup;
 import data.Notification;
-//import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
-//import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 
 
 public class Menubanner extends HBox {
 
-    // student menu
-    private JFXButton btn_home, btn_notification, btn_mymarks;
-    private JFXButton btn_teacher, btn_myclass, btn_school, btn_settings;
+    private JFXButton btn_notification, btn_settings;
 
-
-    // management menu
-    private JFXButton btn_person, btn_allclass, btn_misc;
-
-    private VBox wrapper;
-    private FlowPane menu;
-    private GridPane parent;
-
-    private JFXPopup popup_notifcation;
+    private PopupNotification popup_notifcation;
     private PopupSetting popupSetting;
 
     private ObservableList<Node> items = FXCollections.observableArrayList();
     private ObservableList<Notification> notifications;
 
     public Menubanner(GridPane parent, StackPane main , ObservableList<Notification> notifications) {
+        this.notifications = notifications;
         this.setFillHeight(true);
-        this.parent = parent;
-        wrapper = new VBox();
+        VBox wrapper = new VBox();
         wrapper.setId("wrapper");
-        menu = new FlowPane();
+        FlowPane menu = new FlowPane();
         menu.setId("menu");
         menu.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
         menu.setAlignment(Pos.TOP_LEFT);
@@ -55,12 +40,11 @@ public class Menubanner extends HBox {
 
         createStudentMenu();
         setIcon();
-//        setListeners();
 
         menu.getChildren().addAll(items );
         wrapper.getChildren().add(menu);
         this.getChildren().addAll(wrapper, btn_settings);
-        this.notifications = notifications;
+
         initNotificationPopup(main);
 
         initSettingPopup(main);
@@ -87,7 +71,7 @@ public class Menubanner extends HBox {
 
     private void createStudentMenu() {
 
-        btn_home = new JFXButton("Home");
+        JFXButton btn_home = new JFXButton("Home");
         btn_home.setId("home");
         btn_home.setButtonType(JFXButton.ButtonType.FLAT);
         btn_home.setRipplerFill(Color.GREEN);
@@ -101,35 +85,35 @@ public class Menubanner extends HBox {
         btn_notification.getStyleClass().add("btn");
         btn_notification.setMaxWidth(50);
 
-        btn_mymarks = new JFXButton("Meine Noten");
+        JFXButton btn_mymarks = new JFXButton("Meine Noten");
         btn_mymarks.setId("myMarks");
         btn_mymarks.setButtonType(JFXButton.ButtonType.FLAT);
         btn_mymarks.setRipplerFill(Color.GREEN);
         btn_mymarks.setPrefWidth(USE_COMPUTED_SIZE);
         btn_mymarks.getStyleClass().add("btn");
 
-        btn_myclass = new JFXButton("Meine Klasse");
+        JFXButton btn_myclass = new JFXButton("Meine Klasse");
         btn_myclass.setId("myClass");
         btn_myclass.setButtonType(JFXButton.ButtonType.FLAT);
         btn_myclass.setRipplerFill(Color.GREEN);
         btn_myclass.setPrefWidth(USE_COMPUTED_SIZE);
         btn_myclass.getStyleClass().add("btn");
 
-        btn_teacher = new JFXButton("Lehrpersonen");
+        JFXButton btn_teacher = new JFXButton("Lehrpersonen");
         btn_teacher.setId("teacher");
         btn_teacher.setButtonType(JFXButton.ButtonType.FLAT);
         btn_teacher.setRipplerFill(Color.GREEN);
         btn_teacher.setPrefWidth(USE_COMPUTED_SIZE);
         btn_teacher.getStyleClass().add("btn");
 
-        btn_allclass = new JFXButton("Alle Klassen");
+        JFXButton btn_allclass = new JFXButton("Alle Klassen");
         btn_allclass.setId(("allClass"));
         btn_allclass.setButtonType(JFXButton.ButtonType.FLAT);
         btn_allclass.setRipplerFill(Color.GREEN);
         btn_allclass.setPrefWidth(USE_COMPUTED_SIZE);
         btn_allclass.getStyleClass().add("btn");
 
-        btn_school = new JFXButton("Über Schule");
+        JFXButton btn_school = new JFXButton("Über Schule");
         btn_school.setId("school");
         btn_school.setButtonType(JFXButton.ButtonType.FLAT);
         btn_school.setRipplerFill(Color.GREEN);
@@ -149,20 +133,12 @@ public class Menubanner extends HBox {
     }
 
     private void initNotificationPopup(StackPane main){
-        popup_notifcation = new JFXPopup();
-        if (notifications == null || notifications.isEmpty()){
-            Label label = new Label("Keine Benachrichtigungen!");
-            label.setStyle("-fx-background-color: white");
-            label.getStyleClass().add("text-content");
-            label.setPadding(new Insets(5,5,5,5));
-            popup_notifcation.setContent(label);
-        }else{
-//            popup_notifcation.setContent(notifications.get(0));
-        }
+        popup_notifcation = new PopupNotification(notifications);
         popup_notifcation.setPopupContainer(main);
         popup_notifcation.setSource(btn_notification);
         btn_notification.setOnMouseClicked((e)->{
             if (e.getButton().equals(MouseButton.PRIMARY)){
+                popup_notifcation.clearSelection();
                 popup_notifcation.show(JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 0, 50);
             }
         });

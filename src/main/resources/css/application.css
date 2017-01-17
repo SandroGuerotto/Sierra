@@ -5,7 +5,6 @@
  * @version 1.0
  **/
 
-
 .text{
     -fx-font-family: "Abel";
 }
@@ -128,6 +127,7 @@
 .text-area {
     -fx-background-color: transparent;
     -fx-opacity: 1.0;
+    -fx-text-fill: #4d4d4d;
 }
 /*text area show as normal*/
 .text-area:disabled{
@@ -151,6 +151,12 @@
 #item{
     -fx-background-radius: 10.0;
 }
+
+#lv_tasks .list-cell:filled:selected:focused, #lv_tasks .list-cell:filled:selected{
+    -fx-background-color:  white;
+    -fx-text-fill: #4d4d4d;
+}
+
 /* ===================================================================
 /* 							Combo box
  * ===================================================================
@@ -166,6 +172,34 @@
     -fx-text-fill: -fx-text-inner-color;
 }
 
+/* ===================================================================
+/* 							List View
+ * ===================================================================
+ */
+#notification .list-cell:filled:selected:focused, #notification .list-cell:filled:selected {
+     -fx-background-color:  #b4d878;
+     -fx-text-fill: #4d4d4d;
+ }
+/* ===================================================================
+/* 							List View
+ * ===================================================================
+ */
+#event{
+    -fx-font-family: "Abel";
+    -fx-text-fill: #4d4d4d;
+}
+
+#event:focused > .title{
+    -fx-color: #b4d878;
+}
+#event  .title {
+    -fx-font-size: 16px;
+}
+#event *.content{
+    -fx-font-family: "Abel";
+    -fx-text-fill: #4d4d4d;
+    -fx-font-size: 14px;
+}
 /* ===================================================================
 /* 							Nachrichten
  * ===================================================================

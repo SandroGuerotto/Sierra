@@ -47,7 +47,7 @@ public class HomeHandler implements Initializable {
     private JFXListView<ItemEvent> lv_tasks;
 
     @FXML
-    private JFXListView<?> lv_news;
+    private JFXListView<ItemEvent> lv_news;
 
     @FXML
     private BorderPane pane_schedule;
@@ -125,8 +125,10 @@ public class HomeHandler implements Initializable {
         initCol();
         initPopup();
         lv_tasks.setItems(controller.getTasks());
+        lv_news.setItems(controller.getNews());
 
         pane_schedule.setCenter(controller.getScheduleView().getPanel());
+
 //        pane_schedule.setBottom(controller.getAgendaView().getControlPanel());
 
         table_joker.setItems(controller.getRequests());
@@ -156,7 +158,6 @@ public class HomeHandler implements Initializable {
 
     private void initPopup() {
         Platform.runLater(() -> {
-
             popup_addTask = new PopupNewTask(controller);
             popup_addTask.setPopupContainer(controller.getPane_main());
             popup_addTask.setSource(btn_addTask);
@@ -201,8 +202,6 @@ public class HomeHandler implements Initializable {
                 this.setGraphic(icon);
             }
         });
-
-
     }
 
     private void initButton() {

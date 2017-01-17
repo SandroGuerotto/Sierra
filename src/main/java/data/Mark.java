@@ -5,9 +5,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-/**
- * Created by Sandro on 01.01.2017.
- */
 public class Mark {
     private IntegerProperty id;
     private StringProperty date;

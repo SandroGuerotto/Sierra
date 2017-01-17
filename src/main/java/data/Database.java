@@ -1,5 +1,6 @@
 package data;
 
+import com.itextpdf.text.pdf.AcroFields;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import jfxtras.scene.control.agenda.Agenda;
@@ -9,38 +10,68 @@ import view.ItemEvent;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-
+import java.time.ZoneId;
+import java.util.Calendar;
 
 public class Database {
 
     private ObservableList<Request> requests = FXCollections.observableArrayList();
     private ObservableList<Gesuch> gesuche = FXCollections.observableArrayList();
     private ObservableList<ItemEvent> events = FXCollections.observableArrayList();
-    private ObservableList<Agenda.Appointment> appointments = FXCollections.observableArrayList();
+    private ObservableList<Appointment> appointments = FXCollections.observableArrayList();
     private ObservableList<Mark> marks = FXCollections.observableArrayList();
     private Schoolclass schoolclass;
     private ObservableList<ClassMember> teachers = FXCollections.observableArrayList();
     private ObservableList<Absent> absents = FXCollections.observableArrayList();
     private ObservableList<Person> people = FXCollections.observableArrayList();
     private ObservableList<Subject> subjects = FXCollections.observableArrayList();
+    private ObservableList<Notification> notifications = FXCollections.observableArrayList();
+    private ObservableList<ItemEvent> upcomingTests = FXCollections.observableArrayList();
+    private ObservableList<Appointment> standard = FXCollections.observableArrayList();
+    private ObservableList<ItemEvent> news = FXCollections.observableArrayList();
 
     public Database() {
         initPeople();
         initRequest();
         initGesuch();
-        initEvent();
         initMarks();
         initClass();
         initTeacher();
         initAbsent();
         initSubject();
         initAppointments();
+        initNotification();
+        initEvent();
+        initNews();
+        initTests();
+        initStandard();
+    }
+
+    private void initNews(){
+        for (Appointment appointment: appointments.filtered(t -> t.getType().equals("News"))) {
+            ItemEvent item = new ItemEvent(appointment);
+            news.add(item);
+        }
+
+    }
+
+    private void initTests(){
+        for (Appointment appointment: appointments.filtered(t -> t.getType().equals("Test"))) {
+            upcomingTests.add(new ItemEvent(appointment));
+        }
+    }
+
+    private void initNotification(){
+        Notification notification = new Notification(appointments.get(0));
+        notifications.add(notification);
     }
 
     private void initSubject() {
         Subject subject = new Subject(1, "Mathematik", "#00ff00");
         subjects.add(subject);
         subject = new Subject(2, "Französisch", "#ff00ff");
+        subjects.add(subject);
+        subject = new Subject(3, "Infoabend", "#09544A");
         subjects.add(subject);
     }
 
@@ -110,14 +141,10 @@ public class Database {
     }
 
     private void initEvent() {
-        ItemEvent item;
-        item = new ItemEvent(1, "Mathematik Test: Bruchrechnen", "12.12.2016", "15:00", "Lernziele 1-4 \n" +
-                "Einfaches Rechnen 1: S12 - S24 \n" + "Zeit: 45min", "Test");
-        events.add(item);
-        item = new ItemEvent(2, "Bla bla bla", "06.05.2017", "11:00", "afsa fs fsj kfls jlfjjf ", "News");
-        events.add(item);
-        item = new ItemEvent(3, "Btestst tst", "06.05.2017", "11:00", "afsa fs fsj kfls jlfjjf ", "asfd");
-        events.add(item);
+        for (Appointment appointment: appointments) {
+            ItemEvent itemEvent = new ItemEvent(appointment);
+            events.add(itemEvent);
+        }
     }
 
     public ObservableList<Request> getRequests() {
@@ -132,7 +159,7 @@ public class Database {
         return events;
     }
 
-    public ObservableList<Agenda.Appointment> getAppointments() {
+    public ObservableList<Appointment> getAppointments() {
         return appointments;
     }
 
@@ -156,12 +183,23 @@ public class Database {
 
     public ObservableList<Subject> getSubjects() { return subjects; }
 
+    public ObservableList<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public ObservableList<ItemEvent> getUpcomingTests(){ return upcomingTests; }
+
+    public ObservableList<Appointment> getStandardTable(){ return standard; }
+
+    public ObservableList<ItemEvent> getNews(){ return news; }
+
     public void addRequest(Request request) {
         requests.add(request);
     }
 
     public void addAppointment(Appointment appointment) {
         appointments.add(appointment);
+        events.add(new ItemEvent(appointment));
     }
 
     public void addGesuch(Gesuch gesuch) {
@@ -173,11 +211,13 @@ public class Database {
     }
 
     private void initAppointments() {
-        Appointment appointment = new Appointment(2, LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 30)), LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 00)), "B", "A Description", subjects.get(0), people.get(1));
+        Appointment appointment = new Appointment(2, LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 30)), LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 00)), "Test: Bruchrechnen", "Lernziele 1-4 \n" + "Einfaches Rechnen 1: S12 - S24 \n" + "Zeit: 45min", subjects.get(0), people.get(1), "Test");
         appointments.add(appointment);
-        appointment = new Appointment(3, LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 30)), LocalDateTime.of(LocalDate.now(), LocalTime.of(9, 30)), "C", "Blablabla" , subjects.get(0), people.get(1));
+        appointment = new Appointment(3, LocalDateTime.of(LocalDate.now(), LocalTime.of(12, 30)), LocalDateTime.of(LocalDate.now(), LocalTime.of(13, 30)), "Funktionen", "Mathebuch S5 1.-5." , subjects.get(0), people.get(1), "Hausaufgabe");
         appointments.add(appointment);
-        appointment = new Appointment(3, LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(9, 00)), LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(13, 30)), "D", "Blablabla" , subjects.get(0), people.get(1));
+        appointment = new Appointment(4, LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(9, 00)), LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(13, 30)), "Unité 5 lesen", "Unité 5 S8 lesen" , subjects.get(1), people.get(1), "Hausaufgabe");
+        appointments.add(appointment);
+        appointment = new Appointment( 5, LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(19, 00)), LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(21, 30)), "Neues Jahr - bessere Noten", "Wichtige Theman zum neuen Jahr", subjects.get(2), null, "News");
         appointments.add(appointment);
     }
 
@@ -185,4 +225,16 @@ public class Database {
         appointments.remove(old);
     }
 
+    private void initStandard(){
+        //TODO Appointment appointment = new Appointment(); wie initAppointment()
+        // Get calendar set to current date and time
+        Calendar c = Calendar.getInstance();
+        // Set the calendar to monday of the current week
+        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        //convert date to localdate
+        LocalDate monday = c.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        Appointment appointment = new Appointment(2, LocalDateTime.of(monday, LocalTime.of(8, 30)), LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 00)), "Test: Bruchrechnen", "Lernziele 1-4 \n" + "Einfaches Rechnen 1: S12 - S24 \n" + "Zeit: 45min", subjects.get(0), people.get(1), "Test");
+        standard.add(appointment);
+    }
 }

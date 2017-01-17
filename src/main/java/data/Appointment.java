@@ -8,10 +8,12 @@ public class Appointment extends Agenda.AppointmentImplLocal {
     private int id;
     private Subject subject;
     private Person teacher;
-    public Appointment(int id, LocalDateTime startdatetime, LocalDateTime enddatetime, String summary, String descr, Subject subject, Person teacher) {
+    private String type;
+    public Appointment(int id, LocalDateTime startdatetime, LocalDateTime enddatetime, String summary, String descr, Subject subject, Person teacher, String type) {
         this.id = id;
         this.subject = subject;
         this.teacher = teacher;
+        this.type = type;
         this.withStartLocalDateTime(startdatetime)
                 .withEndLocalDateTime(enddatetime)
                 .withSummary(summary)
@@ -19,9 +21,10 @@ public class Appointment extends Agenda.AppointmentImplLocal {
 
     }
 
-    public Appointment( LocalDateTime startdatetime, LocalDateTime enddatetime, String summary, String descr, Subject subject, Person teacher) {
+    public Appointment( LocalDateTime startdatetime, LocalDateTime enddatetime, String summary, String descr, Subject subject, Person teacher, String type) {
         this.subject = subject;
         this.teacher = teacher;
+        this.type = type;
         this.withStartLocalDateTime(startdatetime)
                 .withEndLocalDateTime(enddatetime)
                 .withSummary(summary)
@@ -34,6 +37,10 @@ public class Appointment extends Agenda.AppointmentImplLocal {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public Subject getSubject() {

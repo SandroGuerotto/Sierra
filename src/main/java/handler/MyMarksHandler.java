@@ -12,6 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import view.ItemEvent;
 
 import java.awt.*;
 import java.io.File;
@@ -49,7 +50,7 @@ public class MyMarksHandler implements Initializable {
     private TableColumn<Mark, String> col_avgClass;
 
     @FXML
-    private JFXListView<?> lv_nextTests;
+    private JFXListView<ItemEvent> lv_nextTests;
 
 
     private Controller controller;
@@ -62,12 +63,10 @@ public class MyMarksHandler implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initCol();
         table_marks.setItems(controller.getMarks());
+        lv_nextTests.setItems(controller.getUpcomingTests());
     }
 
-    /**
-     * cellfactory of tableview.
-     * create a custom cell for download column
-     */
+
     private void initCol() {
 
         col_date.setCellValueFactory(new PropertyValueFactory<Mark, String>("date"));
@@ -76,8 +75,6 @@ public class MyMarksHandler implements Initializable {
         col_semester.setCellValueFactory(new PropertyValueFactory<Mark, String>("semester"));
         col_mark.setCellValueFactory(new PropertyValueFactory<Mark, String>("mark"));
         col_avgClass.setCellValueFactory(new PropertyValueFactory<Mark, String>("avgClass"));
-
-
     }
 
     @FXML

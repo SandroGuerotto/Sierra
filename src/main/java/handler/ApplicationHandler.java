@@ -32,7 +32,7 @@ public class ApplicationHandler implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Menubanner menubanner = new Menubanner(pane_container, pane_main, null);
+        Menubanner menubanner = new Menubanner(pane_container, pane_main, controller.getNotifications());
         try {
             initMenuListener(menubanner);
         } catch (Exception e) {
