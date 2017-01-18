@@ -2,7 +2,13 @@ package data;
 
 
 import javafx.beans.property.*;
-
+/**
+ * Data class to display content in TableView
+ *
+ * @author Sandro Guerotto
+ * @since 02.01.2017
+ * @version 0.1
+ */
 public class Absent {
 
     private IntegerProperty id;
@@ -10,7 +16,14 @@ public class Absent {
     private StringProperty dateto;
     private StringProperty reason;
     private BooleanProperty isExcused;
-
+	/**
+	 * default constructor to create an absent
+	 * @param id unique integer key
+	 * @param datefrom  start date of absent
+	 * @param dateto  end date of absent
+	 * @param reason additional text for absent
+	 * @param isExcused person is excused
+	 */
     public Absent(int id, String datefrom, String dateto, String reason, boolean isExcused) {
         this.setID(id);
         this.setDatefrom(datefrom);

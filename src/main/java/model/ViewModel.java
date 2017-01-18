@@ -7,7 +7,14 @@ import javafx.scene.layout.*;
 
 import java.io.IOException;
 
-
+/**
+ * Loader and holder for all primary FXML files. 
+ * Setups all FXML with a controller and initialize them
+ * @author Sandro Guerotto
+ * @since 27.12.2016
+ * @version 0.1
+ *
+ */
 public class ViewModel {
 
     private HomeHandler homeHandler;
@@ -30,11 +37,16 @@ public class ViewModel {
 
     private Controller controller;
 
+    /**
+     * Constructor for ViewModel
+     * @param controller gets passed to FXML controller
+     */
     public ViewModel(Controller controller) {
         this.controller = controller;
-
     }
-
+    /**
+	 * loads all Controller for FXML files and pass them the overall controller
+	 */
     public void loadHandler() {
         homeHandler = new HomeHandler(controller);
         schoolHandler = new SchoolHandler(controller);
@@ -46,12 +58,14 @@ public class ViewModel {
 
     }
 
+    /**
+     * load all FXML files and save them in their corresponding Pane
+     */
     public void loadFxml() {
         FXMLLoader loader;
         try {
             //loading screen
             loader = new FXMLLoader(this.getClass().getResource("/view/loadinglogin.fxml"));
-//            loader.setController(loginHandler);
             pane_loader = loader.load();
 
             // Login Screen
@@ -93,9 +107,14 @@ public class ViewModel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
+    /**
+     * used to navigate through the application
+     * only in use from menu buttons
+     * @param name of Pane that has to be returned
+     * @return loaded pane. if not loaded or invalid name a new Pane is returned
+     */
     public Pane getFxml(String name){
         switch (name){
             case "login":
@@ -119,10 +138,16 @@ public class ViewModel {
         }
 
     }
-
+    /**
+     * at first time the application controller sets up the screen for first display
+     */
     public void setFirstDisplay(){
         applicationHandler.setFirstDisplay();
     }
 
+    /**
+     * getter method to receive main_Pane
+     * @return main Stackpain
+     */
     public StackPane getPane_main(){return pane_main;}
 }

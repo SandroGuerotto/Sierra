@@ -1,18 +1,20 @@
 package handler;
 
-import com.jfoenix.controls.JFXSnackbar;
-import controller.Controller;
-import javafx.application.Platform;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.layout.*;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import view.Menubanner;
-
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import controller.Controller;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import view.Menubanner;
 
 
 public class ApplicationHandler implements Initializable {

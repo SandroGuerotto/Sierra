@@ -1,6 +1,5 @@
 package data;
 
-
 import helper.DateFormatter;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,12 +12,21 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
+/**
+ * ListView Item for Popup list Notification
+ * @author Sandro Guerotto
+ * @since 26.12.2016
+ * @version 0.1
+ */
 public class Notification extends BorderPane implements Initializable {
 
 
     private Appointment appointment;
 
+    /**
+     * loads List item
+     * @param appointment data source
+     */
     public Notification(Appointment appointment){
         this.appointment = appointment;
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/itemNotification.fxml"));

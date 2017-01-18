@@ -1,11 +1,12 @@
 package controller;
+
+
 /**
- * Starter class für das Login GUI
+ * setups screen with corresponding FXML
  *
  * @author Sandro Guerotto
- * @create 13.12.2016
- * @package controller
- * @version 1.0
+ * @since 13.12.2016
+ * @version 0.1
  */
 
 import javafx.application.Platform;
@@ -59,7 +60,6 @@ public class StarterGui {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
 }

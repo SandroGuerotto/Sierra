@@ -5,13 +5,27 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Data class to display content in TableView
+ * @author Sandro Guerotto
+ * @since 26.12.2016
+ * @version 0.1
+ */
 public class Gesuch {
     private IntegerProperty id;
     private StringProperty date;
     private StringProperty reason;
     private StringProperty content;
     private StringProperty status;
-
+    
+    /**
+     * default constructor to create a gesuch
+     * @param id unique integer key
+     * @param date date of the gesuch
+     * @param reason short description / title
+     * @param content description / additional text
+     * @param status declined, in progress or approved
+     */
     public Gesuch(int id, String date, String reason, String content, String status) {
         this.setID(id);
         this.setDate(date);
