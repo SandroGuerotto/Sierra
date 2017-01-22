@@ -135,7 +135,7 @@ public class Controller {
         agendaView.addAppointement(appointment);
     }
 
-    public void deleteAppointment(Agenda.Appointment old) {
+    public void deleteAppointment(Appointment old) {
         database.deleteAppointment(old);
         agendaView.getAgenda().appointments().remove(old);
     }
