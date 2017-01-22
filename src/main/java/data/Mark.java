@@ -5,6 +5,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Data class to display content in TableView
+ * @author Sandro Guerotto
+ * @since 01.01.2017
+ * @version 0.1
+ */
 public class Mark {
     private IntegerProperty id;
     private StringProperty date;
@@ -14,10 +20,16 @@ public class Mark {
     private StringProperty mark;
     private StringProperty avgClass;
 
-    public Mark() {
-
-    }
-
+	/**
+	 * 
+	 * @param id unique key
+	 * @param date date of exam
+	 * @param subject in which lesson 
+	 * @param theme title of exam
+	 * @param semester in which semester
+	 * @param mark actual mark
+	 * @param avgClass average mark in class
+	 */
     public Mark(int id, String date, String subject, String theme, String semester, String mark, String avgClass) {
         this.setID(id);
         this.setDate(date);

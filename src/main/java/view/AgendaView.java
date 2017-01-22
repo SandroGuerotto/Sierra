@@ -1,32 +1,23 @@
 package view;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 import controller.Controller;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.Priority;
-import javafx.util.Callback;
-import javafx.util.StringConverter;
 import jfxtras.scene.control.LocalDateTimeTextField;
 import jfxtras.scene.control.agenda.Agenda;
-import jfxtras.scene.control.agenda.Agenda.Appointment;
-import jfxtras.scene.control.agenda.Agenda.LocalDateTimeRange;
 import jfxtras.scene.control.agenda.AgendaSkinSwitcher;
 import jfxtras.scene.layout.GridPane;
-
-import java.time.*;
-import java.util.*;
 
 public class AgendaView {
     public AgendaView(Controller controller) {
         agenda = new Agenda();
-        Appointment[] lTestAppointments;
 
         // setup appointment groups
         final Map<String, Agenda.AppointmentGroup> lAppointmentGroupMap = new TreeMap<String, Agenda.AppointmentGroup>();
@@ -42,14 +33,6 @@ public class AgendaView {
                 .withDescription("new")
                 .withAppointmentGroup(lAppointmentGroupMap.get("group04")));
 
-        // initial set
-        LocalDate lTodayLocalDate = LocalDate.now();
-        LocalDate lTomorrowLocalDate = LocalDate.now().plusDays(1);
-        int idx = 0;
-        final String lIpsum = "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus";
-        LocalDateTime lMultipleDaySpannerStartDateTime = lTodayLocalDate.atStartOfDay().plusHours(5);
-        lMultipleDaySpannerStartDateTime = lMultipleDaySpannerStartDateTime.minusDays(lMultipleDaySpannerStartDateTime.getDayOfWeek().getValue() > 3 && lMultipleDaySpannerStartDateTime.getDayOfWeek().getValue() < 7 ? 3 : -1);
-        LocalDateTime lMultipleDaySpannerEndDateTime = lMultipleDaySpannerStartDateTime.plusDays(2);
 
         agenda.appointments().addAll(controller.getAppointments());
 
@@ -113,54 +96,9 @@ public class AgendaView {
         }
         lRowIdx++;
 
-//        // Locale
-//        {
-//            lGridPane.add(new Label("Locale"), new GridPane.C().row(lRowIdx).col(0).halignment(HPos.RIGHT));
-//            ObservableList<Locale> lLocales = FXCollections.observableArrayList(Locale.getAvailableLocales());
-//            FXCollections.sort(lLocales, (o1, o2) -> {
-//                return o1.toString().compareTo(o2.toString());
-//            });
-//            ComboBox<Locale> lComboBox = new ComboBox<>(lLocales);
-//            lComboBox.converterProperty().set(new StringConverter<Locale>() {
-//                @Override
-//                public String toString(Locale locale) {
-//                    return locale == null ? "-" : locale.toString();
-//                }
-//
-//                @Override
-//                public Locale fromString(String s) {
-//                    if ("-".equals(s)) return null;
-//                    return new Locale(s);
-//                }
-//            });
-//            lComboBox.setEditable(true);
-//            lGridPane.add(lComboBox, new GridPane.C().row(lRowIdx).col(1));
-//            lComboBox.valueProperty().bindBidirectional(agenda.localeProperty());
-//        }
-//        lRowIdx++;
-
-        // done
         return lGridPane;
     }
 
-
-    /**
-     * get the calendar for the first day of the week
-     */
-    static private Calendar getFirstDayOfWeekCalendar(Locale locale, Calendar c) {
-        // result
-        int lFirstDayOfWeek = Calendar.getInstance(locale).getFirstDayOfWeek();
-        int lCurrentDayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-        int lDelta = 0;
-        if (lFirstDayOfWeek <= lCurrentDayOfWeek) {
-            lDelta = -lCurrentDayOfWeek + lFirstDayOfWeek;
-        } else {
-            lDelta = -lCurrentDayOfWeek - (7 - lFirstDayOfWeek);
-        }
-        c = ((Calendar) c.clone());
-        c.add(Calendar.DATE, lDelta);
-        return c;
-    }
 
     public void addAppointement(data.Appointment appointment){
         agenda.appointments().add(appointment);

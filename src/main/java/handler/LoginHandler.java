@@ -1,31 +1,25 @@
 package handler;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+
 import controller.Controller;
 import exception.LoginException;
 import javafx.animation.FadeTransition;
-import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 
 public class LoginHandler implements Initializable {

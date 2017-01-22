@@ -18,15 +18,27 @@ import view.ScheduleView;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * Controller class for all functions
+ * Interface for GUI to get Data from Database
+ * @author Sandro Guerotto
+ * @since 13.12.2016
+ * @version 0.1
+ *
+ */
 public class Controller {
+	
     private Stage stage;
     private Database database;
     private ViewModel viewModel;
     private AgendaView agendaView;
     private ScheduleView scheduleView;
 
-    private Task loadThread;
+    private Task<Void> loadThread;
 
+    /**
+     * Standard Constructor for Controller
+     */
     public Controller() {
         database = new Database();
         viewModel = new ViewModel(this);
@@ -43,28 +55,44 @@ public class Controller {
             }
         };
         loadThread.setOnSucceeded(event -> {
-//            gotToApplication();
             goToLogin();
         });
 
     }
 
+    /**
+     * start method to run program. 
+     * starts loading thread
+     * @param stage Primary stage from Application.launch()
+     */
     void start(Stage stage) {
         this.stage = stage;
         new Thread(loadThread).start();
 
     }
 
+    /**
+     * navigation method to get from the application to the login screen
+     */
     private void goToLogin() {
         new StarterGui().start(stage, viewModel.getFxml("login"), false);
 
     }
 
+    /**
+     * navigation method to get from login to the application
+     */
     private void gotToApplication() {
         new StarterGui().start(stage, viewModel.getFxml("application"), true);
         new Thread(() -> viewModel.setFirstDisplay()).start();
     }
 
+    /**
+     * Temporary login method to check if user inputs are valid and in the database
+     * @param username User specified value
+     * @param password User specified value
+     * @throws LoginException throws when user values are not found
+     */
     public void login(String username, String password) throws LoginException {
         if (database.getPeople().filtered(t -> username.equals(t.getUsername()) && password.equals(t.getPassword())).size() > 0) {
             gotToApplication();
@@ -74,7 +102,7 @@ public class Controller {
         }
     }
 
-    // DB Logik
+    
     public ObservableList<ItemEvent> getTasks() {
         return database.getTasks();
     }
@@ -174,6 +202,10 @@ public class Controller {
 
     public ObservableList<ItemEvent> getNews(){ return database.getNews(); }
 
+    /**
+     * Calculates the total absent time from the logged in user.
+     * @return total absent time in format x Days x Hours
+     */
     public String getTotalAbsentTime() {
         int difdays = 0, difHours = 0;
         String text;

@@ -1,18 +1,23 @@
 package data;
 
-import com.itextpdf.text.pdf.AcroFields;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import jfxtras.scene.control.agenda.Agenda;
-import view.ClassMember;
-import view.ItemEvent;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import jfxtras.scene.control.agenda.Agenda;
+import view.ClassMember;
+import view.ItemEvent;
+
+/**
+ * Local Database with observable ArrayLists that contains mock data
+ * @author Sandro Guerotto
+ * @since 25.12.2017
+ * @version 0.1
+ */
 public class Database {
 
     private ObservableList<Request> requests = FXCollections.observableArrayList();
@@ -30,6 +35,9 @@ public class Database {
     private ObservableList<Appointment> standard = FXCollections.observableArrayList();
     private ObservableList<ItemEvent> news = FXCollections.observableArrayList();
 
+    /**
+     * initializes all observable ArrayLists
+     */
     public Database() {
         initPeople();
         initRequest();

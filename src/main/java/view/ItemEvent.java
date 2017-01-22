@@ -3,8 +3,6 @@ package view;
 
 import data.Appointment;
 import helper.DateFormatter;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
