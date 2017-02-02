@@ -1,14 +1,3 @@
-/**
- * @author :   Burim Cakolli
- * My Applications never have bugs. They just create new random features..
- * Created          :   07.01.2017
- * Project          :   Sierra
- * Package          :   model
- * @version 		:   1.0
- * LastUpdated      :   07.01.2017 / by Burim Cakolli
- * Description      :
- * 
- */
 package model;
 
 import java.sql.Connection;
@@ -19,17 +8,17 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 import model.Queries;
-import view.ClassMember;
-import view.ItemEvent;
 import Interfaces.DataSaver;
-import data.Absent;
-import data.Gesuch;
-import data.Mark;
-import data.Person;
-import data.Request;
-import data.Schoolclass;
-import javafx.collections.ObservableList;
 
+import data.Person;
+/**
+ * MySQL connector that connects applationtion with our database server. 
+ * implements DataSaver
+ *
+ * @author Burim Cakolli
+ * @since 07.01.2017
+ * @version 0.1
+ */
 public class MySQLConnection implements DataSaver{
 	private static Connection conn = null; //Connection to DB
 	private static String url = "jdbc:mysql://coiffeur-alan.ch.w012d764.kasserver.com:3306/d024b04f"; //Url zum DB-Server

@@ -1,19 +1,13 @@
-/**
- * @author :   Burim Cakolli
- * Turns coffee & pizza into Software
- * Created          :   10.01.2017
- * Project          :   Sierra
- * Package          :   data
- * @version 		:   1.0
- * LastUpdated      :   10.01.2017 / by Burim Cakolli
- * Description      :
- * 
- */
 package data;
 
-
 import javafx.scene.control.Label;
-
+/**
+ * Data class for all subject
+ *
+ * @author Burim Cakolli
+ * @since 10.01.2017
+ * @version 0.1
+ */
 public class Subject extends Label {
 
 	private int id1;
@@ -25,7 +19,7 @@ public class Subject extends Label {
 		this.name = name;
 		this.colour_hex = colour_hex;
 		this.setText(name);
-	}//-Fach
+	}
 	
 	public int getId1() {
 		return id1;

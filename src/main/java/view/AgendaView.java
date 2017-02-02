@@ -15,6 +15,13 @@ import jfxtras.scene.control.agenda.Agenda;
 import jfxtras.scene.control.agenda.AgendaSkinSwitcher;
 import jfxtras.scene.layout.GridPane;
 
+/**
+ * dynamic agenda view. shows all appointment that are not schedule plan
+ * 
+ * @author Sandro Guerotto
+ * @since 25.12.2016
+ * @version 0.1
+ */
 public class AgendaView {
     public AgendaView(Controller controller) {
         agenda = new Agenda();
@@ -39,8 +46,11 @@ public class AgendaView {
     }
 
     final Agenda agenda;
-
-
+    
+    /**
+     * getter method to get agenda view
+     * @return agenda view
+     */
     public Node getPanel() {
         return agenda;
     }

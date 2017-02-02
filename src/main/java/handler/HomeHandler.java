@@ -9,6 +9,7 @@ import data.Gesuch;
 import data.Request;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
+import helper.Color;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,7 +34,13 @@ import java.time.LocalTime;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-
+/**
+ * view controller for home.fxml
+ * handles all events on home screen
+ * @author Sandro Guerotto
+ * @since 27.12.2016
+ * @version 0.1
+ */
 public class HomeHandler implements Initializable {
 
 
@@ -141,7 +148,9 @@ public class HomeHandler implements Initializable {
 
 
     }
-
+    /**
+     * initialize absent box
+     */
     private void initAbsentView() {
 
         ObservableList<String> reasons = FXCollections.observableArrayList();
@@ -166,7 +175,7 @@ public class HomeHandler implements Initializable {
 
     /**
      * cellfactory of tableview.
-     * create a custom cell for download column
+     * create a custom cell for status column
      */
     private void initCol() {
 
@@ -203,7 +212,9 @@ public class HomeHandler implements Initializable {
             }
         });
     }
-
+    /**
+     * "add" button factory
+     */
     private void initButton() {
         // setup menu icon
         MaterialDesignIconView icon = new MaterialDesignIconView(MaterialDesignIcon.PLUS);
@@ -288,7 +299,9 @@ public class HomeHandler implements Initializable {
 
         }
     }
-
+    /**
+     * set new callback to custom popup to edit appointment
+     */
     private void editAppointment() {
         controller.getAgendaView().getAgenda().setEditAppointmentCallback(param -> {
             Appointment test = (Appointment) param;

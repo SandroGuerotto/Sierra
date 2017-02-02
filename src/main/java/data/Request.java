@@ -5,12 +5,25 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Data class for all request of a person
+ *
+ * @author Sandro Guerotto
+ * @since 02.01.2017
+ * @version 0.1
+ */
 public class Request {
     private IntegerProperty id;
     private StringProperty date;
     private StringProperty reason;
     private StringProperty status;
-
+    /**
+     * 
+     * @param id unique integer key
+     * @param date 
+     * @param reason short description 
+     * @param status new request RQ accept OK denied XX
+     */
     public Request(int id, String date, String reason, String status) {
         this.setID(id);
         this.setDate(date);

@@ -21,7 +21,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-
+/**
+ * view controller for login.fxml
+ * handles all events at the login screen
+ * @author Sandro Guerotto
+ * @since 13.12.2016
+ * @version 0.1
+ */
 public class LoginHandler implements Initializable {
 
     @FXML
@@ -50,7 +56,7 @@ public class LoginHandler implements Initializable {
         this.controller = controller;
     }
 
-    @FXML
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
         pane_login.setVisible(false);
         btn_login.setVisible(false);
@@ -93,7 +99,10 @@ public class LoginHandler implements Initializable {
             return;
         }
     }
-
+    
+    /**
+     * initialize loading screen
+     */
     private void loadSplashScreen() {
         loaded = true;
 

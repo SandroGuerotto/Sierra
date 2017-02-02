@@ -1,21 +1,16 @@
-/**
- * @author :   Burim Cakolli
- * Turns coffee & pizza into Software
- * Created          :   08.01.2017
- * Project          :   Sierra
- * Package          :   model
- * @version 		:   1.0
- * LastUpdated      :   08.01.2017 / by Burim Cakolli
- * Description      :
- * 
- */
 package model;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Properties;
-
+/**
+ * load queries into the application
+ *
+ * @author Burim Cakolli
+ * @since 08.01.2017
+ * @version 0.1
+ */
 public class Queries {
 	private static final String propFileName = "Queries.properties";
     private static Properties props;

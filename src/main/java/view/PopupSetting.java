@@ -13,7 +13,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
+/**
+ * Popup object to edit settings or log out
+ * view controller for popupSettings.fxml 
+ * 
+ * @author Sandro Guerotto
+ * @since 01.01.2017
+ * @version 0.1
+ */
 public class PopupSetting extends JFXPopup implements Initializable {
 
     @FXML

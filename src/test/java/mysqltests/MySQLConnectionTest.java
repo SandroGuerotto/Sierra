@@ -1,17 +1,14 @@
-import static org.junit.Assert.assertNotNull;
+package mysqltests;
 import org.junit.Test;
 import model.MySQLConnection;
 
+
 /**
- * @author :   Burim Cakolli
- * Turns coffee & pizza into Software
- * Created          :   07.01.2017
- * Project          :   Sierra
- * Package          :   
- * @version 		:   1.0
- * LastUpdated      :   07.01.2017 / by Burim Cakolli
- * Description      :
- * 
+ * unit test class to test queries
+ *
+ * @author Burim Cakolli
+ * @since 07.01.2017
+ * @version 0.1
  */
 
 public class MySQLConnectionTest {

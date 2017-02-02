@@ -1,16 +1,12 @@
-/**
- * @author :   Burim Cakolli
- * Turns coffee & pizza into Software
- * Created          :   10.01.2017
- * Project          :   Sierra
- * Package          :   data
- * @version 		:   1.0
- * LastUpdated      :   10.01.2017 / by Burim Cakolli
- * Description      :
- * 
- */
+
 package data;
 
+/**
+ * data class for a person instance
+ * @author Sandro Guerotto
+ * @since 10.01.2017
+ * @version 0.1
+ */
 public class Person {
 	private int id;
 	private String name;
@@ -23,7 +19,20 @@ public class Person {
 	private String username;
 	private boolean isTeacher = false;  // teacher
 	private boolean isRepresentative = false;  //Klassensprecher
-	
+	/**
+	 * standard constructor to create a person object
+	 * @param id unique integer key
+	 * @param name lastname of the person
+	 * @param forename firstname of the person
+	 * @param birthdate birthdate of the person format dd.mm.yyyy
+	 * @param telnr phone number of the person format 000 000 00 00
+	 * @param email e-mail address must be valid xyz@provider.domain
+	 * @param addText additional text optional
+	 * @param isTeacher define person is a teacher
+	 * @param isRepresentative define person is a representative. A person can not be Teacher and Representative
+	 * @param password custom user password / initial password 
+	 * @param username username to log into the application format firstname.lastname
+	 */
 	public Person(int id, String name, String forename, String birthdate, String telnr, String email, String addText,
 			boolean isTeacher,boolean isRepresentative, String password, String username) {
 		this.id = id;
@@ -114,4 +123,4 @@ public class Person {
 	public String toString() {
 		return forename + " " + name;
 	}
-}//-class
+}

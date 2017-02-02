@@ -16,7 +16,14 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import view.Menubanner;
 
-
+/**
+ * view controller for application.fxml
+ * handles menu events and subscreens
+ *
+ * @author Sandro Guerotto
+ * @since 17.12.2016
+ * @version 0.1
+ */
 public class ApplicationHandler implements Initializable {
     @FXML
     private StackPane pane_main;
@@ -35,16 +42,17 @@ public class ApplicationHandler implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Menubanner menubanner = new Menubanner(pane_container, pane_main, controller.getNotifications());
-        try {
-            initMenuListener(menubanner);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        initMenuListener(menubanner);
+
         pane_container.add(menubanner, 0, 0, 4, 1);
 
     }
-
-    private void initMenuListener(Menubanner menubanner) throws Exception {
+    /**
+     * initialize method to create menubanner
+     * handles action events and subscreens (pane)
+     * @param menubanner menubanner object
+     */
+    private void initMenuListener(Menubanner menubanner) {
 
         VBox wrapper = (VBox) menubanner.getChildren().get(0);
         FlowPane menu = (FlowPane) wrapper.getChildren().get(0);
@@ -53,7 +61,7 @@ public class ApplicationHandler implements Initializable {
             Button btn = (Button) child;
             if (!btn.getId().equals("notification") && !btn.getId().equals("settings")) {
                 btn.setOnAction(event -> {
-                    deletePane(); // delete current Pane and add to parent Pane
+                    deletePane(); // delete current Pane and add new to parent Pane
                     pane_container.add(controller.getNextPane(btn.getId()), 1, 2, 2, 2);
                 });
             }
@@ -61,7 +69,9 @@ public class ApplicationHandler implements Initializable {
         }
     }
 
-
+    /**
+     * delete current subscreen (pane)
+     */
     private void deletePane() {
         for (Node node : pane_container.getChildren()) {
             try {
@@ -74,7 +84,9 @@ public class ApplicationHandler implements Initializable {
 
         }
     }
-
+    /**
+     * called at program start to display home screen
+     */
     public void setFirstDisplay() {
         Platform.runLater(() -> {
             spinner.setManaged(false);

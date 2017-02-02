@@ -9,6 +9,7 @@ import java.time.temporal.ChronoUnit;
 /**
  * Helperclass to format LocalDate and LocalDateTime.
  * can not be instantiate. All methods are static
+ * 
  * @author Sandro Guerotto
  * @since 25.12.2016
  * @version 0.1

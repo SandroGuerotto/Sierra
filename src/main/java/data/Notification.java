@@ -14,6 +14,8 @@ import java.util.ResourceBundle;
 
 /**
  * ListView Item for Popup list Notification
+ * extend BorderPane and implements Initializable
+ * Uses a fxml to define layout
  * @author Sandro Guerotto
  * @since 26.12.2016
  * @version 0.1

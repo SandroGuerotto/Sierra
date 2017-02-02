@@ -10,7 +10,13 @@ import javafx.scene.layout.GridPane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
+/**
+ * view controller for myClass.fxml
+ *
+ * @author Sandro Guerotto
+ * @since 01.01.2017
+ * @version 0.1
+ */
 public class MyClassHandler implements Initializable {
 
     private Controller controller;

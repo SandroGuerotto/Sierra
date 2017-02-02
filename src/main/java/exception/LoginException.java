@@ -3,6 +3,7 @@ package exception;
 /**
  * The class LoginException extends Exception that indicates conditions 
  * that a reasonable application might want to catch.
+ * 
  * @author Sandro Guerotto
  * @since 17.12.2016
  * @version 0.1

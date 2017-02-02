@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXPopup;
 import data.Notification;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
+import helper.Color;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.NodeOrientation;
@@ -14,7 +15,13 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 
-
+/**
+ * menu banner creator
+ * 
+ * @author Sandro Guerotto
+ * @since 13.12.2016
+ * @version 0.1
+ */
 public class Menubanner extends HBox {
 
     private JFXButton btn_notification, btn_settings;

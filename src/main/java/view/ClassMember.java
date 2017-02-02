@@ -15,6 +15,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * GUI object to display a classmember
+ * @author Sandro Guerotto
+ * @since 01.01.2017
+ * @version 0.1
+ */
 public class ClassMember extends Pane implements Initializable {
 
     @FXML

@@ -8,6 +8,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 
+/**
+ * defines layout of list item in task listview
+ * 
+ * @author Sandro Guerotto
+ * @since 17.12.2016
+ * @version 0.1
+ */
 public class ItemEvent extends TitledPane {
 
     private Appointment appointment;
@@ -27,7 +34,6 @@ public class ItemEvent extends TitledPane {
             content.setTop(new Label(appointment.getLocation()));
         }
         Label label = new Label(appointment.getSummary());
-//        label.textProperty().bind(new SimpleStringProperty(appointment.getSummary()));
         content.setCenter(label);
         BorderPane.setAlignment(label, Pos.TOP_LEFT);
 

@@ -8,6 +8,13 @@ import javafx.scene.layout.FlowPane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * view controller for teachers.fxml
+ *
+ * @author Sandro Guerotto
+ * @since 01.01.2017
+ * @version 0.1
+ */
 public class TeacherHandler implements Initializable {
 
     @FXML

@@ -20,6 +20,7 @@ import data.Person;
 import data.Subject;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
+import helper.Color;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,7 +31,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 
-
+/**
+ * Popup object to create or edit an appointment
+ * view controller for popupTask.fxml 
+ * 
+ * @author Sandro Guerotto
+ * @since 13.12.2016
+ * @version 0.1
+ */
 public class PopupNewTask extends JFXPopup implements Initializable {
 
     @FXML
@@ -152,18 +160,26 @@ public class PopupNewTask extends JFXPopup implements Initializable {
         }
 
     }
-
+    
+    /**
+     * shows error label with given text
+     * @param text displayed text
+     */
     private void showError(String text) {
         lbl_error.setText(text);
         lbl_error.setVisible(true);
         lbl_error.setDisable(false);
     }
 
+    /**
+     * hides error label
+     */
     private void hideError() {
         lbl_error.setVisible(false);
         lbl_error.setDisable(true);
     }
-
+    
+ 
     public void setInfo(String title, String descr, LocalDate start, LocalTime time, Subject subject, Person teacher, Appointment old) {
         if (old != null) {
             lbl_titel.setText(old.getType());

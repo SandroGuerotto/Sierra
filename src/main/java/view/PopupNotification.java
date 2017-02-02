@@ -7,7 +7,14 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-
+/**
+ * Popup object to show notification
+ * view controller for popupNotification.fxml 
+ * 
+ * @author Sandro Guerotto
+ * @since 13.12.2016
+ * @version 0.1
+ */
 public class PopupNotification extends JFXPopup {
 
     JFXListView<Notification> listView;

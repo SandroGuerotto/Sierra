@@ -10,6 +10,13 @@ import javafx.scene.image.ImageView;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * view controller for school.fxml
+ *
+ * @author Sandro Guerotto
+ * @since 27.12.2016
+ * @version 0.1
+ */
 public class SchoolHandler implements Initializable {
 
     private Controller controller;

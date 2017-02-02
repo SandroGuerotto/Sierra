@@ -10,6 +10,13 @@ import javafx.collections.ObservableList;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
+/**
+ * PDF creator
+ * 
+ * @author Sandro Guerotto
+ * @since 02.01.2017
+ * @version 0.1
+ */
 public class MyMarksPDF {
 
     private ObservableList<Mark> list;
@@ -19,6 +26,10 @@ public class MyMarksPDF {
         this.list = list;
     }
 
+    /**
+     * create PDF document
+     * sets document informations
+     */
     public void create(){
         Document doc = new Document();
         //document header attributes
@@ -76,7 +87,11 @@ public class MyMarksPDF {
         }
 
     }
-
+    
+    /**
+     * set header line of mark table
+     * @param table mark table in the document
+     */
     private void setheader(PdfPTable table){
         Font bfBold12 = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, new BaseColor(0, 0, 0));
         PdfPCell table_cell = new PdfPCell(new Phrase("Datum", bfBold12));

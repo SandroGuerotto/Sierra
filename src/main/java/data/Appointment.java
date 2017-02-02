@@ -1,8 +1,8 @@
 package data;
 
-import jfxtras.scene.control.agenda.Agenda;
-
 import java.time.LocalDateTime;
+
+import jfxtras.scene.control.agenda.Agenda;
 /**
  * Addition to Agenda.AppointmentImplLocal to save custom values
  *
@@ -17,7 +17,8 @@ public class Appointment extends Agenda.AppointmentImplLocal {
     private Person teacher;
     private String type;
     /**
-     * 
+     * default constructor to create an appointment with an id
+     * used when initializing data from DB
      * @param id unique integer key
      * @param startdatetime start date and time of appointment
      * @param enddatetime end date and time of appointment
@@ -40,7 +41,8 @@ public class Appointment extends Agenda.AppointmentImplLocal {
     }
     
     /**
-     * 
+     * default constructor to create an appointment
+     * used when creating a new appointment in the application
      * @param startdatetime start date and time of appointment
      * @param enddatetime end date and time of appointment
      * @param summary short description or title

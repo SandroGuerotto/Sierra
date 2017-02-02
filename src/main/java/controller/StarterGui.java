@@ -1,5 +1,12 @@
 package controller;
 
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 
 /**
  * setups screen with corresponding FXML
@@ -8,19 +15,15 @@ package controller;
  * @since 13.12.2016
  * @version 0.1
  */
-
-import javafx.application.Platform;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.text.Font;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-
 public class StarterGui {
 
-
-    public void start(Stage stage, Parent root, boolean fullscreen) {
+	/**
+	 * creates scene and set settings to display current stage
+	 * @param stage current stage
+	 * @param root current pane to display
+	 * @param fullscreen bool to set fullscreen mode
+	 */
+    public void start(Stage stage, Pane pane, boolean fullscreen) {
         // get screen props
         final double ypos = Screen.getPrimary().getVisualBounds().getMinY();
         final double xpos = Screen.getPrimary().getVisualBounds().getMinX();
@@ -29,7 +32,7 @@ public class StarterGui {
 
         try {
 
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(pane);
             scene.getStylesheets().add(getClass().getResource("/css/application.css").toExternalForm());
 
             //set font style

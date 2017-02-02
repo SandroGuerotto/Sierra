@@ -8,7 +8,6 @@ import javafx.concurrent.Task;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import jfxtras.scene.control.agenda.Agenda;
 import model.ViewModel;
 import view.AgendaView;
 import view.ClassMember;
@@ -37,7 +36,7 @@ public class Controller {
     private Task<Void> loadThread;
 
     /**
-     * Standard Constructor for Controller
+     * Standard constructor for Controller
      */
     public Controller() {
         database = new Database();

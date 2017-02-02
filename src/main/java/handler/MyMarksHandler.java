@@ -20,6 +20,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * view controller for myMaraks.fxml
+ * handles all events at the my marks screen
+ *
+ * @author Sandro Guerotto
+ * @since 30.12.2016
+ * @version 0.1
+ */
 public class MyMarksHandler implements Initializable {
 
     @FXML
@@ -66,7 +74,9 @@ public class MyMarksHandler implements Initializable {
         lv_nextTests.setItems(controller.getUpcomingTests());
     }
 
-
+    /**
+     * cellfactory of tableview.
+     */
     private void initCol() {
 
         col_date.setCellValueFactory(new PropertyValueFactory<Mark, String>("date"));

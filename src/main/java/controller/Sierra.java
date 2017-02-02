@@ -12,6 +12,10 @@ import javafx.stage.Stage;
  */
 public class Sierra extends Application {
 
+	/**
+	 * main method to start program
+	 * @param args start arguments
+	 */
     public static void main(String[] args){
         launch(args);
     }
