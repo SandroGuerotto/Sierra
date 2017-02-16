@@ -3,6 +3,9 @@ package controller;
 import data.*;
 import exception.LoginException;
 import helper.DateFormatter;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.scene.layout.Pane;
@@ -16,6 +19,7 @@ import view.ScheduleView;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Controller class for all functions
@@ -27,13 +31,18 @@ import java.time.LocalDateTime;
  */
 public class Controller {
 	
+	private final boolean skiplogin = true;
+	
     private Stage stage;
     private Database database;
     private ViewModel viewModel;
     private AgendaView agendaView;
     private ScheduleView scheduleView;
+    
+    private Person loggedinUser;
 
-    private Task<Void> loadThread;
+    private Task<Void> loadApplicationThread;
+    private Task<Void> loadLoginThread;
 
     /**
      * Standard constructor for Controller
@@ -42,21 +51,34 @@ public class Controller {
         database = new Database();
         viewModel = new ViewModel(this);
         Controller controller = this;
-        loadThread = new Task<Void>() {
-
+        loadApplicationThread = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                agendaView = new AgendaView(controller);
-                scheduleView = new ScheduleView(controller);
+            	Platform.runLater(() ->{
+            		agendaView = new AgendaView(controller);
+                    scheduleView = new ScheduleView(controller);
+            	});
+                
                 viewModel.loadHandler();
                 viewModel.loadFxml();
                 return null;
             }
         };
-        loadThread.setOnSucceeded(event -> {
+        loadApplicationThread.setOnSucceeded(event -> {
+            gotToApplication();
+        });
+        
+        loadLoginThread = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                viewModel.loadLogin();
+                return null;
+            }
+        };
+        loadLoginThread.setOnSucceeded(event -> {
             goToLogin();
         });
-
+       
     }
 
     /**
@@ -66,8 +88,14 @@ public class Controller {
      */
     void start(Stage stage) {
         this.stage = stage;
-        new Thread(loadThread).start();
-
+        if (skiplogin) {
+        	this.setLoggedinUser(database.getPeople().filtered(t -> "jean.kalt".equals(t.getUsername()) && "1234".equals(t.getPassword())).get(0));
+        	new Thread(loadApplicationThread).start();
+		}else{
+			new Thread(loadLoginThread).start();
+		}
+        
+        
     }
 
     /**
@@ -75,7 +103,6 @@ public class Controller {
      */
     private void goToLogin() {
         new StarterGui().start(stage, viewModel.getFxml("login"), false);
-
     }
 
     /**
@@ -93,14 +120,29 @@ public class Controller {
      * @throws LoginException throws when user values are not found
      */
     public void login(String username, String password) throws LoginException {
-        if (database.getPeople().filtered(t -> username.equals(t.getUsername()) && password.equals(t.getPassword())).size() > 0) {
-            gotToApplication();
+    	Person login = null;
+    	try{
+    		login = database.getPeople().filtered(t -> username.equals(t.getUsername()) && password.equals(t.getPassword())).get(0);
+    	}catch(Exception e){
+    		throw new LoginException();
+    	}
+    	
+        if (login != null) {
+        	this.setLoggedinUser(login);
+        	new Thread(loadApplicationThread).start();
             System.out.println("eingeloggt");
         } else {
-            throw new LoginException();
+        	throw new LoginException();
         }
     }
 
+    public void setLoggedinUser(Person user){
+    	this.loggedinUser = user;
+    }
+    
+    public Person getLoggedinUser(){
+    	return this.loggedinUser;
+    }
     
     public ObservableList<ItemEvent> getTasks() {
         return database.getTasks();
@@ -133,7 +175,8 @@ public class Controller {
     }
 
     public void addAbsent(String reason, LocalDateTime from, LocalDateTime to) {
-        Absent absent = new Absent(getAbsents().size() + 1, DateFormatter.LocalDateTimeToString(from), DateFormatter.LocalDateTimeToString(to), reason, false);
+    	String code = this.generateCode();
+        Absent absent = new Absent(getAbsents().size() + 1, DateFormatter.LocalDateTimeToString(from), DateFormatter.LocalDateTimeToString(to), reason, false, code);
         database.addAbsent(absent);
     }
 
@@ -158,13 +201,32 @@ public class Controller {
     }
 
     public void addAppointment(Appointment appointment) {
+    	System.out.println("add to list");
         database.addAppointment(appointment);
         agendaView.addAppointement(appointment);
     }
+    
+    public void updateAppointment(Appointment old, Appointment appointment){
+    	System.out.println("copy");
+    	old.setTeacher(appointment.getTeacher());
+    	old.setDescription(appointment.getDescription());
+    	old.setLocation(appointment.getLocation());
+    	old.setStartLocalDateTime(appointment.getStartLocalDateTime());
+    	old.setEndLocalDateTime(appointment.getEndLocalDateTime());
+    	old.setSummary(appointment.getSummary());
+    	old.setSubject(appointment.getSubject());
+    	old.setType(appointment.getType());
+    	
+    	this.deleteAppointment(old);
+    	this.addAppointment(appointment);
+    }
 
     public void deleteAppointment(Appointment old) {
+    	System.out.println("delete method");
         database.deleteAppointment(old);
+        System.out.println("delete from list");
         agendaView.getAgenda().appointments().remove(old);
+        System.out.println("delete from agenda");
     }
 
     public int getStudentcount() {
@@ -205,23 +267,23 @@ public class Controller {
      * Calculates the total absent time from the logged in user.
      * @return total absent time in format x Days x Hours
      */
-    public String getTotalAbsentTime() {
-        int difdays = 0, difHours = 0;
-        String text;
-        for (Absent absent : database.getAbsents()) {
-            LocalDateTime to = DateFormatter.StringToLocalDateTime(absent.getDateto());
-            LocalDateTime from = DateFormatter.StringToLocalDateTime(absent.getDatefrom());
-            difdays += DateFormatter.differenceInDays(from, to);
-            difHours += DateFormatter.differenceInHours(from, to);
-        }
-        if (difdays == 0 && difHours == 0) {
-            text = "Keine Absenz";
-        } else {
-            text = Integer.toString(difdays) + " Tage " + Integer.toString(difHours) + " Stunden";
-        }
-
-        return text;
+    public SimpleStringProperty getTotalAbsentTime() {
+    	return database.getTotalAbsentTime();
     }
 
+    private String generateCode(){
+    	String code = UUID.randomUUID().toString().substring(0, 7);
+    	return code;
+    }
+    
+    public boolean verifyCode(String code){
+    	for (Absent absent : database.getAbsents()) {
+			if (absent.getSecureCode().equals(code)) {
+				absent.setIsExcused(true);
+				return true;
+			}
+		}
+    	return false;
+    }
 
 }

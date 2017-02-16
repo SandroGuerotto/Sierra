@@ -16,6 +16,7 @@ public class Absent {
     private StringProperty dateto;
     private StringProperty reason;
     private BooleanProperty isExcused;
+    private StringProperty secureCode;
 	/**
 	 * default constructor to create an absent
 	 * @param id unique integer key
@@ -24,12 +25,13 @@ public class Absent {
 	 * @param reason additional text for absent
 	 * @param isExcused person is excused
 	 */
-    public Absent(int id, String datefrom, String dateto, String reason, boolean isExcused) {
+    public Absent(int id, String datefrom, String dateto, String reason, boolean isExcused, String secureCode) {
         this.setID(id);
         this.setDatefrom(datefrom);
         this.setDateto(dateto);
         this.setReason(reason);
         this.setIsExcused(isExcused);
+        this.setSecureCode(secureCode);
     }
 
     //id
@@ -110,6 +112,22 @@ public class Absent {
             this.isExcused = new SimpleBooleanProperty(this, "isExcused");
         }
         return this.isExcused;
+    }
+    
+    //secureCode
+    public void setSecureCode(String value) {
+        this.secureCodeProperty().set(value);
+    }
+
+    public String getSecureCode() {
+        return this.secureCodeProperty().get();
+    }
+
+    public StringProperty secureCodeProperty() {
+        if (this.secureCode == null) {
+            this.secureCode = new SimpleStringProperty(this, "secureCode");
+        }
+        return this.secureCode;
     }
 
 }

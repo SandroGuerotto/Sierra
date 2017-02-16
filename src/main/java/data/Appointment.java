@@ -88,4 +88,9 @@ public class Appointment extends Agenda.AppointmentImplLocal {
     public void setTeacher(Person teacher) {
         this.teacher = teacher;
     }
+
+	public void setType(String type) {
+		this.type = type;
+	}
+    
 }

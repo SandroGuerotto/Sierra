@@ -3,6 +3,7 @@ package view;
 
 import data.Appointment;
 import helper.DateFormatter;
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
@@ -23,19 +24,24 @@ public class ItemEvent extends TitledPane {
 
         this.appointment = appointment;
         // header
-        Label left = new Label(DateFormatter.LocalDateTimeToString(appointment.getStartLocalDateTime()));
+        Label left = new Label();
+        left.textProperty().bind(Bindings.createStringBinding(() ->
+        DateFormatter.LocalDateTimeToString(appointment.getStartLocalDateTime())));
         this.setGraphic(left);
 
 
         BorderPane content = new BorderPane();
+        Label title = new Label();
         if (appointment.getSubject() != null && !appointment.getSubject().getName().isEmpty()) {
-            content.setTop(new Label(appointment.getSubject().getName()));
+        	title.textProperty().bind(appointment.getSubject().nameProperty());
         }else{
-            content.setTop(new Label(appointment.getLocation()));
+        	title.textProperty().bind(appointment.locationProperty());
         }
-        Label label = new Label(appointment.getSummary());
-        content.setCenter(label);
-        BorderPane.setAlignment(label, Pos.TOP_LEFT);
+        content.setTop(title);
+        Label summary = new Label();
+        summary.textProperty().bind(appointment.summaryProperty());
+        content.setCenter(summary);
+        BorderPane.setAlignment(summary, Pos.TOP_LEFT);
 
         this.setContent(content);
 

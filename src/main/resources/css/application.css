@@ -31,6 +31,7 @@
     -fx-font-size: 18px;
 
 }
+
 /* ===================================================================
 /* 							Login
  * ===================================================================
@@ -130,8 +131,9 @@
     -fx-text-fill: #4d4d4d;
 }
 /*text area show as normal*/
-.text-area:disabled{
+.text-area:disabled, jfx-text-field:disabled{
     -fx-opacity: 1.0;
+    -fx-text-fill: #4d4d4d;
 }
 .text-input > .scroll-pane:disabled {
     -fx-opacity: 1;
@@ -163,7 +165,7 @@
  */
 .combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover
 {
-    -fx-background-color: #b4d878;;
+    -fx-background-color: #b4d878;
 }
 
 .combo-box-popup .list-view .list-cell:filled:hover
@@ -173,15 +175,22 @@
 }
 
 /* ===================================================================
-/* 							List View
+/* 							List View notification
  * ===================================================================
  */
-#notification .list-cell:filled:selected:focused, #notification .list-cell:filled:selected {
+#notification .list-cell:filled:selected:focused, #notification .list-cell:filled:selected,
+#notification .list-cell:filled:focused{
      -fx-background-color:  #b4d878;
      -fx-text-fill: #4d4d4d;
  }
+#notification .scroll-bar .increment-arrow,
+#notification .scroll-bar .decrement-arrow,
+#notification .scroll-bar .increment-button,
+#notification .scroll-bar .decrement-button {
+    -fx-padding:0;
+}
 /* ===================================================================
-/* 							List View
+/* 							List View Event
  * ===================================================================
  */
 #event{
@@ -201,9 +210,28 @@
     -fx-font-size: 14px;
 }
 /* ===================================================================
+/* 							Popup Task
+ * ===================================================================
+*/
+
+#tf_descr:disabled, #tf_descr:disabled > * ,
+#tf_title:disabled, #tf_title:disabled > * ,
+#dp_date:disabled, #dp_date:disabled > * ,
+#dp_time:disabled, #dp_time:disabled > * ,
+#cb_subject:disabled, #cb_subject:disabled > * ,
+#cb_teacher:disabled, #cb_teacher:disabled > * {
+  -fx-opacity: 1.0 ;
+  -fx-text-fill: #4d4d4d;
+}
+.btn_save:disabled, .btn_save:disabled > *,
+.btn_edit:disabled, .btn_edit:disabled > *,
+.btn_delete:disabled, .btn_delete:disabled > *{
+  -fx-opacity: 0.4 ;
+}
+/* ===================================================================
 /* 							Nachrichten
  * ===================================================================
- */
+*/
 
 .error-small{
     -fx-text-fill: #D8000C;

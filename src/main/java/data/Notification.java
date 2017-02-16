@@ -1,6 +1,7 @@
 package data;
 
 import helper.DateFormatter;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -50,8 +51,19 @@ public class Notification extends BorderPane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        lbl_datetime.setText(DateFormatter.LocalDateTimeToString(appointment.getStartLocalDateTime()));
-        lbl_subject.setText(appointment.getSubject().getName());
-        ta_descr.setText(appointment.getSummary());
+        lbl_datetime.textProperty().bind(Bindings.createStringBinding(() ->
+        DateFormatter.LocalDateTimeToString(appointment.getStartLocalDateTime())));
+        
+        lbl_subject.textProperty().bind(appointment.getSubject().nameProperty());
+        ta_descr.textProperty().bind(appointment.summaryProperty());
     }
+
+	public Appointment getAppointment() {
+		return appointment;
+	}
+
+	public void setAppointment(Appointment appointment) {
+		this.appointment = appointment;
+	}
+       
 }

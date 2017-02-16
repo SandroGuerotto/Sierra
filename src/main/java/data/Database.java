@@ -5,9 +5,14 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Calendar;
+import java.util.Comparator;
 
+import helper.DateFormatter;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.ListChangeListener.Change;
 import view.ClassMember;
 import view.ItemEvent;
 
@@ -33,11 +38,14 @@ public class Database {
     private ObservableList<ItemEvent> upcomingTests = FXCollections.observableArrayList();
     private ObservableList<Appointment> standard = FXCollections.observableArrayList();
     private ObservableList<ItemEvent> news = FXCollections.observableArrayList();
+    private ObservableList<String> types = FXCollections.observableArrayList();
+    private SimpleStringProperty totalAbsentTime = new SimpleStringProperty();
 
     /**
      * initializes all observable ArrayLists
      */
     public Database() {
+    	initListeners();
         initPeople();
         initRequest();
         initGesuch();
@@ -45,7 +53,9 @@ public class Database {
         initClass();
         initTeacher();
         initAbsent();
+        iniTotalAbsentTime();
         initSubject();
+        initTypes();
         initAppointments();
         initNotification();
         initEvent();
@@ -54,24 +64,43 @@ public class Database {
         initStandard();
     }
 
+    private void initTypes(){
+    	String type = new String("Information");
+    	types.add(type);
+    	type = new String("Test");
+    	types.add(type);
+    	type = new String("Erinnerung");
+    	types.add(type);
+    	type = new String("Hausaufgabe");
+    	types.add(type);
+    }
     private void initNews(){
-        for (Appointment appointment: appointments.filtered(t -> t.getType().equals("News"))) {
+        for (Appointment appointment: appointments.filtered(t -> t.getType().equals(types.get(0)))) {
             ItemEvent item = new ItemEvent(appointment);
             news.add(item);
         }
-
     }
 
     private void initTests(){
-        for (Appointment appointment: appointments.filtered(t -> t.getType().equals("Test"))) {
+        for (Appointment appointment: appointments.filtered(t -> t.getType().equals(types.get(1)))) {
             upcomingTests.add(new ItemEvent(appointment));
         }
     }
 
     private void initNotification(){
-        Notification notification = new Notification(appointments.get(0));
-        notifications.add(notification);
+//    	for (Appointment appointment: appointments) {
+//    		Notification notification = new Notification(appointment);
+//            notifications.add(notification);
+//        } 
+    	notifications.add(new Notification(appointments.get(0)));
     }
+    
+    Comparator<? super Notification> comparatorNotification = new Comparator<Notification>() {
+        @Override
+        public int compare(Notification o1, Notification o2) {
+            return o1.getAppointment().getStartLocalDateTime().compareTo(o2.getAppointment().getStartLocalDateTime());
+        }
+    };
 
     private void initSubject() {
         Subject subject = new Subject(1, "Mathematik", "#00ff00");
@@ -93,7 +122,7 @@ public class Database {
         people.add(person);
         person = new Person( 3, "Henrich", "Max", "05.06.1999", "078 205 25 23", "m.henrich@gmail.com", "Ersatzklassen: BI14a" , false, true, "1234", "max.henrich");
         people.add(person);
-        person = new Person( 4, "Kalt", "Jean", "15.08.1999", "078 298 45 78", "jean.dunois@gmail.com", "Ersatzklassen: BI14a", false, false, "1234", "jean.kalt");
+        person = new Person( 4, "Kalt", "Jean", "15.08.1999", "078 298 45 78", "jean.kalt@gmail.com", "Ersatzklassen: BI14a", false, false, "1234", "jean.kalt");
         people.add(person);
         person = new Person( 5, "Bauer", "Dieter", "23.09.2001", "078 852 23 01", "b.d2001@hotmail.com", "Ersatzklassen: AP14b", false, false, "1234", "dieter.bauer");
         people.add(person);
@@ -105,10 +134,18 @@ public class Database {
     }
 
     private void initAbsent() {
-        Absent absent = new Absent(1, "01.01.2017 08:00", "02.01.2017 12:00", "Krank", false);
+        Absent absent = new Absent(1, "01.01.2017 08:00", "02.01.2017 12:00", "Krank", false, "J2DxrO3r");
         absents.add(absent);
-        absent = new Absent(2, "28.03.2017 10:00", "28.03.2017 19:00", "Arzt", true);
+        absent = new Absent(2, "28.03.2017 10:00", "28.03.2017 19:00", "Arzt", true, "COmka7oR");
         absents.add(absent);
+        
+        absents.addListener(new ListChangeListener<Absent>(){
+			@Override
+			public void onChanged(Change<? extends Absent> c) {
+				iniTotalAbsentTime();	
+			}
+        	
+        });
     }
 
     private void initTeacher() {
@@ -154,11 +191,20 @@ public class Database {
     }
 
     private void initEvent() {
-        for (Appointment appointment: appointments) {
+        for (Appointment appointment: appointments.filtered(t -> !t.getType().equals(types.get(0)))) {
             ItemEvent itemEvent = new ItemEvent(appointment);
             events.add(itemEvent);
         }
+        //sort myList
+        FXCollections.sort(events, comparatorItemEvent);
     }
+     
+    Comparator<? super ItemEvent> comparatorItemEvent = new Comparator<ItemEvent>() {
+        @Override
+        public int compare(ItemEvent o1, ItemEvent o2) {
+            return o1.getAppointment().getStartLocalDateTime().compareTo(o2.getAppointment().getStartLocalDateTime());
+        }
+    };
 
     public ObservableList<Request> getRequests() {
         return requests;
@@ -213,6 +259,8 @@ public class Database {
     public void addAppointment(Appointment appointment) {
         appointments.add(appointment);
         events.add(new ItemEvent(appointment));
+        FXCollections.sort(events, comparatorItemEvent);
+        FXCollections.sort(notifications, comparatorNotification);
     }
 
     public void addGesuch(Gesuch gesuch) {
@@ -224,18 +272,35 @@ public class Database {
     }
 
     private void initAppointments() {
-        Appointment appointment = new Appointment(2, LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.of(8, 30)), LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 00)), "Test: Bruchrechnen", "Lernziele 1-4 \n" + "Einfaches Rechnen 1: S12 - S24 \n" + "Zeit: 45min", subjects.get(0), people.get(1), "Test");
+    	Appointment appointment;
+        appointment = new Appointment(2, LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.of(8, 30)), LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.of(9, 25)), "Test: Bruchrechnen", "Lernziele 1-4 \n" + "Einfaches Rechnen 1: S12 - S24 \n" + "Zeit: 45min", subjects.get(0), people.get(1), types.get(1));
         appointments.add(appointment);
-        appointment = new Appointment(3, LocalDateTime.of(LocalDate.now(), LocalTime.of(12, 30)), LocalDateTime.of(LocalDate.now(), LocalTime.of(13, 30)), "Funktionen", "Mathebuch S5 1.-5." , subjects.get(0), people.get(1), "Hausaufgabe");
+        appointment = new Appointment(3, LocalDateTime.of(LocalDate.now(), LocalTime.of(12, 30)), LocalDateTime.of(LocalDate.now(), LocalTime.of(13, 30)), "Funktionen", "Mathebuch S5 1.-5." , subjects.get(0), people.get(1), types.get(3));
         appointments.add(appointment);
-        appointment = new Appointment(4, LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(9, 00)), LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(13, 30)), "Unité 5 lesen", "Unité 5 S8 lesen" , subjects.get(1), people.get(1), "Hausaufgabe");
+        appointment = new Appointment(4, LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(9, 00)), LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(13, 30)), "Unité 5 lesen", "Unité 5 S8 lesen" , subjects.get(1), people.get(1), types.get(3));
         appointments.add(appointment);
-        appointment = new Appointment( 5, LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(19, 00)), LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(21, 30)), "Neues Jahr - bessere Noten", "Wichtige Theman zum neuen Jahr", new Subject(3, "Infoabend", "#09544A"), null, "News");
-        appointments.add(appointment);
+        appointment = new Appointment( 5, LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(19, 00)), LocalDateTime.of(LocalDate.now().plusDays(2), LocalTime.of(21, 30)), "Neues Jahr - bessere Noten", "Wichtige Theman zum neuen Jahr", new Subject(3, "Infoabend", "#09544A"), null, types.get(0));
+        appointments.add(appointment);        
     }
 
     public void deleteAppointment(Appointment old) {
         appointments.remove(old);
+        // delete from news
+        if (news.filtered(t -> t.getAppointment() == old).size() > 0) {
+        	news.remove(news.filtered( t -> t.getAppointment() == old).get(0));
+		}
+        // delete from event list
+        if (events.filtered(t -> t.getAppointment() == old).size() > 0) {
+			events.remove(events.filtered( t -> t.getAppointment() == old).get(0));
+		}
+        // delete from notification
+        if (notifications.filtered( t -> t.getAppointment() == old).size() > 0) {
+        	notifications.remove(notifications.filtered( t -> t.getAppointment() == old).get(0));
+		}
+        if (upcomingTests.filtered( t -> t.getAppointment() == old).size() > 0) {
+        	upcomingTests.remove(upcomingTests.filtered( t -> t.getAppointment() == old).get(0));
+		}
+        
     }
 
     private void initStandard(){
@@ -283,5 +348,39 @@ public class Database {
         standard.addAll(appointmentThursday, appointmentThursday1, appointmentThursday2, appointmentThursday3, appointmentThursday);
         standard.addAll(appointmentFriday, appointmentFriday1, appointmentFriday2, appointmentFriday3);
 
+    }
+    
+    private void iniTotalAbsentTime() {
+    	int difdays = 0, difHours = 0;
+        for (Absent absent : this.getAbsents()) {
+            LocalDateTime to = DateFormatter.StringToLocalDateTime(absent.getDateto());
+            LocalDateTime from = DateFormatter.StringToLocalDateTime(absent.getDatefrom());
+            difdays += DateFormatter.differenceInDays(from, to);
+            difHours += DateFormatter.differenceInHours(from, to);
+        }
+        while( difHours > 24){
+        	difdays++;
+        	difHours -= 24;
+        }
+        if (difdays == 0 && difHours == 0) {
+        	totalAbsentTime.set("Keine Absenz"); 
+        } else {
+        	totalAbsentTime.set( Integer.toString(difdays) + " Tage " + Integer.toString(difHours) + " Stunden" );
+        }
+    }
+    
+    public SimpleStringProperty getTotalAbsentTime() {
+    	return totalAbsentTime;
+    }
+    
+    private void initListeners(){
+    	absents.addListener(new ListChangeListener<Absent>(){
+			@Override
+			public void onChanged(Change<? extends Absent> c) {
+				for (Absent absent : absents) {
+					System.out.println(absent.getSecureCode());
+				}
+			}
+        });
     }
 }

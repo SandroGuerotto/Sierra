@@ -3,6 +3,8 @@ package view;
 
 import com.jfoenix.effects.JFXDepthManager;
 import data.Person;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -46,42 +48,37 @@ public class ClassMember extends Pane implements Initializable {
     private boolean isRepresentative = false;  //Klassensprecher
     private boolean isClassTeacher = false;  //Klassensprecher
 
-    private String name, forename, birthdate, telnr, email, roll = "Schüler", addText;
+    private StringProperty roll;
     // roll = text for user information
     private int id;
+    
+    private Person person;
 
     public ClassMember(Person person ){
-        this.id = person.getId();
-        this.isTeacher = person.isTeacher();
-        this.isRepresentative = person.isRepresentative();
-        this.name = person.getName();
-        this.forename = person.getForename();
-        this.birthdate = person.getBirthdate();
-        this.telnr = person.getTelnr();
-        this.email = person.getEmail();
-        this.addText = person.getAddText();
+    	this.person = person;
 
-        if (this.isTeacher && this.isClassTeacher){
-            this.roll = "Klassenlehrer";
-        }else if(this.isTeacher && !this.isClassTeacher){
-            this.roll = "Lehrer";
-        }else if( this.isRepresentative){
-            this.roll = "Klassensprecher";
+        if(this.person.isTeacher() && !this.isClassTeacher){
+        	this.rollProperty().set("Lehrer");
+        }else if( this.person.isRepresentative()){
+        	this.rollProperty().set("Klassensprecher");
+        }else{
+        	this.rollProperty().set("Schüler");
         }
+        
     loadFXML();
 }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    	lbl_name.textProperty().bind(person.nameProperty());
+    	lbl_forename.textProperty().bind(person.forenameProperty());
+    	lbl_birthdate.textProperty().bind(person.birthdateProperty());
+    	lbl_telnr.textProperty().bind(person.telnrProperty());
+    	lbl_email.textProperty().bind(person.emailProperty());
+    	lbl_addtext.textProperty().bind(person.addTextProperty());
+    	lbl_roll.textProperty().bind(this.rollProperty());
+    	
 
-        lbl_name.setText(this.name);
-        lbl_forename.setText(this.forename);
-        lbl_birthdate.setText(this.birthdate);
-        lbl_telnr.setText(this.telnr);
-        lbl_email.setText(this.email);
-        lbl_roll.setText(this.roll);
-        lbl_addtext.setText(this.addText);
-
-        if (this.addText.isEmpty()){
+        if (this.person.getAddText().isEmpty()){
             lbl_addtext.setManaged(false);
             lbl_addtext.setVisible(false);
             lbl_addtext.setDisable(true);
@@ -92,7 +89,7 @@ public class ClassMember extends Pane implements Initializable {
     }
 
     private void loadFXML() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/classmember.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/classmember.fxml"));
         loader.setController(this);
         try {
             pane_root = loader.load();
@@ -106,24 +103,38 @@ public class ClassMember extends Pane implements Initializable {
     }
 
     public boolean isTeacher() {
-        return isTeacher;
+        return person.isTeacher();
     }
 
     public String getName() {
-        return name;
+        return person.getName();
     }
 
     public String getForename() {
-        return forename;
+        return person.getForename();
     }
 
     public String getTelnr() {
-        return telnr;
+        return person.getTelnr();
     }
+    
+	// roll
+	public String getRoll() {
+		return this.rollProperty().get();
+	}
+	public void setRoll(String roll) {
+		this.rollProperty().set(roll);
+	}
+	public StringProperty rollProperty(){
+		if (this.roll == null) {
+            this.roll = new SimpleStringProperty(this, "roll");
+        }
+        return this.roll;
+	}
 
     public void setIsClassTeacher(boolean isClassTeacher) {
         this.isClassTeacher = isClassTeacher;
-        this.roll = "Klassenlehrer";
+        this.rollProperty().set("Klassenlehrer");
     }
 
 }

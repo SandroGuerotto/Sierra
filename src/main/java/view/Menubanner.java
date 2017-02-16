@@ -3,12 +3,16 @@ package view;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPopup;
+
+import controller.Controller;
 import data.Notification;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import helper.Color;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.ListChangeListener.Change;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -32,7 +36,7 @@ public class Menubanner extends HBox {
     private ObservableList<Node> items = FXCollections.observableArrayList();
     private ObservableList<Notification> notifications;
 
-    public Menubanner(GridPane parent, StackPane main , ObservableList<Notification> notifications) {
+    public Menubanner(GridPane parent, StackPane main , ObservableList<Notification> notifications, Controller controller) {
         this.notifications = notifications;
         this.setFillHeight(true);
         VBox wrapper = new VBox();
@@ -54,7 +58,7 @@ public class Menubanner extends HBox {
 
         initNotificationPopup(main);
 
-        initSettingPopup(main);
+        initSettingPopup(main, controller);
 
     }
 
@@ -149,10 +153,17 @@ public class Menubanner extends HBox {
                 popup_notifcation.show(JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 0, 50);
             }
         });
+    	this.notifications.addListener(new ListChangeListener<Notification>(){
+			@Override
+			public void onChanged(Change<? extends Notification> c) {
+				popup_notifcation.updateContent();
+				setIcon();
+			}
+        });
     }
 
-    private void initSettingPopup(StackPane main){
-        popupSetting = new PopupSetting();
+    private void initSettingPopup(StackPane main, Controller controller){
+        popupSetting = new PopupSetting(controller);
         popupSetting.setPopupContainer(main);
         popupSetting.setSource(btn_settings);
         btn_settings.setOnMouseClicked((e)->{

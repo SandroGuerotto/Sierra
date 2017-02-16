@@ -14,8 +14,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Popup object to edit settings or log out
- * view controller for popupSettings.fxml 
+ * Popup object to edit settings or log out view controller for
+ * popupSettings.fxml
  * 
  * @author Sandro Guerotto
  * @since 01.01.2017
@@ -23,39 +23,40 @@ import java.util.ResourceBundle;
  */
 public class PopupSetting extends JFXPopup implements Initializable {
 
-    @FXML
-    private Label lbl_name_forename, lbl_email;
+	@FXML
+	private Label lbl_forename, lbl_name, lbl_email;
 
-    private Controller controller;
-    private BorderPane content;
+	private Controller controller;
+	private BorderPane content;
 
-    public PopupSetting(){
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/popupSetting.fxml"));
-        loader.setController(this);
-        try {
-            content = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        this.setContent(content);
+	public PopupSetting(Controller controller) {
+		this.controller = controller;
+		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/popupSetting.fxml"));
+		loader.setController(this);
+		try {
+			content = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		this.setContent(content);
 
-    }
+	}
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        lbl_name_forename.setText("Maximori" + " " + "Dunois" );
-        lbl_email.setText("maximori.dunois@gmail.com");
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		lbl_forename.textProperty().bind(controller.getLoggedinUser().forenameProperty());
+		lbl_name.textProperty().bind(controller.getLoggedinUser().nameProperty());
+		lbl_email.textProperty().bind(controller.getLoggedinUser().emailProperty());
+	}
 
-    }
+	@FXML
+	private void exit() {
+		Platform.exit();
+		System.exit(0);
+	}
 
-    @FXML
-    private void exit(){
-        Platform.exit();
-        System.exit(0);
-    }
-
-    @FXML
-    private void goToSetting(){
-        System.out.println("settings");
-    }
+	@FXML
+	private void goToSetting() {
+		System.out.println("settings");
+	}
 }

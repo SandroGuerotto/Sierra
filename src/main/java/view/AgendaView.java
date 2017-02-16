@@ -1,9 +1,14 @@
 package view;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.jfoenix.controls.JFXPopup;
+
 import controller.Controller;
+import data.Appointment;
 import javafx.geometry.HPos;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
@@ -23,6 +28,7 @@ import jfxtras.scene.layout.GridPane;
  * @version 0.1
  */
 public class AgendaView {
+	
     public AgendaView(Controller controller) {
         agenda = new Agenda();
 
@@ -33,18 +39,26 @@ public class AgendaView {
         }
 
         // accept new appointments
-        agenda.newAppointmentCallbackProperty().set(dateTimeRange -> new Agenda.AppointmentImplLocal()
-                .withStartLocalDateTime(dateTimeRange.getStartLocalDateTime())
-                .withEndLocalDateTime(dateTimeRange.getEndLocalDateTime())
-                .withSummary("new")
-                .withDescription("new")
-                .withAppointmentGroup(lAppointmentGroupMap.get("group04")));
-
-
+        agenda.newAppointmentCallbackProperty().set(dateTimeRange -> 
+        new Appointment(dateTimeRange.getStartLocalDateTime(), dateTimeRange.getEndLocalDateTime(), "", "",  null, null, "Aufgabe")
+        	.withAppointmentGroup(lAppointmentGroupMap.get("group04")));
+        
+        agenda.setAppointmentChangedCallback(param -> {
+        	controller.updateAppointment((Appointment) param, (Appointment) param);
+            return null;
+        });
+        
         agenda.appointments().addAll(controller.getAppointments());
-
+        setSettings();
     }
-
+    /**
+	 * set initial setting to display standard schedule plan from logged in student.
+	 */
+    private void setSettings() {
+    	agenda.setAllowDragging(true);
+    	agenda.setAllowResize(true);
+    }
+    
     final Agenda agenda;
     
     /**

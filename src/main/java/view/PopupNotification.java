@@ -17,17 +17,27 @@ import javafx.scene.layout.BorderPane;
  */
 public class PopupNotification extends JFXPopup {
 
-    JFXListView<Notification> listView;
+	private JFXListView<Notification> listView;
+    private ObservableList<Notification> notifications;
 
     public PopupNotification(ObservableList<Notification> notifications) {
-        BorderPane root = new BorderPane();
-        root.setPrefWidth(350);
-        root.setMaxHeight(360);
+    	this.notifications = notifications;
+    	updateContent();
 
-        listView = new JFXListView<>();
-        listView.setId("notification");
+    }
+    public void updateContent(){
+        BorderPane root = new BorderPane();
+        this.getChildren().clear();
+        
+        root.getChildren().removeAll();
+       
         if (notifications.size() > 0){
-            listView.setItems(notifications);
+        	listView = new JFXListView<>();
+            listView.setId("notification");
+            listView.setItems(this.notifications);
+            
+            root.setPrefWidth(350);
+            root.setMaxHeight(360);
             root.setCenter(listView);
             this.setContent(root);
         }else{
@@ -35,7 +45,8 @@ public class PopupNotification extends JFXPopup {
             label.setStyle("-fx-background-color: white");
             label.getStyleClass().add("text-content");
             label.setPadding(new Insets(5,5,5,5));
-            this.setContent(label);
+            root.setCenter(label);
+            this.setContent(root);
         }
     }
     public void clearSelection(){

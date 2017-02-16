@@ -1,5 +1,9 @@
 package data;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.Label;
 /**
  * Data class for all subject
@@ -10,34 +14,57 @@ import javafx.scene.control.Label;
  */
 public class Subject extends Label {
 
-	private int id1;
-	private String name;
-	private String colour_hex;
+	private IntegerProperty id1;
+	private StringProperty name;
+	private StringProperty color_hex;
 	
 	public Subject(int id, String name, String colour_hex){
-		this.id1 = id;
-		this.name = name;
-		this.colour_hex = colour_hex;
-		this.setText(name);
+		this.setId1(id);
+		this.setName(name);
+		this.setColor_hex(colour_hex);
+		this.textProperty().bind(this.nameProperty());
 	}
 	
+	// id
 	public int getId1() {
-		return id1;
+		return this.id1Property().get();
 	}
 	public void setId1(int id) {
-		this.id1 = id;
+		this.id1Property().set(id);;
 	}
+	public IntegerProperty id1Property(){
+		if (this.id1 == null) {
+            this.id1 = new SimpleIntegerProperty(this, "id1");
+        }
+        return this.id1;
+	}
+	
+	// name
 	public String getName() {
-		return name;
+		return this.nameProperty().get();
 	}
 	public void setName(String name) {
-		this.name = name;
+		this.nameProperty().set(name);
 	}
-	public String getColour_hex() {
-		return colour_hex;
+	public StringProperty nameProperty(){
+		if (this.name == null) {
+            this.name = new SimpleStringProperty(this, "name");
+        }
+        return this.name;
 	}
-	public void setColour_hex(String colour_hex) {
-		this.colour_hex = colour_hex;
+	
+	// color_hex
+	public String getColor_hex() {
+		return this.color_hexProperty().get();
+	}
+	public void setColor_hex(String hex) {
+		this.color_hexProperty().set(hex);
+	}
+	public StringProperty color_hexProperty(){
+		if (this.color_hex == null) {
+            this.color_hex = new SimpleStringProperty(this, "color_hex");
+        }
+        return this.color_hex;
 	}
 	
 }

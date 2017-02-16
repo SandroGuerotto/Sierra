@@ -31,7 +31,7 @@ public class MySQLConnection implements DataSaver{
 	
 	private void startConnection(){
 		try {
-		    this.conn =
+		    MySQLConnection.conn =
 		       DriverManager.getConnection(url,user,password);
 		} catch (SQLException ex) {
 		    // handle any errors
@@ -47,7 +47,7 @@ public class MySQLConnection implements DataSaver{
 		ArrayList<String> result = new ArrayList<String>();
 		
 		try {
-		    stmt = this.conn.prepareStatement(Queries.getQuery("get_AllRollen"));
+		    stmt = MySQLConnection.conn.prepareStatement(Queries.getQuery("get_AllRollen"));
 		    rs = stmt.executeQuery();
 		    while(rs.next()){
 		    	result.add(rs.getString(2));		

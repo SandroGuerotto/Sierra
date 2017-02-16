@@ -11,6 +11,7 @@ import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import helper.Color;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,12 +20,15 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import view.*;
 
 import java.net.URL;
@@ -111,13 +115,13 @@ public class HomeHandler implements Initializable {
     private TableColumn<Absent, Boolean> col_absentExcuse;
 
     @FXML
-    private Label lbl_AbsentTotal, lbl_teacher, lbl_telnrTeacher;
+    private Label lbl_AbsentTotal, lbl_teacher, lbl_telnrTeacher, lbl_absenterror;
 
 
     @FXML
     private StackPane pane_main;
 
-    private PopupNewTask popup_addTask;
+    private PopupNewTask popup_addTask, popup_addNews;
 
     private Controller controller;
 
@@ -161,16 +165,19 @@ public class HomeHandler implements Initializable {
         ClassMember teacher = controller.getMemebers().stream().filter(ClassMember::isTeacher).collect(Collectors.toList()).get(0);
         lbl_teacher.setText(teacher.getForename() + " " + teacher.getName());
         lbl_telnrTeacher.setText(teacher.getTelnr());
-
-        lbl_AbsentTotal.setText(controller.getTotalAbsentTime());
+        lbl_AbsentTotal.textProperty().bind(controller.getTotalAbsentTime());
+        
+        lbl_absenterror.setVisible(false);
     }
 
     private void initPopup() {
-        Platform.runLater(() -> {
-            popup_addTask = new PopupNewTask(controller);
-            popup_addTask.setPopupContainer(controller.getPane_main());
-            popup_addTask.setSource(btn_addTask);
-        });
+        popup_addTask = new PopupNewTask(controller);
+        popup_addTask.setPopupContainer(controller.getPane_main());
+        popup_addTask.setSource(btn_addTask);
+        
+        popup_addNews = new PopupNewTask(controller);
+        popup_addNews.setPopupContainer(controller.getPane_main());
+        popup_addNews.setSource(btn_addNews);
     }
 
     /**
@@ -179,18 +186,18 @@ public class HomeHandler implements Initializable {
      */
     private void initCol() {
 
-        col_jokerDate.setCellValueFactory(new PropertyValueFactory<Request, String>("date"));
-        col_jokerReason.setCellValueFactory(new PropertyValueFactory<Request, String>("reason"));
-        col_jokerStatus.setCellValueFactory(new PropertyValueFactory<Request, String>("status"));
+        col_jokerDate.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
+        col_jokerStatus.setCellValueFactory(cellData -> cellData.getValue().reasonProperty());
+        col_jokerStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
 
-        col_gesuchDate.setCellValueFactory(new PropertyValueFactory<Gesuch, String>("date"));
-        col_gesuchReason.setCellValueFactory(new PropertyValueFactory<Gesuch, String>("reason"));
-        col_gesuchStatus.setCellValueFactory(new PropertyValueFactory<Gesuch, String>("status"));
-
-        col_AbsentFrom.setCellValueFactory(new PropertyValueFactory<Absent, String>("datefrom"));
-        col_AbsentTo.setCellValueFactory(new PropertyValueFactory<Absent, String>("dateto"));
-        col_absentReason.setCellValueFactory(new PropertyValueFactory<Absent, String>("reason"));
-        col_absentExcuse.setCellValueFactory(new PropertyValueFactory<Absent, Boolean>("isExcused"));
+        col_gesuchDate.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
+        col_gesuchReason.setCellValueFactory(cellData -> cellData.getValue().reasonProperty());
+        col_gesuchStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+        
+        col_AbsentFrom.setCellValueFactory(cellData -> cellData.getValue().datefromProperty());
+        col_AbsentTo.setCellValueFactory(cellData -> cellData.getValue().datetoProperty());
+        col_absentReason.setCellValueFactory(cellData -> cellData.getValue().reasonProperty());
+        col_absentExcuse.setCellValueFactory(cellData -> cellData.getValue().isExcusedProperty());
 
         col_absentExcuse.setCellFactory(param -> new TableCell<Absent, Boolean>() {
             @Override
@@ -211,7 +218,52 @@ public class HomeHandler implements Initializable {
                 this.setGraphic(icon);
             }
         });
+//        table_absent.getColumns().forEach(this::addTooltipAbsent);
     }
+    
+//    private <T> void addTooltipAbsent(TableColumn<Absent,T> column) {
+//
+//        Callback<TableColumn<Absent, T>, TableCell<Absent,T>> existingCellFactory 
+//            = column.getCellFactory();
+//
+//        column.setCellFactory(c -> {
+//            TableCell<Absent, T> cell = existingCellFactory.call(c);
+//
+//            Tooltip tooltip = new Tooltip();
+//            // can use arbitrary binding here to make text depend on cell
+//            // in any way you need:
+////            Absent test = (Absent) column.getCellData(cell.getIndex());
+//            System.out.println(cell.getIndex());
+//            Absent data = (Absent) cell.getTableView().getItems().get(cell.getIndex());
+//            
+//            tooltip.textProperty().bind(cell.itemProperty().asString());
+////            tooltip.textProperty().bind(column.getCellData(cell.getIndex().getS));
+//
+//            cell.setTooltip(tooltip);
+//            return cell ;
+//        });
+//    }
+    
+//    private void test(){
+//    	table_absent.setRowFactory(new Callback<TableView, TableRow>() {
+//    	    @Override
+//    	    public TableRow call(final TableView p) {
+//    	        return new TableRow() {
+//    	            @Override
+//    	            public void updateItem(Absent item, boolean empty) {
+//    	                super.updateItem(item, empty);
+//    	                if (item == null) {
+//    	                    setTooltip(null);
+//    	                } else {
+//    	                    Tooltip tooltip = new Tooltip();
+//    	                    tooltip.setText(getItem().getTip());
+//    	                    setTooltip(tooltip);
+//    	                }
+//    	            }
+//    	        };
+//    	    }
+//    	});
+//    }
     /**
      * "add" button factory
      */
@@ -261,27 +313,47 @@ public class HomeHandler implements Initializable {
 
     @FXML
     private void addTask() {
-        popup_addTask.setInfo("", "", LocalDate.now(), LocalTime.now(), null, null, null);
+        popup_addTask.setInfo("", "", LocalDate.now(), LocalTime.now(), null, null, null, false, "Aufgabe");
         popup_addTask.show(JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 0, 50);
     }
 
     @FXML
     private void addNews() {
+    	popup_addNews.setInfo("", "", LocalDate.now(), LocalTime.now(), null, null, null, false, "Information");
+    	popup_addNews.show(JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 0, 50);
     }
 
 
     @FXML
     private void verifyCode() {
         if (!tf_code.getText().isEmpty()) {
-            //do something
+        	if (controller.verifyCode(tf_code.getText())){
+        		tf_code.setText("");
+        	}else{
+        		showError("Bestätigungscode ungültig!");
+        	}
+            
         }
     }
+
+	private void showError(String msg) {
+		lbl_absenterror.setText(msg);
+		lbl_absenterror.setVisible(true);
+		new Thread(() -> {
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e1) {
+			}
+			Platform.runLater(() -> lbl_absenterror.setVisible(false));
+		}).start();
+	}
 
     @FXML
     private void save_absent() {
         if (cb_reason.getSelectionModel().getSelectedItem() != null && dp_startdate.getValue() != null
                 && dp_starttime.getTime() != null && dp_enddate.getValue() != null && dp_endtime.getTime() != null
-                && dp_startdate.getValue().isBefore(dp_enddate.getValue())) {
+                && ( dp_startdate.getValue().isBefore(dp_enddate.getValue())
+                || dp_startdate.getValue().isEqual(dp_enddate.getValue()) ) ) {
             LocalDateTime from = LocalDateTime.of(dp_startdate.getValue(), dp_starttime.getTime());
             LocalDateTime to = LocalDateTime.of(dp_enddate.getValue(), dp_endtime.getTime());
             controller.addAbsent(cb_reason.getSelectionModel().getSelectedItem(), from, to);
@@ -289,14 +361,10 @@ public class HomeHandler implements Initializable {
 
             dp_enddate.setValue(null);
             dp_startdate.setValue(null);
-
-            try {
-                dp_endtime.setTime(null);
-                dp_starttime.setTime(null);
-            } catch (Exception e) {
-            }
-            lbl_AbsentTotal.setText(controller.getTotalAbsentTime());
-
+            dp_endtime.setTime(LocalTime.of(0, 0));
+            dp_starttime.setTime(LocalTime.of(0, 0));
+        }else{
+        	showError("Bitte alles ausfüllen!");
         }
     }
     /**
@@ -304,11 +372,11 @@ public class HomeHandler implements Initializable {
      */
     private void editAppointment() {
         controller.getAgendaView().getAgenda().setEditAppointmentCallback(param -> {
-            Appointment test = (Appointment) param;
+            Appointment newA = (Appointment) param;
 
-            LocalDate date = test.getStartLocalDateTime().toLocalDate();
-            LocalTime time = test.getStartLocalDateTime().toLocalTime();
-            popup_addTask.setInfo(test.getSummary(), test.getDescription(), date, time, test.getSubject(), test.getTeacher(), test);
+            LocalDate date = newA.getStartLocalDateTime().toLocalDate();
+            LocalTime time = newA.getStartLocalDateTime().toLocalTime();
+            popup_addTask.setInfo(newA.getSummary(), newA.getDescription(), date, time, newA.getSubject(), newA.getTeacher(), newA, true ,"");
             popup_addTask.show(JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 0, 50);
             return null;
         });
@@ -324,4 +392,5 @@ public class HomeHandler implements Initializable {
             pane_schedule.setCenter(controller.getScheduleView().getPanel());
         }
     }
+    
 }

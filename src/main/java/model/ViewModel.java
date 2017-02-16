@@ -44,6 +44,24 @@ public class ViewModel {
     public ViewModel(Controller controller) {
         this.controller = controller;
     }
+    
+    public void loadLogin(){
+    	loginHandler = new LoginHandler(controller);
+    	FXMLLoader loader;
+    	try {
+	    	//loading screen
+	        loader = new FXMLLoader(this.getClass().getResource("/view/loadinglogin.fxml"));
+	        pane_loader = loader.load();
+	
+	        // Login Screen
+	        loader = new FXMLLoader(this.getClass().getResource("/view/login.fxml"));
+	        loader.setController(loginHandler);
+	        pane_login = loader.load();
+    	 } catch (IOException e) {
+             e.printStackTrace();
+         }
+    }
+    
     /**
 	 * loads all Controller for FXML files and pass them the overall controller
 	 */
@@ -51,7 +69,7 @@ public class ViewModel {
         homeHandler = new HomeHandler(controller);
         schoolHandler = new SchoolHandler(controller);
         applicationHandler = new ApplicationHandler(controller);
-        loginHandler = new LoginHandler(controller);
+        
         myMarksHandler = new MyMarksHandler(controller);
         myClassHandler = new MyClassHandler(controller);
         teacherHandler = new TeacherHandler(controller);
@@ -64,16 +82,6 @@ public class ViewModel {
     public void loadFxml() {
         FXMLLoader loader;
         try {
-            //loading screen
-            loader = new FXMLLoader(this.getClass().getResource("/view/loadinglogin.fxml"));
-            pane_loader = loader.load();
-
-            // Login Screen
-            loader = new FXMLLoader(this.getClass().getResource("/view/login.fxml"));
-            loader.setController(loginHandler);
-            pane_login = loader.load();
-
-
             // Application
             loader = new FXMLLoader(this.getClass().getResource("/view/application.fxml"));
             loader.setController(applicationHandler);
@@ -103,6 +111,7 @@ public class ViewModel {
             loader = new FXMLLoader(this.getClass().getResource("/view/teachers.fxml"));
             loader.setController(teacherHandler);
             pane_teacher = loader.load();
+            System.out.println("fertig load fxml");
 
         } catch (IOException e) {
             e.printStackTrace();

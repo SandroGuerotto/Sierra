@@ -41,7 +41,7 @@ public class ApplicationHandler implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Menubanner menubanner = new Menubanner(pane_container, pane_main, controller.getNotifications());
+        Menubanner menubanner = new Menubanner(pane_container, pane_main, controller.getNotifications(), this.controller);
         initMenuListener(menubanner);
 
         pane_container.add(menubanner, 0, 0, 4, 1);
