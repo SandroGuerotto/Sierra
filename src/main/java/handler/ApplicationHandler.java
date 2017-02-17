@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -31,6 +32,8 @@ public class ApplicationHandler implements Initializable {
     private GridPane pane_container;
     @FXML
     private BorderPane spinner;
+    @FXML
+    private Label lbl_msg;
 
     private Controller controller;
 
@@ -45,7 +48,10 @@ public class ApplicationHandler implements Initializable {
         initMenuListener(menubanner);
 
         pane_container.add(menubanner, 0, 0, 4, 1);
-
+        lbl_msg.setVisible(Controller.devmode);
+        if (Controller.devmode) {
+        	lbl_msg.setText("Developer mode is active! --> Controller.java");
+		}
     }
     /**
      * initialize method to create menubanner

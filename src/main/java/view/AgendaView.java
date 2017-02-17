@@ -1,34 +1,22 @@
 package view;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.jfoenix.controls.JFXPopup;
-
 import controller.Controller;
 import data.Appointment;
-import helper.DateFormatter;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.HPos;
 import javafx.scene.Node;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.Priority;
 import jfxtras.scene.control.LocalDateTimeTextField;
 import jfxtras.scene.control.agenda.Agenda;
-import jfxtras.scene.control.agenda.AgendaSkinSwitcher;
 import jfxtras.scene.layout.GridPane;
 
 /**
@@ -66,19 +54,13 @@ public class AgendaView {
         setSettings();
         
         setWeekNumber();
-    	agenda.displayedLocalDateTime().addListener(new ChangeListener<LocalDateTime>() {
-			@Override
-			public void changed(ObservableValue<? extends LocalDateTime> arg0, LocalDateTime arg1, LocalDateTime arg2) {
-				 setWeekNumber();
-			}
-		});
+    	agenda.displayedLocalDateTime().addListener((arg) ->  setWeekNumber());
     }
     /**
      * set displayed week number
      */
     private void setWeekNumber(){
 		int weekNumber = agenda.getDisplayedLocalDateTime().toLocalDate().get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear());
-//		setDisplayedLocalDate(DateFormatter.LocalDateToString(agenda.getDisplayedLocalDateTime().toLocalDate()));
 		setWeekNumberProperty("Woche " + weekNumber);
 		setdisplayedLocalDate(agenda.getDisplayedLocalDateTime().toLocalDate());
     }
@@ -156,7 +138,7 @@ public class AgendaView {
         this.displayedLocalDateProperty().set(value);
     }
 
-    public LocalDate getdisplayedLocalDatey() {
+    public LocalDate getdisplayedLocalDate() {
         return this.displayedLocalDateProperty().get();
     }
 

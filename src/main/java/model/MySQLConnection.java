@@ -67,6 +67,7 @@ public class MySQLConnection implements DataSaver{
 	/* (non-Javadoc)
 	 * @see Interfaces.DataSaver#insertPerson(data.Person)
 	 */
+	@SuppressWarnings("unused")
 	@Override
 	public boolean insertPerson(Person person) {
 		PreparedStatement stmt = null;

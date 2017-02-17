@@ -79,6 +79,8 @@ public class Database {
 		types.add(type);
 		type = new String("Hausaufgabe");
 		types.add(type);
+		type = new String("Lektion");
+		types.add(type);
 	}
 
 	private void initNews() {
@@ -246,6 +248,9 @@ public class Database {
 		return news;
 	}
 
+	public ObservableList<String> getTypes(){
+		return types;
+	}
 	public void addRequest(Request request) {
 		requests.add(request);
 	}
@@ -317,91 +322,83 @@ public class Database {
 		// convert date to localdate
 		LocalDate monday = c.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		// All Appointments on monday
-		Appointment appointmentMonday = new Appointment(2, LocalDateTime.of(monday, LocalTime.of(7, 30)),
-				LocalDateTime.of(monday, LocalTime.of(9, 10)), "Mathematik",
-				"Lernziele 1-4 \n" + "Einfaches Rechnen 1: S12 - S24 \n" + "Zeit: 45min", subjects.get(0),
-				people.get(1), "Fach");
-		Appointment appointmentMonday1 = new Appointment(2, LocalDateTime.of(monday, LocalTime.of(9, 40)),
-				LocalDateTime.of(monday, LocalTime.of(11, 10)), "Chemie", "" + "" + "", subjects.get(4), people.get(1),
-				"Fach");
-		Appointment appointmentMonday2 = new Appointment(2, LocalDateTime.of(monday, LocalTime.of(11, 10)),
-				LocalDateTime.of(monday, LocalTime.of(12, 10)), "Englisch", "" + "" + "", subjects.get(3),
-				people.get(1), "Fach");
-		Appointment appointmentMonday3 = new Appointment(2, LocalDateTime.of(monday, LocalTime.of(13, 30)),
-				LocalDateTime.of(monday, LocalTime.of(14, 45)), "Deutsch", "" + "" + "", subjects.get(2), people.get(1),
-				"Fach");
-		Appointment appointmentMonday4 = new Appointment(2, LocalDateTime.of(monday, LocalTime.of(14, 50)),
-				LocalDateTime.of(monday, LocalTime.of(16, 00)), "Geschichte", "" + "" + "", subjects.get(5),
-				people.get(1), "Fach");
+		Appointment appointmentMonday = new Appointment(200, LocalDateTime.of(monday, LocalTime.of(7, 30)),
+				LocalDateTime.of(monday, LocalTime.of(9, 10)), subjects.get(0).getName(), "", 
+				subjects.get(0), people.get(1), types.get(4));
+		Appointment appointmentMonday1 = new Appointment(201, LocalDateTime.of(monday, LocalTime.of(9, 40)),
+				LocalDateTime.of(monday, LocalTime.of(11, 10)), subjects.get(4).getName(), "", 
+				subjects.get(4), people.get(1),	types.get(4));
+		Appointment appointmentMonday2 = new Appointment(202, LocalDateTime.of(monday, LocalTime.of(11, 10)),
+				LocalDateTime.of(monday, LocalTime.of(12, 10)), subjects.get(3).getName(), "" , 
+				subjects.get(3), people.get(1), types.get(4));
+		Appointment appointmentMonday3 = new Appointment(203, LocalDateTime.of(monday, LocalTime.of(13, 30)),
+				LocalDateTime.of(monday, LocalTime.of(14, 45)), subjects.get(2).getName(), "", 
+				subjects.get(2), people.get(1),	types.get(4));
+		Appointment appointmentMonday4 = new Appointment(204, LocalDateTime.of(monday, LocalTime.of(14, 50)),
+				LocalDateTime.of(monday, LocalTime.of(16, 00)), subjects.get(5).getName(), "", 
+				subjects.get(5), people.get(1), types.get(4));
 
 		// All Appointments on Tuesday
-		Appointment appointmentTuesday = new Appointment(2, LocalDateTime.of(monday.plusDays(1), LocalTime.of(7, 30)),
-				LocalDateTime.of(monday.plusDays(1), LocalTime.of(8, 30)), "Französisch", "" + "" + "", subjects.get(1),
-				people.get(1), "Fach");
-		Appointment appointmentTuesday1 = new Appointment(2, LocalDateTime.of(monday.plusDays(1), LocalTime.of(8, 30)),
-				LocalDateTime.of(monday.plusDays(1), LocalTime.of(10, 00)), "Englisch", "" + "" + "", subjects.get(3),
-				people.get(1), "Fach");
-		Appointment appointmentTuesday2 = new Appointment(2, LocalDateTime.of(monday.plusDays(1), LocalTime.of(10, 30)),
-				LocalDateTime.of(monday.plusDays(1), LocalTime.of(12, 10)), "Geschichte", "" + "" + "", subjects.get(5),
-				people.get(1), "Fach");
-		Appointment appointmentTuesday3 = new Appointment(2, LocalDateTime.of(monday.plusDays(1), LocalTime.of(13, 30)),
-				LocalDateTime.of(monday.plusDays(1), LocalTime.of(14, 45)), "Mathematik", "" + "" + "", subjects.get(0),
-				people.get(1), "Fach");
-		Appointment appointmentTuesday4 = new Appointment(2, LocalDateTime.of(monday.plusDays(1), LocalTime.of(14, 50)),
-				LocalDateTime.of(monday.plusDays(1), LocalTime.of(16, 00)), "Deutsch", "" + "" + "", subjects.get(2),
-				people.get(1), "Fach");
+		Appointment appointmentTuesday = new Appointment(205, LocalDateTime.of(monday.plusDays(1), LocalTime.of(7, 30)),
+				LocalDateTime.of(monday.plusDays(1), LocalTime.of(8, 30)), subjects.get(1).getName(), "", 
+				subjects.get(1), people.get(1), types.get(4));
+		Appointment appointmentTuesday1 = new Appointment(206, LocalDateTime.of(monday.plusDays(1), LocalTime.of(8, 30)),
+				LocalDateTime.of(monday.plusDays(1), LocalTime.of(10, 00)), subjects.get(3).getName(), "", 
+				subjects.get(3), people.get(1), types.get(4));
+		Appointment appointmentTuesday2 = new Appointment(207, LocalDateTime.of(monday.plusDays(1), LocalTime.of(10, 30)),
+				LocalDateTime.of(monday.plusDays(1), LocalTime.of(12, 10)), subjects.get(5).getName(), "", 
+				subjects.get(5), people.get(1), types.get(4));
+		Appointment appointmentTuesday3 = new Appointment(208, LocalDateTime.of(monday.plusDays(1), LocalTime.of(13, 30)),
+				LocalDateTime.of(monday.plusDays(1), LocalTime.of(14, 45)), subjects.get(0).getName(), "" , 
+				subjects.get(0), people.get(1), types.get(4));
+		Appointment appointmentTuesday4 = new Appointment(209, LocalDateTime.of(monday.plusDays(1), LocalTime.of(14, 50)),
+				LocalDateTime.of(monday.plusDays(1), LocalTime.of(16, 00)), subjects.get(2).getName(), "", 
+				subjects.get(2), people.get(1), types.get(4));
 
 		// All Appointments on Wednesday
-		Appointment appointmentWednesday = new Appointment(2, LocalDateTime.of(monday.plusDays(2), LocalTime.of(7, 30)),
-				LocalDateTime.of(monday.plusDays(2), LocalTime.of(9, 10)), "Chemie", "" + "" + "", subjects.get(4),
-				people.get(1), "Fach");
-		Appointment appointmentWednesday1 = new Appointment(2,
-				LocalDateTime.of(monday.plusDays(2), LocalTime.of(9, 40)),
-				LocalDateTime.of(monday.plusDays(2), LocalTime.of(11, 10)), "Mathematik", "" + "" + "", subjects.get(0),
-				people.get(1), "Fach");
-		Appointment appointmentWednesday2 = new Appointment(2,
-				LocalDateTime.of(monday.plusDays(2), LocalTime.of(11, 10)),
-				LocalDateTime.of(monday.plusDays(2), LocalTime.of(12, 10)), "Deutsch", "" + "" + "", subjects.get(2),
-				people.get(1), "Fach");
+		Appointment appointmentWednesday = new Appointment(210, LocalDateTime.of(monday.plusDays(2), LocalTime.of(7, 30)),
+				LocalDateTime.of(monday.plusDays(2), LocalTime.of(9, 10)), subjects.get(4).getName(),"", 
+				subjects.get(4), people.get(1), types.get(4));
+		Appointment appointmentWednesday1 = new Appointment(211, LocalDateTime.of(monday.plusDays(2), LocalTime.of(9, 40)),
+				LocalDateTime.of(monday.plusDays(2), LocalTime.of(11, 10)), subjects.get(0).getName(), "", 
+				subjects.get(0), people.get(1), types.get(4));
+		Appointment appointmentWednesday2 = new Appointment(212, LocalDateTime.of(monday.plusDays(2), LocalTime.of(11, 10)),
+				LocalDateTime.of(monday.plusDays(2), LocalTime.of(12, 10)), subjects.get(2).getName(), "", 
+				subjects.get(2), people.get(1), types.get(4));
 
 		// All Appointments on Thursday
-		Appointment appointmentThursday = new Appointment(2, LocalDateTime.of(monday.plusDays(3), LocalTime.of(8, 10)),
-				LocalDateTime.of(monday.plusDays(3), LocalTime.of(9, 10)), "Englisch", "" + "" + "", subjects.get(3),
-				people.get(1), "Fach");
-		Appointment appointmentThursday1 = new Appointment(2, LocalDateTime.of(monday.plusDays(3), LocalTime.of(9, 40)),
-				LocalDateTime.of(monday.plusDays(3), LocalTime.of(11, 10)), "Französisch", "" + "" + "",
-				subjects.get(1), people.get(1), "Fach");
-		Appointment appointmentThursday2 = new Appointment(2,
-				LocalDateTime.of(monday.plusDays(3), LocalTime.of(11, 10)),
-				LocalDateTime.of(monday.plusDays(3), LocalTime.of(12, 10)), "Mathematik", "" + "" + "", subjects.get(0),
-				people.get(1), "Fach");
-		Appointment appointmentThursday3 = new Appointment(2,
-				LocalDateTime.of(monday.plusDays(3), LocalTime.of(13, 30)),
-				LocalDateTime.of(monday.plusDays(3), LocalTime.of(16, 00)), "Chemie", "" + "" + "", subjects.get(4),
-				people.get(1), "Fach");
+		Appointment appointmentThursday = new Appointment(213, LocalDateTime.of(monday.plusDays(3), LocalTime.of(8, 10)),
+				LocalDateTime.of(monday.plusDays(3), LocalTime.of(9, 10)), subjects.get(3).getName(), "", 
+				subjects.get(3), people.get(1), types.get(4));
+		Appointment appointmentThursday1 = new Appointment(214, LocalDateTime.of(monday.plusDays(3), LocalTime.of(9, 40)),
+				LocalDateTime.of(monday.plusDays(3), LocalTime.of(11, 10)), subjects.get(1).getName(), "",
+				subjects.get(1), people.get(1), types.get(4));
+		Appointment appointmentThursday2 = new Appointment(215, LocalDateTime.of(monday.plusDays(3), LocalTime.of(11, 10)),
+				LocalDateTime.of(monday.plusDays(3), LocalTime.of(12, 10)),	subjects.get(0).getName(), "" , 
+				subjects.get(0), people.get(1), types.get(4));
+		Appointment appointmentThursday3 = new Appointment(216, LocalDateTime.of(monday.plusDays(3), LocalTime.of(13, 30)),
+				LocalDateTime.of(monday.plusDays(3), LocalTime.of(16, 00)), subjects.get(4).getName(), "", 
+				subjects.get(4), people.get(1), types.get(4));
 
 		// All Appointments on Friday
-		Appointment appointmentFriday = new Appointment(2, LocalDateTime.of(monday.plusDays(4), LocalTime.of(8, 10)),
-				LocalDateTime.of(monday.plusDays(4), LocalTime.of(9, 10)), "Deutsch", "" + "" + "", subjects.get(2),
-				people.get(1), "Fach");
-		Appointment appointmentFriday1 = new Appointment(2, LocalDateTime.of(monday.plusDays(4), LocalTime.of(9, 40)),
-				LocalDateTime.of(monday.plusDays(4), LocalTime.of(11, 10)), "Mathematik", "" + "" + "", subjects.get(0),
-				people.get(1), "Fach");
-		Appointment appointmentFriday2 = new Appointment(2, LocalDateTime.of(monday.plusDays(4), LocalTime.of(11, 10)),
-				LocalDateTime.of(monday.plusDays(4), LocalTime.of(12, 10)), "Englisch", "" + "" + "", subjects.get(3),
-				people.get(1), "Fach");
-		Appointment appointmentFriday3 = new Appointment(2, LocalDateTime.of(monday.plusDays(4), LocalTime.of(13, 30)),
-				LocalDateTime.of(monday.plusDays(4), LocalTime.of(15, 15)), "Geschichte", "" + "" + "", subjects.get(5),
-				people.get(1), "Fach");
+		Appointment appointmentFriday = new Appointment(217, LocalDateTime.of(monday.plusDays(4), LocalTime.of(8, 10)),
+				LocalDateTime.of(monday.plusDays(4), LocalTime.of(9, 10)), subjects.get(2).getName(), "", 
+				subjects.get(2), people.get(1), types.get(4));
+		Appointment appointmentFriday1 = new Appointment(218, LocalDateTime.of(monday.plusDays(4), LocalTime.of(9, 40)),
+				LocalDateTime.of(monday.plusDays(4), LocalTime.of(11, 10)), subjects.get(0).getName(), "", 
+				subjects.get(0), people.get(1), types.get(4));
+		Appointment appointmentFriday2 = new Appointment(219, LocalDateTime.of(monday.plusDays(4), LocalTime.of(11, 10)),
+				LocalDateTime.of(monday.plusDays(4), LocalTime.of(12, 10)), subjects.get(3).getName(), "" , 
+				subjects.get(3), people.get(1), types.get(4));
+		Appointment appointmentFriday3 = new Appointment(220, LocalDateTime.of(monday.plusDays(4), LocalTime.of(13, 30)),
+				LocalDateTime.of(monday.plusDays(4), LocalTime.of(15, 15)), subjects.get(5).getName(), "" , 
+				subjects.get(5), people.get(1), types.get(4));
 
 		// Add all Appointments
-		standard.addAll(appointmentMonday, appointmentMonday1, appointmentMonday2, appointmentMonday3,
-				appointmentMonday4);
-		standard.addAll(appointmentTuesday, appointmentTuesday1, appointmentTuesday2, appointmentTuesday3,
-				appointmentTuesday4);
+		standard.addAll(appointmentMonday, appointmentMonday1, appointmentMonday2, appointmentMonday3, appointmentMonday4);
+		standard.addAll(appointmentTuesday, appointmentTuesday1, appointmentTuesday2, appointmentTuesday3, appointmentTuesday4);
 		standard.addAll(appointmentWednesday, appointmentWednesday1, appointmentWednesday2);
-		standard.addAll(appointmentThursday, appointmentThursday1, appointmentThursday2, appointmentThursday3,
-				appointmentThursday);
+		standard.addAll(appointmentThursday, appointmentThursday1, appointmentThursday2, appointmentThursday3);
 		standard.addAll(appointmentFriday, appointmentFriday1, appointmentFriday2, appointmentFriday3);
 
 	}
@@ -433,7 +430,6 @@ public class Database {
 		appointments.addListener(new ListChangeListener<Appointment>() {
 			@Override
 			public void onChanged(Change<? extends Appointment> c) {
-				System.out.println("changes");
 				FXCollections.sort(events, comparatorItemEvent);
 				FXCollections.sort(news, comparatorItemEvent);
 				FXCollections.sort(notifications, comparatorNotification);

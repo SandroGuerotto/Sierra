@@ -5,7 +5,6 @@ import exception.LoginException;
 import helper.DateFormatter;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.scene.layout.Pane;
@@ -31,7 +30,7 @@ import java.util.UUID;
  */
 public class Controller {
 	
-	private final boolean skiplogin = true;
+	public static final boolean devmode = true; // set value to false to deactivate developer mode
 	
     private Stage stage;
     private Database database;
@@ -88,7 +87,7 @@ public class Controller {
      */
     void start(Stage stage) {
         this.stage = stage;
-        if (skiplogin) {
+        if (devmode) {
         	this.setLoggedinUser(database.getPeople().filtered(t -> "jean.kalt".equals(t.getUsername()) && "1234".equals(t.getPassword())).get(0));
         	new Thread(loadApplicationThread).start();
 		}else{
@@ -162,6 +161,10 @@ public class Controller {
 
     public ObservableList<Absent> getAbsents() {
         return database.getAbsents();
+    }
+    
+    public ObservableList<String> getTypes() {
+        return database.getTypes();
     }
 
     public void addJoker(LocalDate date, String reason) {

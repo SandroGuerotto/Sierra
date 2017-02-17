@@ -17,7 +17,6 @@ public class Sierra extends Application {
 	 * @param args start arguments
 	 */
     public static void main(String[] args){
-    	System.out.println("test");
         launch(args);
     }
 

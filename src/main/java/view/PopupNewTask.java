@@ -59,7 +59,7 @@ public class PopupNewTask extends JFXPopup implements Initializable {
 	@FXML
 	private JFXTextArea tf_descr;
 	@FXML
-	private Label lbl_error, lbl_titel;
+	private Label lbl_error, lbl_titel, lbl_teacher, lbl_subject;
 	@FXML
 	private GridPane popupTask;
 
@@ -122,52 +122,49 @@ public class PopupNewTask extends JFXPopup implements Initializable {
 
 	@FXML
 	private void save() {
-		if (!tf_descr.getText().isEmpty() && dp_date.getValue() != null && dp_date.getValue() != null
-				&& !tf_title.getText().isEmpty() && cb_teacher.getSelectionModel().getSelectedItem() != null
-				&& cb_subject.getSelectionModel().getSelectedItem() != null) {
-			System.out.println("input fields checked");
-			try {
-				Appointment appointment = new Appointment(LocalDateTime.of(dp_date.getValue(), dp_time.getTime()),
-						null, tf_title.getText(),
-						tf_descr.getText(), cb_subject.getSelectionModel().getSelectedItem(),
-						cb_teacher.getSelectionModel().getSelectedItem(), lbl_titel.getText());
-				if (old!= null && old.getEndLocalDateTime() != null) {
-					appointment.setEndLocalDateTime(old.getEndLocalDateTime());
-				}else{
-					appointment.setEndLocalDateTime(LocalDateTime.of(dp_date.getValue(), dp_time.getTime().plusMinutes(45)));
-				}
-				System.out.println("appointment erstellt");
-				if (old != null && checkInput(old, appointment)) {
-					System.out.println("update");
-					controller.updateAppointment(old, appointment);
-					old = null;
-				} else if (old == null) {
-					System.out.println("add");
-					controller.addAppointment(appointment);
-				}
-				hideError();
-
-				// popup erfolgreich
-			} catch (Exception e) {
-				showError("Es ist ein Fehler aufgetreten. Bitte später erneut probieren!");
-				new Thread(() -> {
-					try {
-						Thread.sleep(5000);
-					} catch (InterruptedException e1) {
-					}
-					Platform.runLater(() -> hideError());
-				}).start();
-			} finally {
-					tf_descr.clear();
-					tf_title.clear();
-					dp_date.setValue(null);
-					this.close();
-					dp_time.setTime(LocalTime.of(0, 0));
-					cb_subject.getSelectionModel().clearSelection();
-					cb_teacher.getSelectionModel().clearSelection();
-			}
-		} else {
+		// check if input is valid
+		if (!checkInput()) {
 			showError("Bitte alle Felder ausfüllen!");
+			return;
+		}
+		Appointment appointment = new Appointment(LocalDateTime.of(dp_date.getValue(), dp_time.getTime()), null,
+				tf_title.getText(), tf_descr.getText(), cb_subject.getSelectionModel().getSelectedItem(),
+				cb_teacher.getSelectionModel().getSelectedItem(), lbl_titel.getText());
+		try {
+			//take old end date time if supplied
+			if (old != null && old.getEndLocalDateTime() != null) {
+				appointment.setEndLocalDateTime(old.getEndLocalDateTime());
+			} else {
+				appointment.setEndLocalDateTime(LocalDateTime.of(dp_date.getValue(), dp_time.getTime().plusMinutes(45)));
+			}
+			//check for any changes and if it is an addition
+			if (old != null && checkSameValue(old, appointment)) {
+				// update existing entry
+				controller.updateAppointment(old, appointment);
+				old = null;
+			} else if (old == null) {
+				// new entry
+				controller.addAppointment(appointment);
+			}
+			hideError();
+
+		} catch (Exception e) {
+			showError("Es ist ein Fehler aufgetreten. Bitte später erneut probieren!");
+			new Thread(() -> {
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e1) {
+				}
+				Platform.runLater(() -> hideError());
+			}).start();
+		} finally {
+			tf_descr.clear();
+			tf_title.clear();
+			dp_date.setValue(null);
+			this.close();
+			dp_time.setTime(LocalTime.of(0, 0));
+			cb_subject.getSelectionModel().clearSelection();
+			cb_teacher.getSelectionModel().clearSelection();
 		}
 
 	}
@@ -176,16 +173,17 @@ public class PopupNewTask extends JFXPopup implements Initializable {
 	private void edit() {
 		lockinput(!tf_title.isDisable());
 	}
-	
+
 	@FXML
-	private void delete(){
+	private void delete() {
 		controller.deleteAppointment(old);
 	}
 
 	/**
 	 * shows error label with given text
 	 * 
-	 * @param text displayed text
+	 * @param text
+	 *            displayed text
 	 */
 	private void showError(String text) {
 		lbl_error.setText(text);
@@ -211,6 +209,13 @@ public class PopupNewTask extends JFXPopup implements Initializable {
 			btn_delete.setDisable(true);
 			btn_edit.setDisable(true);
 		}
+		// combobox for subject and teacher is only visible with Task type
+		// Information
+		cb_subject.setVisible(!type.equals(controller.getTypes().get(0)));
+		cb_teacher.setVisible(!type.equals(controller.getTypes().get(0)));
+		lbl_subject.setVisible(!type.equals(controller.getTypes().get(0)));
+		lbl_teacher.setVisible(!type.equals(controller.getTypes().get(0)));
+
 		tf_title.setText(title);
 		tf_descr.setText(descr);
 		dp_date.setValue(start);
@@ -230,29 +235,37 @@ public class PopupNewTask extends JFXPopup implements Initializable {
 		cb_teacher.setDisable(lockinput);
 
 		btn_save.setDisable(lockinput);
-		if(old != null){
+		if (old != null) {
 			btn_delete.setDisable(false);
 			btn_edit.setDisable(false);
-		}else{
+		} else {
 			btn_delete.setDisable(true);
 			btn_edit.setDisable(true);
 		}
-		
+
 	}
 
-	private boolean checkInput(Appointment old, Appointment appointment) {
-		System.out.println("check inputa");
+	private boolean checkSameValue(Appointment old, Appointment appointment) {
 		if (old.getTeacher() == appointment.getTeacher() && old.getDescription().equals(appointment.getDescription())
 				&& old.getLocation() == appointment.getLocation()
 				&& old.getStartLocalDateTime().isEqual(appointment.getStartLocalDateTime())
 				&& old.getEndLocalDateTime().isEqual(appointment.getEndLocalDateTime())
 				&& old.getSummary().equals(appointment.getSummary()) && old.getSubject() == appointment.getSubject()
 				&& old.getType() == appointment.getType()) {
-			System.out.println("gleich");
 			return false;
 		} else {
-			System.out.println("changed");
 			return true;
+		}
+	}
+
+	private boolean checkInput() {
+		if (lbl_titel.getText().equals(controller.getTypes().get(0))) {
+			return !tf_descr.getText().isEmpty() && dp_date.getValue() != null && dp_date.getValue() != null
+					&& !tf_title.getText().isEmpty();
+		} else {
+			return !tf_descr.getText().isEmpty() && dp_date.getValue() != null && dp_date.getValue() != null
+					&& !tf_title.getText().isEmpty() && cb_teacher.getSelectionModel().getSelectedItem() != null
+					&& cb_subject.getSelectionModel().getSelectedItem() != null;
 		}
 	}
 }

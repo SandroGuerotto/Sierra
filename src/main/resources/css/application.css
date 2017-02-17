@@ -245,6 +245,10 @@
     -fx-text-fill: #D8000C;
     -fx-font-size: 18px;
 }
+.error-large{
+    -fx-text-fill: #D8000C;
+    -fx-font-size: 30px;
+}
 
 /*.jfx-snackbar-content, */
 .msg_info, .msg_success, .msg_warning, .msg_error {

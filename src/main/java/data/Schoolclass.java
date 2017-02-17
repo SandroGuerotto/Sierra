@@ -12,11 +12,13 @@ import view.ClassMember;
  */
 public class Schoolclass {
 
-    private int id;
+    @SuppressWarnings("unused")
+	private int id;
     private int studentcount;
 
     private ObservableList<ClassMember> memebers = FXCollections.observableArrayList();
-    private ObservableList<Person> people = FXCollections.observableArrayList();
+    @SuppressWarnings("unused")
+	private ObservableList<Person> people = FXCollections.observableArrayList();
 
     private String classname;
 	/**

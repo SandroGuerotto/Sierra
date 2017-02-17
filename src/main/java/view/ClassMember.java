@@ -43,14 +43,9 @@ public class ClassMember extends Pane implements Initializable {
     @FXML
     private Label lbl_telnr, lbl_email, lbl_addtext;
 
-
-    private boolean isTeacher = false;  // teacher
-    private boolean isRepresentative = false;  //Klassensprecher
     private boolean isClassTeacher = false;  //Klassensprecher
 
     private StringProperty roll;
-    // roll = text for user information
-    private int id;
     
     private Person person;
 

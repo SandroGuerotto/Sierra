@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXSpinner?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane fx:id="pane_main" alignment="TOP_CENTER" prefHeight="1080.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="pane_main" alignment="TOP_CENTER" prefHeight="1080.0" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
 <children>
     <GridPane fx:id="pane_container" prefWidth="1920.0" style="-fx-background-color: white;">
         <columnConstraints>
@@ -26,9 +27,10 @@
          <children>
             <BorderPane fx:id="spinner" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="2">
                <center>
-                  <JFXSpinner  radius="100.0" startingAngle="-256.27528690480403" BorderPane.alignment="CENTER" />
+                  <JFXSpinner radius="100.0" startingAngle="-256.27528690480403" BorderPane.alignment="CENTER" />
                </center>
             </BorderPane>
+            <Label fx:id="lbl_msg" focusTraversable="false" styleClass="error-large" text="Nachricht" visible="false" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
          </children>
     </GridPane>
 </children>

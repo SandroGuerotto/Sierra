@@ -90,7 +90,7 @@
                         <Insets left="10.0" />
                     </GridPane.margin>
                 </Label>
-                <Label styleClass="text-content" text="Fach:" GridPane.rowIndex="2">
+                <Label fx:id="lbl_subject" styleClass="text-content" text="Fach:" GridPane.rowIndex="2">
                     <GridPane.margin>
                         <Insets left="10.0" />
                     </GridPane.margin>
@@ -100,7 +100,7 @@
                         <Insets left="10.0" />
                     </GridPane.margin>
                 </Label>
-                <Label styleClass="text-content" text="Lehrperson:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                <Label fx:id="lbl_teacher" styleClass="text-content" text="Lehrperson:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             </children>
         </GridPane>
     </children>

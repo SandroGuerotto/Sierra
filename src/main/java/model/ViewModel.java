@@ -57,6 +57,7 @@ public class ViewModel {
 	        loader = new FXMLLoader(this.getClass().getResource("/view/login.fxml"));
 	        loader.setController(loginHandler);
 	        pane_login = loader.load();
+	        System.out.println("fertig load login");
     	 } catch (IOException e) {
              e.printStackTrace();
          }
@@ -111,7 +112,7 @@ public class ViewModel {
             loader = new FXMLLoader(this.getClass().getResource("/view/teachers.fxml"));
             loader.setController(teacherHandler);
             pane_teacher = loader.load();
-            System.out.println("fertig load fxml");
+            System.out.println("fertig load application");
 
         } catch (IOException e) {
             e.printStackTrace();

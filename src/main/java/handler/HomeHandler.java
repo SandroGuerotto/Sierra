@@ -266,8 +266,12 @@ public class HomeHandler implements Initializable {
 			@Override
 			public void updateItem(Absent absent, boolean empty) {
 				super.updateItem(absent, empty);
+				
 				if (absent == null) {
 					setTooltip(null);
+				} else if (Controller.devmode && absent != null) {
+					tooltip.textProperty().bind(absent.secureCodeProperty());
+					setTooltip(tooltip);
 				} else if (absent.isExcused()) {
 					tooltip.textProperty().bind(absent.secureCodeProperty());
 					setTooltip(tooltip);
@@ -346,7 +350,7 @@ public class HomeHandler implements Initializable {
 	@FXML
 	private void addNews() {
 		btn_schedule.setSelected(true);
-		popup_addNews.setInfo("", "", LocalDate.now(), LocalTime.now(), null, null, null, false, "Information");
+		popup_addNews.setInfo("", "", LocalDate.now(), LocalTime.now(), null, null, null, false, controller.getTypes().get(0));
 		popup_addNews.show(JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 0, 50);
 	}
 

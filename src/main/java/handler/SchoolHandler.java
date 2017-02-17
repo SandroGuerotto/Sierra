@@ -19,7 +19,8 @@ import java.util.ResourceBundle;
  */
 public class SchoolHandler implements Initializable {
 
-    private Controller controller;
+    @SuppressWarnings("unused")
+	private Controller controller;
 
     @FXML
     private ImageView iv_2, iv_1;
