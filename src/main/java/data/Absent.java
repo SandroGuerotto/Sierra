@@ -11,7 +11,7 @@ import javafx.beans.property.*;
  */
 public class Absent {
 
-    private IntegerProperty id;
+	private IntegerProperty id;
     private StringProperty datefrom;
     private StringProperty dateto;
     private StringProperty reason;
@@ -30,10 +30,10 @@ public class Absent {
         this.setDatefrom(datefrom);
         this.setDateto(dateto);
         this.setReason(reason);
-        this.setIsExcused(isExcused);
+        this.setExcused(isExcused);
         this.setSecureCode(secureCode);
     }
-
+    
     //id
     public void setID(int value) {
         this.idProperty().set(value);
@@ -99,11 +99,11 @@ public class Absent {
     }
 
     //isExcused
-    public void setIsExcused(boolean value) {
+    public void setExcused(boolean value) {
         this.isExcusedProperty().set(value);
     }
 
-    public boolean getIsExcused() {
+    public boolean isExcused() {
         return this.isExcusedProperty().get();
     }
 

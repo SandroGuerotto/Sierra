@@ -279,7 +279,7 @@ public class Controller {
     public boolean verifyCode(String code){
     	for (Absent absent : database.getAbsents()) {
 			if (absent.getSecureCode().equals(code)) {
-				absent.setIsExcused(true);
+				absent.setExcused(true);
 				return true;
 			}
 		}

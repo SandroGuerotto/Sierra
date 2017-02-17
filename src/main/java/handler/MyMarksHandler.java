@@ -85,6 +85,16 @@ public class MyMarksHandler implements Initializable {
         col_semester.setCellValueFactory(new PropertyValueFactory<Mark, String>("semester"));
         col_mark.setCellValueFactory(new PropertyValueFactory<Mark, String>("mark"));
         col_avgClass.setCellValueFactory(new PropertyValueFactory<Mark, String>("avgClass"));
+        
+        // Set fixed column widths that resize automatically
+        // Values are weighted to be a fraction of a total of 41 (arbitrary)
+        col_date.prefWidthProperty().bind(table_marks.widthProperty().multiply(4.0 / 41.0));
+        col_theme.prefWidthProperty().bind(table_marks.widthProperty().multiply(16.8 / 41.0));
+        col_subject.prefWidthProperty().bind(table_marks.widthProperty().multiply(6.0 / 41.0));
+        col_semester.prefWidthProperty().bind(table_marks.widthProperty().multiply(5.0 / 41.0));
+        col_mark.prefWidthProperty().bind(table_marks.widthProperty().multiply(4.0 / 41.0));
+        col_avgClass.prefWidthProperty().bind(table_marks.widthProperty().multiply(5.0 / 41.0));
+        
     }
 
     @FXML

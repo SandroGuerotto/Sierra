@@ -131,7 +131,7 @@ public class PopupNewTask extends JFXPopup implements Initializable {
 						null, tf_title.getText(),
 						tf_descr.getText(), cb_subject.getSelectionModel().getSelectedItem(),
 						cb_teacher.getSelectionModel().getSelectedItem(), lbl_titel.getText());
-				if (old.getEndLocalDateTime() != null) {
+				if (old!= null && old.getEndLocalDateTime() != null) {
 					appointment.setEndLocalDateTime(old.getEndLocalDateTime());
 				}else{
 					appointment.setEndLocalDateTime(LocalDateTime.of(dp_date.getValue(), dp_time.getTime().plusMinutes(45)));
@@ -145,7 +145,6 @@ public class PopupNewTask extends JFXPopup implements Initializable {
 					System.out.println("add");
 					controller.addAppointment(appointment);
 				}
-
 				hideError();
 
 				// popup erfolgreich
@@ -159,7 +158,6 @@ public class PopupNewTask extends JFXPopup implements Initializable {
 					Platform.runLater(() -> hideError());
 				}).start();
 			} finally {
-				if (old != null) {
 					tf_descr.clear();
 					tf_title.clear();
 					dp_date.setValue(null);
@@ -167,7 +165,6 @@ public class PopupNewTask extends JFXPopup implements Initializable {
 					dp_time.setTime(LocalTime.of(0, 0));
 					cb_subject.getSelectionModel().clearSelection();
 					cb_teacher.getSelectionModel().clearSelection();
-				}
 			}
 		} else {
 			showError("Bitte alle Felder ausfüllen!");

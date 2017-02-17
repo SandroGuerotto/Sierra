@@ -1,7 +1,10 @@
 package view;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.WeekFields;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -9,6 +12,14 @@ import com.jfoenix.controls.JFXPopup;
 
 import controller.Controller;
 import data.Appointment;
+import helper.DateFormatter;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
@@ -28,6 +39,9 @@ import jfxtras.scene.layout.GridPane;
  * @version 0.1
  */
 public class AgendaView {
+	
+	private StringProperty displayedWeekNumberProperty;
+	private ObjectProperty<LocalDate> displayedLocalDateProperty;
 	
     public AgendaView(Controller controller) {
         agenda = new Agenda();
@@ -50,6 +64,23 @@ public class AgendaView {
         
         agenda.appointments().addAll(controller.getAppointments());
         setSettings();
+        
+        setWeekNumber();
+    	agenda.displayedLocalDateTime().addListener(new ChangeListener<LocalDateTime>() {
+			@Override
+			public void changed(ObservableValue<? extends LocalDateTime> arg0, LocalDateTime arg1, LocalDateTime arg2) {
+				 setWeekNumber();
+			}
+		});
+    }
+    /**
+     * set displayed week number
+     */
+    private void setWeekNumber(){
+		int weekNumber = agenda.getDisplayedLocalDateTime().toLocalDate().get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear());
+//		setDisplayedLocalDate(DateFormatter.LocalDateToString(agenda.getDisplayedLocalDateTime().toLocalDate()));
+		setWeekNumberProperty("Woche " + weekNumber);
+		setdisplayedLocalDate(agenda.getDisplayedLocalDateTime().toLocalDate());
     }
     /**
 	 * set initial setting to display standard schedule plan from logged in student.
@@ -83,40 +114,12 @@ public class AgendaView {
         lGridPane.getColumnConstraints().addAll(lColumnConstraintsNeverGrow, lColumnConstraintsAlwaysGrow);
         int lRowIdx = 0;
 
-        // skin
-        {
-            lGridPane.add(new Label("Skin"), new GridPane.C().row(2).col(lRowIdx).halignment(HPos.RIGHT));
-            AgendaSkinSwitcher lAgendaSkinSwitcher = new AgendaSkinSwitcher(agenda);
-            lGridPane.add(lAgendaSkinSwitcher, new GridPane.C().row(1).col(lRowIdx));
-        }
-        lRowIdx++;
 
         // displayed calendar
         {
-            lGridPane.add(new Label("Display"), new GridPane.C().row(2).col(lRowIdx).halignment(HPos.RIGHT));
             LocalDateTimeTextField lLocalDateTimeTextField = new LocalDateTimeTextField();
             lGridPane.add(lLocalDateTimeTextField, new GridPane.C().row(1).col(lRowIdx));
             lLocalDateTimeTextField.localDateTimeProperty().bindBidirectional(agenda.displayedLocalDateTime());
-        }
-        lRowIdx++;
-
-        // AllowDragging
-        {
-            lGridPane.add(new Label("Allow dragging"), new GridPane.C().row(2).col(lRowIdx).halignment(HPos.RIGHT));
-            CheckBox lCheckBox = new CheckBox();
-            lCheckBox.setSelected(true);
-            lGridPane.add(lCheckBox, new GridPane.C().row(1).col(lRowIdx));
-            agenda.allowDraggingProperty().bind(lCheckBox.selectedProperty());
-        }
-        lRowIdx++;
-
-        // AllowResize
-        {
-            lGridPane.add(new Label("Allow resize"), new GridPane.C().row(2).col(lRowIdx).halignment(HPos.RIGHT));
-            CheckBox lCheckBox = new CheckBox();
-            lCheckBox.setSelected(true);
-            lGridPane.add(lCheckBox, new GridPane.C().row(1).col(lRowIdx));
-            agenda.allowResizeProperty().bind(lCheckBox.selectedProperty());
         }
         lRowIdx++;
 
@@ -131,5 +134,37 @@ public class AgendaView {
 
     public Agenda getAgenda(){ return agenda; }
 
+
+    // Week number
+	public void setWeekNumberProperty(String value) {
+        this.displayedWeekNumberProperty().set(value);
+    }
+
+    public String getWeekNumberProperty() {
+        return this.displayedWeekNumberProperty().get();
+    }
+
+    public StringProperty displayedWeekNumberProperty() {
+        if (this.displayedWeekNumberProperty == null) {
+            this.displayedWeekNumberProperty = new SimpleStringProperty(this, "displayedWeekNumberProperty");
+        }
+        return this.displayedWeekNumberProperty;
+    }
+    
+    // Week number
+	public void setdisplayedLocalDate(LocalDate value) {
+        this.displayedLocalDateProperty().set(value);
+    }
+
+    public LocalDate getdisplayedLocalDatey() {
+        return this.displayedLocalDateProperty().get();
+    }
+
+    public ObjectProperty<LocalDate> displayedLocalDateProperty() {
+        if (this.displayedLocalDateProperty == null) {
+            this.displayedLocalDateProperty = new SimpleObjectProperty<LocalDate>(this, "displayedLocalDateProperty");
+        }
+        return this.displayedLocalDateProperty;
+    }
 
 }
